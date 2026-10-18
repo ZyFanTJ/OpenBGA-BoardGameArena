@@ -1,0 +1,173 @@
+{
+  "version": 1,
+  "image": "cabo-atlas-v1.png",
+  "width": 1024,
+  "height": 1536,
+  "columns": 4,
+  "rows": 4,
+  "tileWidth": 256,
+  "tileHeight": 384,
+  "source": "User-supplied CABO reference photograph; recreated using built-in imagegen. Not covered by Kenney CC0 license.",
+  "cards": [
+    {
+      "id": "card-00",
+      "name": "月光独角兽",
+      "value": 0,
+      "ability": null,
+      "x": 0,
+      "y": 0,
+      "width": 256,
+      "height": 384
+    },
+    {
+      "id": "card-01",
+      "name": "城堡与瓢虫",
+      "value": 1,
+      "ability": null,
+      "x": 256,
+      "y": 0,
+      "width": 256,
+      "height": 384
+    },
+    {
+      "id": "card-02",
+      "name": "追蝶",
+      "value": 2,
+      "ability": null,
+      "x": 512,
+      "y": 0,
+      "width": 256,
+      "height": 384
+    },
+    {
+      "id": "card-03",
+      "name": "螺旋植物",
+      "value": 3,
+      "ability": null,
+      "x": 768,
+      "y": 0,
+      "width": 256,
+      "height": 384
+    },
+    {
+      "id": "card-04",
+      "name": "鸟浴喷泉",
+      "value": 4,
+      "ability": null,
+      "x": 0,
+      "y": 384,
+      "width": 256,
+      "height": 384
+    },
+    {
+      "id": "card-05",
+      "name": "月上跃动",
+      "value": 5,
+      "ability": null,
+      "x": 256,
+      "y": 384,
+      "width": 256,
+      "height": 384
+    },
+    {
+      "id": "card-06",
+      "name": "林间侦探",
+      "value": 6,
+      "ability": null,
+      "x": 512,
+      "y": 384,
+      "width": 256,
+      "height": 384
+    },
+    {
+      "id": "card-07",
+      "name": "水下鱼群",
+      "value": 7,
+      "ability": "PEEK",
+      "x": 768,
+      "y": 384,
+      "width": 256,
+      "height": 384
+    },
+    {
+      "id": "card-08",
+      "name": "长椅伙伴",
+      "value": 8,
+      "ability": "PEEK",
+      "x": 0,
+      "y": 768,
+      "width": 256,
+      "height": 384
+    },
+    {
+      "id": "card-09",
+      "name": "金衣间谍",
+      "value": 9,
+      "ability": "SPY",
+      "x": 256,
+      "y": 768,
+      "width": 256,
+      "height": 384
+    },
+    {
+      "id": "card-10",
+      "name": "红发间谍",
+      "value": 10,
+      "ability": "SPY",
+      "x": 512,
+      "y": 768,
+      "width": 256,
+      "height": 384
+    },
+    {
+      "id": "card-11",
+      "name": "交换伙伴",
+      "value": 11,
+      "ability": "SWAP",
+      "x": 768,
+      "y": 768,
+      "width": 256,
+      "height": 384
+    },
+    {
+      "id": "card-12",
+      "name": "月下剪影",
+      "value": 12,
+      "ability": "SWAP",
+      "x": 0,
+      "y": 1152,
+      "width": 256,
+      "height": 384
+    },
+    {
+      "id": "card-13",
+      "name": "故事之书",
+      "value": 13,
+      "ability": null,
+      "x": 256,
+      "y": 1152,
+      "width": 256,
+      "height": 384
+    },
+    {
+      "id": "back",
+      "name": "统一牌背",
+      "value": null,
+      "ability": null,
+      "x": 512,
+      "y": 1152,
+      "width": 256,
+      "height": 384
+    },
+    {
+      "id": "base",
+      "name": "空白底板",
+      "value": null,
+      "ability": null,
+      "x": 768,
+      "y": 1152,
+      "width": 256,
+      "height": 384
+    }
+  ]
+}

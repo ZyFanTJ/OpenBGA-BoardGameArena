@@ -1,0 +1,25 @@
+.shell-menu-toggle{display:none}.shell-menu-links{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}.shell-menu-links button{min-height:44px}
+/* Shared navigation geometry must not depend on the active game. */
+@media(min-width:761px){html{scrollbar-gutter:stable}}
+@media(max-width:760px), (max-height:500px) and (max-width:1000px){
+ #app .lobby-nav{height:80px;min-height:0;padding:4px 12px;display:grid;grid-template-columns:minmax(0,1fr) auto 36px;grid-template-rows:34px 38px;gap:0 8px}
+ #app .lobby-brand{gap:8px}#app .lobby-brand b{font-size:15px}#app .moon-mark{width:24px;height:24px}
+ #app .lobby-nav nav{grid-column:1/-1;grid-row:2;width:100%;gap:2px;justify-content:space-between}
+ #app .lobby-nav nav button{height:38px;min-width:0;padding:6px 12px;font-size:13px;gap:4px;flex:1}
+ #app .lobby-nav nav .ui-icon{width:14px;height:14px}
+ #app .lobby-profile{grid-row:1;grid-column:2;min-width:0;padding:0;gap:5px;border:0}
+ #app .profile-avatar{width:24px;height:24px;font-size:12px}#app .lobby-profile b{font-size:10px}#app .lobby-profile small{display:none}
+ #app .lobby-search,#app .notification-button{display:none}
+ #app .lobby-nav nav [data-action^="soon-"]{display:none}
+ #app .lobby-profile>span:last-child{display:none}
+ #app .lobby-profile b{max-width:64px;font-size:11px}
+ #app .shell-menu-toggle{display:block;grid-column:3;grid-row:1;width:36px;height:34px;padding:0;background:transparent;color:var(--text);border:0;font-size:21px}
+ #app .lobby-brand{min-width:0}#app .lobby-brand b{letter-spacing:.1em}
+
+ #app .moon-lobby,#app .room-empty{height:calc(100dvh - 108px)}
+ #app .room-lounge{height:calc(100dvh - 146px)}
+}
+@media(orientation:landscape) and (max-height:500px) and (max-width:1000px){
+ #app .lobby-nav{height:36px;grid-template-columns:auto 1fr 36px;grid-template-rows:30px}#app .lobby-nav nav{grid-column:2;grid-row:1}#app .lobby-profile{display:none}#app .lobby-nav nav button{height:30px}#app .shell-menu-toggle{height:30px}
+ #app .moon-lobby,#app .room-empty{height:calc(100dvh - 64px)}
+}

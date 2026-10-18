@@ -1,0 +1,311 @@
+{
+  "retrieved": "2026-10-08",
+  "game": "High Frontier 4 All",
+  "files": [
+    {
+      "id": "core-official-2026-04",
+      "title": "核心规则（含模组 0、词汇表）",
+      "source": "官方规则索引",
+      "version_note": "索引 2026-04；书内 2025-04；PDF 导出 2026-04-29",
+      "url": "https://www.dropbox.com/scl/fi/xhv8q5f96hvuip0x6is9g/HF4-Core-Rules.pdf?rlkey=yggvm85oi09x4fdx4qwmf0yqj&dl=1",
+      "retrieved": "2026-10-08",
+      "pages": 56,
+      "bytes": 56377277,
+      "sha256": "87c963af51e52e8b97f0611b19cd86526e31e6d74357db753464d3a819df8226",
+      "pdf_metadata": {
+        "/CreationDate": "D:20260429180614-07'00'",
+        "/ModDate": "D:20260429180639-07'00'"
+      }
+    },
+    {
+      "id": "appendix-official-2025-10",
+      "title": "附录：变体、剧本及参考",
+      "source": "官方规则索引",
+      "version_note": "书内 2025-10",
+      "url": "https://www.dropbox.com/scl/fi/sbsqrb2hz1jcqu97jfywn/HF4-Appendix-open-with-InDesign2024.pdf?rlkey=o0hzd2vcmmffny9pu0vut28nc&dl=1",
+      "retrieved": "2026-10-08",
+      "pages": 40,
+      "bytes": 2737511,
+      "sha256": "f79b85d2cf6bd2fc49b3cd35c11a7946a233437ecd73d224bc8a70be92233f76",
+      "pdf_metadata": {
+        "/CreationDate": "D:20251008133607-07'00'",
+        "/ModDate": "D:20251008133608-07'00'"
+      }
+    },
+    {
+      "id": "m1-official-share",
+      "title": "模组 1：Terawatt & Futures",
+      "source": "出版社资料库",
+      "version_note": "书内 2021-02；较旧离线版",
+      "url": "https://nx86265.your-storageshare.de/public.php/webdav/High%20Frontier%204%20All/High%20Frontier%204%20All%20M1_Terawatt_rules.pdf",
+      "retrieved": "2026-10-08",
+      "pages": 40,
+      "bytes": 4893345,
+      "sha256": "bf3b52d2394d00d71d8793c5b751b9b8c08017d0b41a4b26420ab2368bc6de51",
+      "pdf_metadata": {
+        "/CreationDate": "D:20210307153216+01'00'",
+        "/ModDate": "D:20210307153225+01'00'"
+      }
+    },
+    {
+      "id": "m2-official-2025-10",
+      "title": "模组 2：Colonization",
+      "source": "官方规则索引",
+      "version_note": "书内 2025-10",
+      "url": "https://www.dropbox.com/scl/fi/w0fd1a74mfuukugvp4zvq/HF4-M2_Colonization_rules.pdf?rlkey=sv9vif6g8es32fy9mkv1crbtz&dl=1",
+      "retrieved": "2026-10-08",
+      "pages": 28,
+      "bytes": 699034,
+      "sha256": "42f3de7682bf1c944c193d987ab6de6dadb33bedc59e4f3674f8bee1965c6f1e",
+      "pdf_metadata": {
+        "/CreationDate": "D:20251017162956-07'00'",
+        "/ModDate": "D:20251017162957-07'00'"
+      }
+    },
+    {
+      "id": "m3-official-share",
+      "title": "模组 3：Conflict",
+      "source": "出版社资料库",
+      "version_note": "书内 2021-03-11；较旧离线版",
+      "url": "https://nx86265.your-storageshare.de/public.php/webdav/High%20Frontier%204%20All/High%20Frontier%204%20All%20M3_Conflict_rules_Book1.pdf",
+      "retrieved": "2026-10-08",
+      "pages": 44,
+      "bytes": 4107524,
+      "sha256": "8945c0f18f44541b1197e107874fed027902e6274828848dada31d5e819cf4d8",
+      "pdf_metadata": {
+        "/CreationDate": "D:20210311123801+01'00'",
+        "/ModDate": "D:20210311123808+01'00'"
+      }
+    },
+    {
+      "id": "m4-official-2023-07",
+      "title": "模组 4：Exodus",
+      "source": "官方规则索引",
+      "version_note": "索引 2023-07；PDF 导出 2023-11-10",
+      "url": "https://www.dropbox.com/scl/fi/r3qcrvwyzfqm6ah4gqn2o/HF4-M4-Exodus-Rules.pdf?rlkey=byittq7g57bjj8o9mxgwelx3n&dl=1",
+      "retrieved": "2026-10-08",
+      "pages": 44,
+      "bytes": 8941815,
+      "sha256": "889fb69c99abc59114668b8ceb2bcdcd42570a0eac20e566f46c948519ccaeb1",
+      "pdf_metadata": {
+        "/CreationDate": "D:20231110142553+01'00'",
+        "/ModDate": "D:20231110142643+01'00'"
+      }
+    },
+    {
+      "id": "m5-official-2025-10",
+      "title": "模组 5：Economy",
+      "source": "官方规则索引",
+      "version_note": "书内 2025-10；PDF 导出 2026-05-12",
+      "url": "https://www.dropbox.com/scl/fi/r23ex9e1aiygvacy1s3wk/HF4-M5-Rules-MASTER.pdf?rlkey=c40p7r2ec047tohv20yhg8yhz&dl=1",
+      "retrieved": "2026-10-08",
+      "pages": 44,
+      "bytes": 17242806,
+      "sha256": "040ebc405732591241a146f81ad45a070fb551c3bb901677d23914f526767ee5",
+      "pdf_metadata": {
+        "/CreationDate": "D:20260512075832-07'00'",
+        "/ModDate": "D:20260512075855-07'00'"
+      }
+    },
+    {
+      "id": "m6-official-2026-05",
+      "title": "模组 6：Odyssey",
+      "source": "官方规则索引",
+      "version_note": "索引 2026-05；书内 2026-09；PDF 导出 2026-09-22",
+      "url": "https://www.dropbox.com/scl/fi/kq9wpobb9v2eb362yxdn8/HF4-M6-Rules-MASTER.pdf?rlkey=p5ylwgw6z4rsa2xs8myjrri8y&dl=1",
+      "retrieved": "2026-10-08",
+      "pages": 28,
+      "bytes": 9546169,
+      "sha256": "7ac265ee77056075cd15187ea278c2be36db5f1c3d0db85869a1e5b7f7f579db",
+      "pdf_metadata": {
+        "/CreationDate": "D:20260922110852-07'00'",
+        "/ModDate": "D:20260922110902-07'00'"
+      }
+    },
+    {
+      "id": "read-me-first-official",
+      "title": "Read Me First 开箱与入门指南",
+      "source": "出版社资料库",
+      "version_note": "文件名 v0-936；PDF 导出 2020-05",
+      "url": "https://nx86265.your-storageshare.de/public.php/webdav/High%20Frontier%204%20All/High%20Frontier%204%20All_Read_Me_First_v0-936.pdf",
+      "retrieved": "2026-10-08",
+      "pages": 8,
+      "bytes": 1497105,
+      "sha256": "e73ba6ef3a84ed012a6fa42d6582bfecefd26d6c86666df1104f49f159e4cb50",
+      "pdf_metadata": {
+        "/CreationDate": "D:20200511214336+02'00'",
+        "/ModDate": "D:20200514150552+02'00'"
+      }
+    },
+    {
+      "id": "space-diamonds-official",
+      "title": "Space Diamonds / Starship Builder",
+      "source": "出版社资料库",
+      "version_note": "PDF 导出 2020-12-20",
+      "url": "https://nx86265.your-storageshare.de/public.php/webdav/High%20Frontier%204%20All/High%20Frontier%204%20All%20Space%20Diamonds.pdf",
+      "retrieved": "2026-10-08",
+      "pages": 8,
+      "bytes": 8929822,
+      "sha256": "4c080daf123cfdbf16fc939eace0dca1f637230ff79fcdef1016b0388a81b51c",
+      "pdf_metadata": {
+        "/CreationDate": "D:20201220192642+01'00'",
+        "/ModDate": "D:20201220192652+01'00'"
+      }
+    },
+    {
+      "id": "race-for-glory-official",
+      "title": "Race to Mars + Race for Glory 教程",
+      "source": "出版社资料库",
+      "version_note": "PDF 导出 2020-12-20",
+      "url": "https://nx86265.your-storageshare.de/public.php/webdav/High%20Frontier%204%20All/High%20Frontier%204%20All%20Race%20to%20Mars%20%2b%20Race%20for%20Glory.pdf",
+      "retrieved": "2026-10-08",
+      "pages": 28,
+      "bytes": 23287811,
+      "sha256": "271c9b752ca39bf7a6e219510d49184390932bbaac69dd9e306428a11272ca43",
+      "pdf_metadata": {
+        "/CreationDate": "D:20201220192540+01'00'",
+        "/ModDate": "D:20201220192609+01'00'"
+      }
+    },
+    {
+      "id": "jump-start-official",
+      "title": "Tools 1：Jump Start 预组装飞船",
+      "source": "出版社资料库",
+      "version_note": "书内 2022-04-30；PDF 导出 2026-08-31",
+      "url": "https://nx86265.your-storageshare.de/public.php/webdav/High%20Frontier%204%20All/High%20Frontier%204All%20-%20Tools%201%20Jump%20Start%20Rules.pdf",
+      "retrieved": "2026-10-08",
+      "pages": 24,
+      "bytes": 17810661,
+      "sha256": "1328206f7a538a3f0993a61eb79dd3449b9ddb858d1559d341c179b7a8240a3b",
+      "pdf_metadata": {
+        "/CreationDate": "D:20260831233311+02'00'",
+        "/ModDate": "D:20260831233325+02'00'"
+      }
+    },
+    {
+      "id": "player-aid-official",
+      "title": "玩家辅助表",
+      "source": "出版社资料库",
+      "version_note": "PDF 导出 2020-12-20",
+      "url": "https://nx86265.your-storageshare.de/public.php/webdav/High%20Frontier%204%20All/High%20Frontier%204%20All%20Player%20Aid.pdf",
+      "retrieved": "2026-10-08",
+      "pages": 6,
+      "bytes": 3261353,
+      "sha256": "75cb472a41252c2866eab126eafbc217742eebc2fde196e87743b49c2836532f",
+      "pdf_metadata": {
+        "/CreationDate": "D:20201220192410+01'00'",
+        "/ModDate": "D:20201220192414+01'00'"
+      }
+    },
+    {
+      "id": "player-aid-core-official",
+      "title": "核心专用玩家辅助表",
+      "source": "出版社资料库",
+      "version_note": "文件名 2021-02-14",
+      "url": "https://nx86265.your-storageshare.de/public.php/webdav/High%20Frontier%204%20All/High%20Frontier%204%20All%20Player%20Aid_2021-02-14%20Core%20Only.pdf",
+      "retrieved": "2026-10-08",
+      "pages": 4,
+      "bytes": 2310640,
+      "sha256": "785b2f490e3b891f1efe84cec0d8247ac03d42b60e0a62d5c8fddd7887ecac2c",
+      "pdf_metadata": {
+        "/CreationDate": "D:20210214082116-05'00'",
+        "/ModDate": "D:20210214082119-05'00'"
+      }
+    },
+    {
+      "id": "m3-strategy-official",
+      "title": "模组 3 策略册",
+      "source": "出版社资料库",
+      "version_note": "文件名 v0-636；PDF 导出 2020-09-04",
+      "url": "https://nx86265.your-storageshare.de/public.php/webdav/High%20Frontier%204%20All/High%20Frontier%204%20All%20M3_Conflict_strategy_v0-636.pdf",
+      "retrieved": "2026-10-08",
+      "pages": 8,
+      "bytes": 870261,
+      "sha256": "36ea002706b60a7777230b70b74807cd0898cf271b4686648ec448dc910819b9",
+      "pdf_metadata": {
+        "/CreationDate": "D:20200904112839+02'00'",
+        "/ModDate": "D:20200904112841+02'00'"
+      }
+    },
+    {
+      "id": "colonization-cards-official",
+      "title": "殖民卡散热标记修正资料",
+      "source": "出版社资料库",
+      "version_note": "文件名 v05c；PDF 导出 2021-02-09",
+      "url": "https://nx86265.your-storageshare.de/public.php/webdav/High%20Frontier%204%20All/High%20Frontier%204%20All%20Colonization%20Cards%20with%20Therms%20v05c.pdf",
+      "retrieved": "2026-10-08",
+      "pages": 13,
+      "bytes": 2075124,
+      "sha256": "0ea67f5c3c5eed56b31390fc7648b169476441abdfddf907080a9108c903b695",
+      "pdf_metadata": {
+        "/Author": "Geoffrey Speare",
+        "/CreationDate": "D:20210209184001-05'00'",
+        "/ModDate": "D:20210209184001-05'00'"
+      }
+    },
+    {
+      "id": "cards-community",
+      "title": "卡牌参考表",
+      "source": "Ian Hayward 社区资料",
+      "version_note": "PDF 导出 2023-07-09；非当前全扩展卡库",
+      "url": "https://www.iandrea.co.uk/sf/resources/hf/HF4A_cards.pdf",
+      "retrieved": "2026-10-08",
+      "pages": 18,
+      "bytes": 777409,
+      "sha256": "394b8fc547b28855c61c0e5fb741c2fcf898dabd5eed0f28bcb7da99d8743a7b",
+      "pdf_metadata": {
+        "/Title": "High Frontier 4 All Card List",
+        "/Author": "Ian Hayward",
+        "/CreationDate": "D:20230709165920Z00'00'",
+        "/ModDate": "D:20230709165920Z00'00'"
+      }
+    },
+    {
+      "id": "sites-community",
+      "title": "地点参考表",
+      "source": "Ian Hayward 社区资料",
+      "version_note": "PDF 导出 2023-07-09；不包含完整路线拓扑",
+      "url": "https://www.iandrea.co.uk/sf/resources/hf/HF4A_sites.pdf",
+      "retrieved": "2026-10-08",
+      "pages": 4,
+      "bytes": 432492,
+      "sha256": "092de12aab690151a782d7625ddf2a7666daaa924df4b033b52943148502f329",
+      "pdf_metadata": {
+        "/Title": "HF4A_sites.pdf",
+        "/Author": "Ian Hayward",
+        "/CreationDate": "D:20230709161802Z00'00'",
+        "/ModDate": "D:20230709161802Z00'00'"
+      }
+    },
+    {
+      "id": "m1-mirror",
+      "title": "模组 1 旧版镜像",
+      "source": "Boardgamesbot 镜像",
+      "version_note": "PDF 导出 2020-06-17；比官方离线版更旧",
+      "url": "https://www.boardgamesbot.com/assets/games-library/high-frontier-4-all-module-1-terawatt-futures/manual_eng.pdf?raw=1",
+      "retrieved": "2026-10-08",
+      "pages": 40,
+      "bytes": 934875,
+      "sha256": "8daf99d4d24c245b95a7c6a5b93b8488ee168d66642af79b1215a6102f25be2e",
+      "pdf_metadata": {
+        "/CreationDate": "D:20200617133225+02'00'",
+        "/ModDate": "D:20200617133232+02'00'"
+      }
+    },
+    {
+      "id": "m3-mirror-2021-03-11",
+      "title": "模组 3 镜像",
+      "source": "Gamers HQ 镜像",
+      "version_note": "与官方资料库版本 SHA-256 相同",
+      "url": "https://gamers-hq.de/media/pdf/49/4a/ef/HF4-M3_Conflict_rules_Book1.pdf",
+      "retrieved": "2026-10-08",
+      "pages": 44,
+      "bytes": 4107524,
+      "sha256": "8945c0f18f44541b1197e107874fed027902e6274828848dada31d5e819cf4d8",
+      "pdf_metadata": {
+        "/CreationDate": "D:20210311123801+01'00'",
+        "/ModDate": "D:20210311123808+01'00'"
+      }
+    }
+  ]
+}

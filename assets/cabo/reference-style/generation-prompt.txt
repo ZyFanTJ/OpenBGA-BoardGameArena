@@ -1,0 +1,27 @@
+Create a production game-art SPRITE ATLAS recreating the card illustrations in the supplied CABO photograph. Reference is for illustration designs and palette, NOT the photograph arrangement. Output one portrait 2:3 image, ideally 2048x3072 or higher, containing EXACTLY 4 columns and 4 rows of equal rectangular full-bleed tiles, each tile portrait 2:3. Perfect edge-to-edge regular grid, zero gutters, zero outside margin, no rounded corners, no perspective, no rotation, no overlaps, no physical tabletop, no drop shadows. Every illustration upright. Do NOT draw ANY text, letters, numerals, labels or watermarks; those are added separately by UI. Keep top left corner relatively dark and bottom strip uncluttered for later typography.
+
+Match reference faithfully: crisp flat geometric modern fairy-tale illustration, angular shapes, minimal faces with two gray vertical eyes and salmon triangle mouth, white angular long-eared little unicorn creature, occasional delicate screenprint grain, midnight blue / plum starry skies, lime rolling hills, turquoise water, golden mustard trench coats. NOT watercolor, not realistic, not 3D, not ornate fantasy.
+
+Grid order strictly left-to-right then top-to-bottom:
+Row 1:
+tile 0: close-up majestic white unicorn long neck and horn, blue geometric night backdrop, matching reference card 0.
+tile 1: lime rolling hillside with ladybug in foreground, white castle with salmon cone roofs and angular mountains behind.
+tile 2: happy little angular white unicorn jumping toward two golden butterflies above green meadow.
+tile 3: small white unicorn balanced on tall green geometric spiral plants beneath starry navy sky.
+Row 2:
+tile 4: little white unicorn in circular pale stone birdbath fountain, pink birds, angular mountains behind.
+tile 5: small white unicorn floating diagonally above large luminous moon with concentric arcs, plum purple starry sky.
+tile 6: rear view of mustard trenchcoat detective with hat and small dog observing park of round geometric trees and lamps at night.
+tile 7: turquoise underwater school of stylized dark blue fish, pale arched bridge above water and little yellow houses on distant bank.
+Row 3:
+tile 8: mustard trenchcoat detective sitting on park bench beside little white unicorn, round green trees and white moon, blue sky.
+tile 9: close-up mustard-yellow trenchcoat spy lifting golden fedora, black glasses, tall collar, starry navy background.
+tile 10: rear portrait red-haired spy with gray fedora and charcoal trenchcoat, purple starry background.
+tile 11: friendly golden floppy-eared dog and little white unicorn together in profile and front view, dark green hill, navy starry sky.
+Row 4:
+tile 12: two black silhouettes in brimmed spy hats facing one another before huge pale full moon, purple night.
+tile 13: giant white angular unicorn rising from an open storybook with lime miniature hills and tiny castle, violet concentric magic arcs.
+tile 14: CARD BACK: evenly repeating small angular unicorn heads in cream, mint, mustard and plum on navy teal; no central scene, uniform decorative pattern.
+tile 15: reusable EMPTY CARD FACE BASE: subtle flat midnight teal and navy geometric diagonals and very sparse small stars around edges, spacious clear center, no creature or object.
+
+This is a 16-tile usable asset atlas. Every tile is a separate complete scene. Keep shapes bold and charming and matched to the user's reference.

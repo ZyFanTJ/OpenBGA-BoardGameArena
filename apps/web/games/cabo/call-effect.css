@@ -1,0 +1,25 @@
+.cabo-call-effect{position:absolute;overflow:hidden;border-radius:24px;pointer-events:none;isolation:isolate}
+.cabo-call-shade{position:absolute;inset:0;background:radial-gradient(ellipse at 50% 43%,#174e5666,#021e32b3)}
+.cabo-call-horse{position:absolute;left:50%;top:40%;width:clamp(190px,32vw,350px);transform:translate(-50%,-50%);filter:drop-shadow(0 0 18px #a0e1cf88) drop-shadow(0 18px 12px #001d3188);z-index:2}
+.cabo-call-horse svg{display:block;width:100%}
+.cabo-call-caption{position:absolute;top:55%;left:50%;transform:translateX(-50%);width:90%;display:flex;align-items:center;flex-direction:column;text-align:center;color:#fff1bb;text-shadow:0 3px 18px #001b2d;z-index:3}
+.cabo-call-caption strong{font-size:clamp(36px,5vw,60px);font-weight:950;font-style:italic;letter-spacing:.12em;line-height:1.1}
+.cabo-call-caption span{font-size:15px;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin:8px 0 12px}
+.cabo-call-caption b{padding:5px 24px;border:1px solid #efd48d99;border-radius:20px;background:#123f48e8;font-size:14px;letter-spacing:.2em}
+.cabo-call-wave{position:absolute;left:50%;top:46%;width:60%;aspect-ratio:2;border:2px solid #f7df9b;border-radius:50%;box-shadow:0 0 25px #f8df9177,inset 0 0 25px #f8df9144;opacity:0}
+.cabo-call-star{position:absolute;left:50%;top:40%;font-size:20px;color:#f9e7aa;text-shadow:0 0 12px #f1e6b4;z-index:1}
+.cabo-call-shout{position:absolute;color:#fff1a6;text-shadow:0 2px 6px #00363d,0 0 18px #fbd585;font-size:24px;font-weight:950;font-style:italic}
+.cabo-final-banner{position:absolute;z-index:5;left:20px;top:78px;display:flex;align-items:center;gap:7px;max-width:230px;padding:7px 12px 7px 5px;border:1px solid #e4c7788c;border-radius:14px;background:#123e46ef;box-shadow:0 4px 20px #001e3033;color:#ffe6a5;pointer-events:none}
+.cabo-final-icon{width:44px;flex-shrink:0}.cabo-final-icon svg{width:100%;display:block}
+.cabo-final-banner strong{display:block;font-size:13px;white-space:nowrap}.cabo-final-banner small{font-size:11px;font-weight:500}.cabo-final-banner div>span{display:block;max-width:164px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:11px;color:#d2ded0}
+.cabo-final-round .felt-surface{border-color:#efd181b3;box-shadow:0 24px 0 -12px #073d43,0 0 28px #e9c86d26,inset 0 0 55px #ead07615}
+.cabo-caller .player-badge{border-color:#edcf83;background:#38554a;box-shadow:0 0 18px #f6d88430}.cabo-caller .playing-card{border-color:#d9c37e}
+.cabo-final-turn{display:block;flex-basis:100%;font-size:11px;letter-spacing:.08em;color:#f6d884;margin-bottom:4px}
+@media(max-width:760px){
+ .cabo-final-banner{top:8px;left:50%;transform:translateX(-50%);max-width:calc(100% - 24px);padding:4px 10px 4px 3px;gap:3px;border-radius:12px}
+ .cabo-final-icon{width:25px}.cabo-final-banner strong{font-size:11px;line-height:13px}.cabo-final-banner small{font-size:10px}.cabo-final-banner div>span{font-size:10px;line-height:13px;max-width:210px}
+ .cabo-final-round .table-hud{display:none}.cabo-final-round .cabo-final-banner{left:8px;top:2px;padding:1px 5px;transform:none;max-width:calc(100% - 116px)}
+ .cabo-call-caption{top:53%}.cabo-call-caption span{font-size:13px}.cabo-call-caption b{font-size:12px}.cabo-call-horse{width:220px;max-width:75%}
+ .cabo-final-round .cabo-chip{position:static;font-size:8px}.cabo-final-round .player-badge{gap:3px}.cabo-final-round .cabo-caller .player-name{max-width:48px}
+}
+@media(prefers-reduced-motion:reduce){.cabo-call-wave,.cabo-call-star{display:none}}

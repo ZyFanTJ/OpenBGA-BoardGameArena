@@ -1,0 +1,105 @@
+/* The player stays south; table geometry never changes the authoritative card order. */
+.cabo-stage { position: relative; isolation: isolate; height: calc(100dvh - 78px); min-height: 680px; overflow: hidden; border-radius: 24px; background: radial-gradient(ellipse at 50% 40%, #147f82, #075052 78%); box-shadow: inset 0 0 100px #003a43a0; }
+.felt-surface { position: absolute; z-index: -1; inset: 7% 17% 18%; border: 3px solid #a9e1cc7a; border-radius: 25% 25% 20% 20% / 20% 20% 17% 17%; transform: perspective(1000px) rotateX(24deg); background: linear-gradient(160deg,#087e7e,#087175); box-shadow: 0 24px 0 -12px #073d43,0 27px 28px #00292e77,inset 0 0 65px #1ca7a82b; }
+.felt-inner { position: absolute; inset: 12px; border: 1px solid #a9e1cc35; border-radius: inherit; }
+.felt-logo { position: absolute; top: 37%; left: 50%; transform: translateX(-50%); color: #014c5263; font-size: clamp(60px,10vw,140px); font-weight: 950; font-style: italic; letter-spacing: .12em; }
+.felt-edition { position: absolute; bottom: 12%; width: 100%; text-align: center; font-size: 11px; letter-spacing: .35em; color: #b4ece644; }
+.table-hud { position: absolute; top: 22px; left: 24px; display: flex; align-items: center; gap: 12px; }
+.round-counter { display: flex; align-items: center; gap: 12px; padding: 7px 15px; background: #003f48bb; border: 1px solid #a9e1cc66; border-radius: 12px; }
+.round-counter small { font-size: 11px; font-weight: 750; letter-spacing: .12em; color: #b9e0d8; }
+.round-counter strong { font-size: 28px; color: #f6df9c; line-height: 1.2; }
+.mode-chip { font-size: 12px; color: #e3efd8; }
+.table-seat { --seat-color: #f1cf76; position: absolute; z-index: 2; width: 230px; text-align: center; }
+.color-1 { --seat-color: #e4a0b1; }.color-2 { --seat-color: #b8d9f1; }.color-3 { --seat-color: #c8c2fa; }
+.seat-north { left: 50%; top: 16px; transform: translateX(-50%); width: 330px; }
+.seat-west { left: 12px; top: 35%; }.seat-east { right: 12px; top: 35%; }
+.seat-south { left: 50%; bottom: 110px; transform: translateX(-50%); width: min(66%,760px); display: flex; flex-direction: column-reverse; gap: 17px; }
+.player-badge { display: inline-flex; align-items: center; gap: 9px; max-width: 100%; position: relative; padding: 5px 12px 5px 5px; background: #053f49e8; border: 1px solid #86b3a36b; border-radius: 30px; box-shadow: 0 5px 15px #00323940; }
+.player-avatar { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--seat-color); color: #173637; font-size: 16px; font-weight: 800; flex-shrink: 0; border: 2px solid #f3ebcb; }
+.player-name { font-size: 14px; font-weight: 700; max-width: 125px; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }.player-name small { margin-left: 6px; font-size: 11px; opacity: .65; }
+.score-chip { color: #fff2c0; font-size: 16px; font-weight: 800; white-space: nowrap; }.score-chip small { margin-left: 3px; font-size: 11px; font-weight: 400; color: #bbd6c9; }
+.ready-check { color: #e5ec9d; }.cabo-chip { color: #fff0a1; font-size: 10px; font-weight: 900; letter-spacing: .06em; }
+.is-active .player-badge { border-color: #f8e4a3; box-shadow: 0 0 0 2px #f4da8b33,0 0 24px #e4f28e36; }
+.is-active .player-avatar { box-shadow: 0 0 0 3px #f9edab; }
+.seat-south .player-badge { align-self: center; }
+.table-hand { display: flex; justify-content: center; gap: 7px; margin-top: 12px; padding: 10px 8px 19px; max-width: 100%; }
+.seat-north .table-hand { transform: perspective(650px) rotateX(24deg); margin-top: 1px; }
+.seat-west .table-hand { transform: rotate(13deg) skewY(-3deg); }.seat-east .table-hand { transform: rotate(-13deg) skewY(3deg); }
+.seat-west .table-hand,.seat-east .table-hand { gap: 0; flex-wrap: wrap; }
+.seat-west .playing-card + .playing-card,.seat-east .playing-card + .playing-card { margin-left: -16px; }
+.seat-south .table-hand { gap: 12px; margin: 0; overflow-x: auto; justify-content: safe center; scrollbar-width: thin; scrollbar-color: #80b4a0 transparent; }
+.playing-card { position: relative; flex-shrink: 0; width: 61px; height: 92px; padding: 0; display: block; border: 3px solid #e5e3c4; border-radius: 6px; background: #164357; color: #fffdf0; box-shadow: 2px 5px 0 #06384066,0 8px 13px #002e3b66; transition: transform .16s,box-shadow .16s; }
+.playing-card:disabled { opacity: 1; }.playing-card .card-art { position: absolute; inset: 0; border-radius: 3px; background-image: url('/assets/cabo-atlas-v1.png'); background-size: 400% 400%; }
+.playing-card:hover:not(:disabled) { background: #164357; transform: translateY(-8px); z-index: 4; box-shadow: 0 0 0 2px #fff1b7,0 14px 22px #00354199; }
+.playing-card.selected,.playing-card.revealed { transform: translateY(-12px); border-color: #ffdf70; box-shadow: 0 0 0 3px #f7d877,0 13px 28px #001d3266; }
+.playing-card.selected::after { content: '✓'; position: absolute; top: -12px; right: -10px; background: #ffdf70; color: #16404a; width: 22px; height: 22px; border-radius: 50%; font-size: 14px; font-weight: 900; }
+.card-number { position: absolute; top: 4%; left: 7%; font-family: 'Arial',sans-serif; font-size: 23px; font-weight: 800; line-height: 1; text-shadow: 0 1px 3px #002748,1px 0 2px #002748; }
+.card-number.inverted { top: auto; left: auto; bottom: 5%; right: 6%; transform: rotate(180deg); font-size: 15px; }.card-number.underlined { text-decoration: underline; text-underline-offset: 3px; }
+.card-ability { position: absolute; bottom: 5%; left: 5%; font-size: 9px; font-weight: 900; font-style: italic; text-shadow: 0 1px 3px #002748,1px 0 2px #002748; }
+.slot-index { position: absolute; bottom: -19px; left: 50%; transform: translateX(-50%); color: #b4d9cc; font-size: 11px; line-height: 1; font-weight: 500; }
+.public-marker { position: absolute; right: -7px; top: -7px; background: #ebf5d6; color: #07565b; border-radius: 50%; font-size: 13px; padding: 0 3px; }
+.seat-south .playing-card { width: 90px; height: 135px; border-width: 4px; border-radius: 8px; }
+.seat-south .card-number { font-size: 31px; }.seat-south .inverted { font-size: 22px; }.seat-south .card-ability { font-size: 12px; }
+.center-piles { position: absolute; top: 32%; left: 50%; transform: translateX(-50%); display: flex; gap: 24px; z-index: 3; }
+.pile-group { text-align: center; }.center-piles .playing-card { width: 78px; height: 117px; }.center-piles .card-number { font-size: 29px; }.center-piles .inverted { font-size: 20px; }
+.draw-pile { box-shadow: 2px 3px #e3e0bd,3px 5px #073e4a,5px 8px #d5d4b2,7px 11px 18px #002f3a99; transform: rotate(-7deg); }.discard-pile { transform: rotate(7deg); }
+.pile-label { display: block; margin-top: 16px; color: #c1e5d6; font-size: 12px; letter-spacing: .1em; }.pile-label b { font-size: 13px; color: #fff0b2; margin-left: 5px; }
+.held-card .playing-card { border-color: #ffdd80; box-shadow: 0 0 0 2px #ffdf7044,0 8px 18px #003e4aaa; }.held-card .pile-label { color: #ffe79d; }
+.table-actions { position: absolute; z-index: 6; bottom: 18px; left: 50%; transform: translateX(-50%); width: max-content; max-width: calc(100% - 24px); text-align: center; }
+.turn-prompt { display: inline-block; padding: 6px 18px; background: #063e48df; color: #f4efd0; border: 1px solid #88b7a566; border-radius: 24px; font-size: 14px; box-shadow: 0 5px 15px #003e4840; margin-bottom: 10px; }
+.table-actions .actions { justify-content: center; gap: 8px; }.table-actions button { padding: 9px 22px; border-radius: 22px; font-size: 14px; }.table-actions .inline-label { font-size: 12px; }
+.table-actions.settlement { bottom: 12px; width: min(580px,calc(100% - 24px)); padding: 16px; background: #073d48f2; border: 1px solid #83aea1; border-radius: 18px; box-shadow: 0 8px 35px #00293899; }
+.settlement .turn-prompt { margin-bottom: 0; background: none; border: none; box-shadow: none; }.settlement table { font-size: 13px; }.settlement th,.settlement td { padding: 6px 8px; }
+.tile-0{background-position:0 0}.tile-1{background-position:33.333333% 0}.tile-2{background-position:66.666667% 0}.tile-3{background-position:100% 0}
+.tile-4{background-position:0 33.333333%}.tile-5{background-position:33.333333% 33.333333%}.tile-6{background-position:66.666667% 33.333333%}.tile-7{background-position:100% 33.333333%}
+.tile-8{background-position:0 66.666667%}.tile-9{background-position:33.333333% 66.666667%}.tile-10{background-position:66.666667% 66.666667%}.tile-11{background-position:100% 66.666667%}
+.tile-12{background-position:0 100%}.tile-13{background-position:33.333333% 100%}.tile-14{background-position:66.666667% 100%}
+
+@media(min-width:761px) and (max-height:850px){
+  .cabo-stage{min-height:560px}
+  .seat-south{bottom:110px;gap:10px}.seat-south .playing-card{width:74px;height:111px}.seat-south .card-number{font-size:27px}.seat-south .inverted{font-size:19px}
+  .seat-north .playing-card{width:45px;height:68px}.seat-north .table-hand{padding-top:5px}.seat-north .player-avatar{width:25px;height:25px}.seat-north .player-badge{padding:3px 10px 3px 3px}
+  .center-piles{top:27%;gap:22px}.center-piles .playing-card{width:65px;height:98px}.pile-label{margin-top:12px}
+}
+@media(min-width:1400px){.seat-west{left:5%}.seat-east{right:5%}.seat-south .playing-card{width:100px;height:150px}.cabo-stage{min-height:740px}.center-piles{top:34%}}
+@media(prefers-reduced-motion:reduce){.playing-card{transition:none}}
+
+/* Flights live above the table, so perspective hands and scrolling never clip a moving card. */
+.cabo-motion-layer { position:fixed; inset:0; z-index:25; pointer-events:none; perspective:1200px; }
+.motion-card.playing-card { position:absolute; left:0; top:0; margin:0; transform-origin:0 0; pointer-events:none; border:0; background:transparent; box-shadow:none; transition:none; will-change:transform; }
+.motion-flipper { position:absolute; inset:0; transform-style:preserve-3d; }
+.motion-face { position:absolute; inset:0; border:3px solid #e7e4c5; border-radius:7px; background:#164357; backface-visibility:hidden; box-shadow:0 2px 4px #00212d66; }
+.motion-back { transform:rotateY(180deg); }.motion-card .card-number { font-size:clamp(19px,2.3vw,29px); }.motion-card .card-number.inverted { font-size:18px; }.motion-card .card-ability { font-size:10px; }
+.motion-hidden { visibility:hidden!important; }.motion-playing .table-actions { pointer-events:none; }.motion-playing .is-active .player-badge { box-shadow:none; border-color:#86b3a36b; }.motion-playing .is-active .player-avatar { box-shadow:none; }
+.motion-ring { position:absolute; border:2px solid; border-radius:12px; box-shadow:0 0 18px #fae8ad44; }
+.motion-title { position:absolute; border:1px solid #e4dda473; border-radius:30px; padding:9px 26px; background:#063b46e8; color:#ffedb4; font-size:20px; font-weight:850; letter-spacing:.15em; box-shadow:0 8px 25px #00212d55; white-space:nowrap; }
+@media(max-width:760px){.motion-title{font-size:16px;padding:8px 20px}.motion-face{border-width:2px}.motion-card .card-number{font-size:20px}.motion-card .card-number.inverted{font-size:12px}.motion-card .card-ability{font-size:7px}}
+.held-empty { visibility:hidden; }
+
+
+/* Status chips never resize the seat when setup ends or CABO is called. */
+.player-badge .ready-check,.player-badge .cabo-chip{position:absolute;right:-5px;top:-6px;background:#37554a;border-radius:5px;padding:0 3px}
+.score-chip{min-width:2ch;font-variant-numeric:tabular-nums}
+.center-piles{--pile-width:78px}.center-piles .pile-group{width:var(--pile-width);flex:none}.center-piles .playing-card{margin-inline:auto}
+.cabo-settlement-backdrop{position:fixed;inset:0;z-index:40;background:#011d2a88}
+.cabo-layout:has(.round-ended)>.guide-toggle{visibility:hidden}
+.cabo-stage .table-actions.settlement{position:fixed;inset:50% auto auto 50%;transform:translate(-50%,-50%);width:min(580px,calc(100vw - 28px));max-height:calc(100dvh - 48px);height:auto;overflow:auto;z-index:41}
+.cabo-results{flex-basis:100%;width:100%;display:grid;gap:8px;margin:6px 0 10px;text-align:left}
+.cabo-result-player{padding:8px 10px;border:1px solid #64938555;border-radius:12px;background:#06333d}.cabo-result-player.is-you{border-color:#d8c58788;background:#164b4b}
+.cabo-result-heading{display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:6px;font-size:12px}.cabo-result-heading b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.cabo-result-heading small{margin-left:5px;font-size:9px;font-weight:400}.cabo-result-heading>span{font-size:10px;color:#f3d589;white-space:nowrap}
+.cabo-result-body{display:grid;grid-template-columns:minmax(0,1fr) 130px;align-items:center;gap:10px}.cabo-result-hand{display:flex;flex-wrap:wrap;gap:5px;min-width:0}
+.cabo-result-hand .result-card{width:35px;height:auto;aspect-ratio:2/3;border-width:2px;box-shadow:0 2px 5px #001c3044;pointer-events:none}.result-card .card-number{font-size:15px}.result-card .card-number.inverted{font-size:10px}.result-card .card-ability{font-size:6px}
+.cabo-result-scores{display:grid;grid-template-columns:repeat(3,1fr);text-align:center;gap:5px;margin:0}.cabo-result-scores dt{font-size:10px;color:#9fbfb5}.cabo-result-scores dd{margin:0;font-size:17px;line-height:1.3;color:#f7dfa0;font-weight:750;font-variant-numeric:tabular-nums}
+@media(max-width:760px){.cabo-results{gap:6px}.cabo-result-player{padding:6px 7px}.cabo-result-body{grid-template-columns:minmax(0,1fr) 103px;gap:5px}.cabo-result-hand{gap:3px}.cabo-result-hand .result-card{width:29px}.cabo-result-scores dd{font-size:15px}.cabo-result-heading{margin-bottom:4px;font-size:11px}}
+@media(min-width:761px) and (min-height:501px),(min-width:1001px){
+ .in-room .cabo-stage,.in-room .cabo-layout>.cabo-reference{height:calc(100dvh - 118px);min-height:0}
+ .table-actions:not(.settlement){width:min(460px,calc(100% - 24px));height:116px;bottom:10px}
+ .table-actions:not(.settlement) .turn-prompt{height:28px;display:flex;align-items:center;justify-content:center;margin:0 0 6px;padding:0 10px;font-size:12px}
+ .table-actions:not(.settlement) .actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:44px 28px;gap:6px}
+ .table-actions:not(.settlement) button{grid-row:1;min-height:44px;padding:8px}
+ .table-actions [data-action="game:exchange"],.table-actions [data-action="game:skip"]{grid-column:1}
+ .table-actions [data-action="game:discard"],.table-actions [data-action="game:look"],.table-actions [data-action="game:confirm"]{grid-column:2}
+ .table-actions [data-action="game:power"],.table-actions [data-action="game:cabo"],.table-actions [data-action="game:ability"]{grid-column:3}
+ .table-actions .inline-label{grid-column:1/-1;grid-row:2;display:flex;align-items:center;justify-content:center;gap:6px;margin:0}.table-actions .inline-label select{width:auto;min-height:28px;padding:2px 8px}
+ .seat-south{bottom:136px}
+}

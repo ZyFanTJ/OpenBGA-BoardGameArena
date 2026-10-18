@@ -1,0 +1,514 @@
+{
+  "version": 1,
+  "created": "2026-10-16",
+  "generator": "image_gen built-in",
+  "cardKinds": {
+    "lumber": {
+      "sheet": "materials",
+      "index": 0
+    },
+    "stone": {
+      "sheet": "materials",
+      "index": 1
+    },
+    "clay": {
+      "sheet": "materials",
+      "index": 2
+    },
+    "ore": {
+      "sheet": "materials",
+      "index": 3
+    },
+    "tree": {
+      "sheet": "materials",
+      "index": 4
+    },
+    "excavation": {
+      "sheet": "materials",
+      "index": 5
+    },
+    "claypit": {
+      "sheet": "materials",
+      "index": 6
+    },
+    "timber": {
+      "sheet": "materials",
+      "index": 7
+    },
+    "forest": {
+      "sheet": "materials",
+      "index": 8
+    },
+    "mine": {
+      "sheet": "materials",
+      "index": 9
+    },
+    "sawmill": {
+      "sheet": "materials",
+      "index": 10
+    },
+    "quarry": {
+      "sheet": "materials",
+      "index": 11
+    },
+    "brickyard": {
+      "sheet": "materials",
+      "index": 12
+    },
+    "foundry": {
+      "sheet": "materials",
+      "index": 13
+    },
+    "glass": {
+      "sheet": "materials",
+      "index": 14
+    },
+    "press": {
+      "sheet": "materials",
+      "index": 15
+    },
+    "loom": {
+      "sheet": "materials",
+      "index": 16
+    },
+    "well": {
+      "sheet": "blue",
+      "index": 0
+    },
+    "baths": {
+      "sheet": "blue",
+      "index": 1
+    },
+    "altar": {
+      "sheet": "blue",
+      "index": 2
+    },
+    "theater": {
+      "sheet": "blue",
+      "index": 3
+    },
+    "statue": {
+      "sheet": "blue",
+      "index": 4
+    },
+    "aqueduct": {
+      "sheet": "blue",
+      "index": 5
+    },
+    "temple": {
+      "sheet": "blue",
+      "index": 6
+    },
+    "courthouse": {
+      "sheet": "blue",
+      "index": 7
+    },
+    "pantheon": {
+      "sheet": "blue",
+      "index": 8
+    },
+    "gardens": {
+      "sheet": "blue",
+      "index": 9
+    },
+    "townhall": {
+      "sheet": "blue",
+      "index": 10
+    },
+    "palace": {
+      "sheet": "blue",
+      "index": 11
+    },
+    "senate": {
+      "sheet": "blue",
+      "index": 12
+    },
+    "tavern": {
+      "sheet": "yellow",
+      "index": 0
+    },
+    "east": {
+      "sheet": "yellow",
+      "index": 1
+    },
+    "west": {
+      "sheet": "yellow",
+      "index": 2
+    },
+    "market": {
+      "sheet": "yellow",
+      "index": 3
+    },
+    "caravansery": {
+      "sheet": "yellow",
+      "index": 4
+    },
+    "forum": {
+      "sheet": "yellow",
+      "index": 5
+    },
+    "vineyard": {
+      "sheet": "yellow",
+      "index": 6
+    },
+    "bazar": {
+      "sheet": "yellow",
+      "index": 7
+    },
+    "lighthouse": {
+      "sheet": "yellow",
+      "index": 8
+    },
+    "haven": {
+      "sheet": "yellow",
+      "index": 9
+    },
+    "commerce": {
+      "sheet": "yellow",
+      "index": 10
+    },
+    "ludus": {
+      "sheet": "yellow",
+      "index": 11
+    },
+    "arena": {
+      "sheet": "yellow",
+      "index": 12
+    },
+    "stockade": {
+      "sheet": "red",
+      "index": 0
+    },
+    "barracks": {
+      "sheet": "red",
+      "index": 1
+    },
+    "tower": {
+      "sheet": "red",
+      "index": 2
+    },
+    "stables": {
+      "sheet": "red",
+      "index": 3
+    },
+    "archery": {
+      "sheet": "red",
+      "index": 4
+    },
+    "walls": {
+      "sheet": "red",
+      "index": 5
+    },
+    "training": {
+      "sheet": "red",
+      "index": 6
+    },
+    "castrum": {
+      "sheet": "red",
+      "index": 7
+    },
+    "fortifications": {
+      "sheet": "red",
+      "index": 8
+    },
+    "circus": {
+      "sheet": "red",
+      "index": 9
+    },
+    "arsenal": {
+      "sheet": "red",
+      "index": 10
+    },
+    "siege": {
+      "sheet": "red",
+      "index": 11
+    },
+    "apothecary": {
+      "sheet": "green",
+      "index": 0
+    },
+    "workshop": {
+      "sheet": "green",
+      "index": 1
+    },
+    "scriptorium": {
+      "sheet": "green",
+      "index": 2
+    },
+    "dispensary": {
+      "sheet": "green",
+      "index": 3
+    },
+    "laboratory": {
+      "sheet": "green",
+      "index": 4
+    },
+    "library": {
+      "sheet": "green",
+      "index": 5
+    },
+    "school": {
+      "sheet": "green",
+      "index": 6
+    },
+    "lodge": {
+      "sheet": "green",
+      "index": 7
+    },
+    "academy": {
+      "sheet": "green",
+      "index": 8
+    },
+    "observatory": {
+      "sheet": "green",
+      "index": 9
+    },
+    "study": {
+      "sheet": "green",
+      "index": 10
+    },
+    "university": {
+      "sheet": "green",
+      "index": 11
+    },
+    "workers": {
+      "sheet": "purple",
+      "index": 0
+    },
+    "craftsmen": {
+      "sheet": "purple",
+      "index": 1
+    },
+    "magistrates": {
+      "sheet": "purple",
+      "index": 2
+    },
+    "traders": {
+      "sheet": "purple",
+      "index": 3
+    },
+    "spies": {
+      "sheet": "purple",
+      "index": 4
+    },
+    "philosophers": {
+      "sheet": "purple",
+      "index": 5
+    },
+    "builders": {
+      "sheet": "purple",
+      "index": 6
+    },
+    "decorators": {
+      "sheet": "purple",
+      "index": 7
+    },
+    "scientists": {
+      "sheet": "purple",
+      "index": 8
+    },
+    "shipowners": {
+      "sheet": "purple",
+      "index": 9
+    }
+  },
+  "wonderScenes": [
+    "alexandria",
+    "babylon",
+    "ephesus",
+    "giza",
+    "halicarnassus",
+    "olympia",
+    "rhodes",
+    "cover"
+  ],
+  "atlasSheets": {
+    "materials": {
+      "columns": 5,
+      "rows": 4,
+      "kinds": [
+        "lumber",
+        "stone",
+        "clay",
+        "ore",
+        "tree",
+        "excavation",
+        "claypit",
+        "timber",
+        "forest",
+        "mine",
+        "sawmill",
+        "quarry",
+        "brickyard",
+        "foundry",
+        "glass",
+        "press",
+        "loom"
+      ]
+    },
+    "blue": {
+      "columns": 4,
+      "rows": 4,
+      "kinds": [
+        "well",
+        "baths",
+        "altar",
+        "theater",
+        "statue",
+        "aqueduct",
+        "temple",
+        "courthouse",
+        "pantheon",
+        "gardens",
+        "townhall",
+        "palace",
+        "senate"
+      ]
+    },
+    "yellow": {
+      "columns": 4,
+      "rows": 4,
+      "kinds": [
+        "tavern",
+        "east",
+        "west",
+        "market",
+        "caravansery",
+        "forum",
+        "vineyard",
+        "bazar",
+        "lighthouse",
+        "haven",
+        "commerce",
+        "ludus",
+        "arena"
+      ]
+    },
+    "red": {
+      "columns": 4,
+      "rows": 4,
+      "kinds": [
+        "stockade",
+        "barracks",
+        "tower",
+        "stables",
+        "archery",
+        "walls",
+        "training",
+        "castrum",
+        "fortifications",
+        "circus",
+        "arsenal",
+        "siege"
+      ]
+    },
+    "green": {
+      "columns": 4,
+      "rows": 4,
+      "kinds": [
+        "apothecary",
+        "workshop",
+        "scriptorium",
+        "dispensary",
+        "laboratory",
+        "library",
+        "school",
+        "lodge",
+        "academy",
+        "observatory",
+        "study",
+        "university"
+      ]
+    },
+    "purple": {
+      "columns": 4,
+      "rows": 4,
+      "kinds": [
+        "workers",
+        "craftsmen",
+        "magistrates",
+        "traders",
+        "spies",
+        "philosophers",
+        "builders",
+        "decorators",
+        "scientists",
+        "shipowners"
+      ]
+    }
+  },
+  "icons": [
+    "w",
+    "s",
+    "c",
+    "o",
+    "g",
+    "p",
+    "t",
+    "coin",
+    "shield",
+    "compass",
+    "gear",
+    "tablet",
+    "points"
+  ],
+  "notes": "Rules remain in authoritative server projection. Paintings are decorative; vector symbols convey exact effects.",
+  "files": {
+    "wonders": {
+      "path": "apps/web/assets/seven-wonders/wonders-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 532030,
+      "sha256": "66fdbf0c13a5362101cedd97401ad5755d0b1df824d7e79d1d3615fa60a03da4"
+    },
+    "materials": {
+      "path": "apps/web/assets/seven-wonders/cards-materials-v1.webp",
+      "width": 1717,
+      "height": 916,
+      "bytes": 694506,
+      "sha256": "ff81a0ad9607e63e5ea77533ec8674586f84c05eff3f1e1c209f04f5429ade4c"
+    },
+    "blue": {
+      "path": "apps/web/assets/seven-wonders/cards-blue-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 644116,
+      "sha256": "86f1d1051d5ada445ef8844386ef2316b95eb942dcce0fb7edeec2436bf29ac5"
+    },
+    "yellow": {
+      "path": "apps/web/assets/seven-wonders/cards-yellow-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 677878,
+      "sha256": "37a6e9e64de3a5f32303d389eae2d56b4d8aa02db151734cfbb1f16570b5bea8"
+    },
+    "red": {
+      "path": "apps/web/assets/seven-wonders/cards-red-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 644560,
+      "sha256": "b55525fba292b337b2a69bc9c8ee8a4ae13f5e0a2317a72e6eec151c24ebe957"
+    },
+    "green": {
+      "path": "apps/web/assets/seven-wonders/cards-green-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 582236,
+      "sha256": "cfde3ec0ce14707d025487226aa4ec53cd87e54e27c5ca6c80f9fb736b7bc33e"
+    },
+    "purple": {
+      "path": "apps/web/assets/seven-wonders/cards-purple-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 610096,
+      "sha256": "69354c2b84c9443201b26cd51d1d2edb9a7675baa7aa70e65e5c9fe0336fc0d1"
+    },
+    "table": {
+      "path": "apps/web/assets/seven-wonders/table-v1.webp",
+      "width": 1536,
+      "height": 1024,
+      "bytes": 350090,
+      "sha256": "61a0302b9cd4a8b77ab502d411d15c7deda4216422db965ca455ec6d1246d111"
+    }
+  }
+}
