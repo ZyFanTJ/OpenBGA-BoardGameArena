@@ -1,5 +1,10 @@
 /** Small shared interface icons; game artwork remains separate raster assets. */
 const paths = {
+  chat: '<path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9H13a8.5 8.5 0 0 1 8 8v.5Z"/>',
+  spark: '<path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5z"/>',
+  check: '<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>',
+  copy: '<rect x="8" y="8" width="13" height="13" rx="1"/><path d="M16 8V3H3v13h5"/>',
+  crown: '<path d="m3 5 4 5 5-7 5 7 4-5-2 14H5zM5 22h14"/>',
   home: '<path d="m3 10 9-7 9 7v11h-7v-7h-4v7H3z"/>',
   room: '<path d="M5 21V5a7 7 0 0 1 14 0v16M9 21v-7h6v7M9 7h6M9 10h6"/>',
   people: '<circle cx="9" cy="7" r="3"/><path d="M2 21v-4a7 7 0 0 1 14 0v4M16 4a3 3 0 0 1 0 6M20 21v-5a5 5 0 0 0-3-4"/>',

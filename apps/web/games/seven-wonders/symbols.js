@@ -3,6 +3,11 @@ import { escapeHtml as e } from '../../ui.js';
 export const resourceNames = { w:'木', s:'石', c:'砖', o:'矿', g:'玻璃', p:'纸', t:'布' };
 export const colorNames = { brown:'原料', grey:'制品', blue:'市政', yellow:'商业', red:'军事', green:'科技', purple:'行会' };
 const paths = {
+  tax:'<path d="M8 3h16v25l-4-3-4 3-4-3-4 3zM12 9h8m-8 5h8m-5 5h5M3 8v12m-3-3 3 3 3-3"/>',
+  ship:'<path d="M3 23h26l-5 6H9zM16 3v19M13 5 5 19h8zm6 0v14h9zM2 31q4-3 8 0t8 0 8 0"/>',
+  naval:'<path d="M16 3v22m-5-17h10M4 19q0 10 12 10t12-10M4 19l-2 4m26-4 2 4M16 25l-5-4m5 4 5-4"/><circle cx="16" cy="4" r="3"/>',
+  island:'<path d="m2 25 7-9 6 4 5-6 10 11zM3 29h26M19 16V8m0 2-8-5 9 1 6-4-3 6 7 3z"/>',
+  amphora:'<path d="M12 3h8v5l5 8-1 10-5 4h-6l-5-4-1-10 5-8zM8 11H3v10h5m17-10h4v10h-5M11 18h10"/>',
   w:'<path d="m6 12 12-7 8 5-12 7z"/><path d="M6 12v10l8 5V17m0 10 12-7V10M10 10l9 5M18 8l4 3"/>',
   s:'<path d="m5 14 6-7 13 1 4 12-10 7-13-4z"/><path d="m5 14 14 1 5-7m-5 7-1 12m1-12 9 5"/>',
   c:'<path d="M4 10h24v17H4zM4 18h24M14 10v8m8 0v9M4 10l5-5h19v5"/>',
@@ -65,7 +70,7 @@ export function production(slots, labeled=false) {
 }
 export function costSymbols(cost) {
   const slots=[...cost.resources];
-  return `${cost.coins?`<span class="sw-symbol-value">${icon('coin')}<b>${cost.coins}</b></span>`:''}${production(slots)}`;
+  return `${cost.age?`<span class="sw-symbol-value" title="费用为当前时代数">${icon('coin')}<b>I / II / III</b></span>`:cost.coins?`<span class="sw-symbol-value">${icon('coin')}<b>${cost.coins}</b></span>`:''}${production(slots)}`;
 }
 const value=(key,n)=>`<span class="sw-symbol-value">${icon(key)}<b>${n}</b></span>`;
 function scopeMark(scope) { const label={own:'自己',neighbors:'左右邻国',all:'自己与左右邻国'}[scope]??'自己'; return `<span class="sw-scope-cities" title="${label}" role="img" aria-label="统计${label}">${[0,1,2].map(i=>`<i class="${scope==='all'||scope==='neighbors'&&i!==1||scope==='own'&&i===1?'sw-counted-city':''}">${icon('building')}</i>`).join('')}</span>`; }
@@ -85,6 +90,45 @@ export function effectSymbols(effect) {
   if(effect.revive)out.push(`<span class="sw-special-effect">${icon('history')}${icon('building')}</span>`);
   if(effect.double)out.push(`<span class="sw-special-effect">${icon('cards')}<b>+1</b></span>`);
   if(effect.freeColor)out.push(`<span class="sw-free-effect"><span class="sw-rainbow">${Object.keys(colorNames).map(c=>`<i class="sw-${c}"></i>`).join('')}</span><b>0</b>${icon('coin')}</span>`);
-  if(effect.freeFirst||effect.freeLast)out.push(`<span class="sw-free-effect"><b>${effect.freeFirst?'1':'6'}</b>${icon('cards')}<b>0</b>${icon('coin')}</span>`);
+  if(effect.freeFirst||effect.freeLast)out.push(`<span class="sw-free-effect"><b>${effect.freeFirst?'1':effect.freeLastAt??6}</b>${icon('cards')}<b>0</b>${icon('coin')}</span>`);
+  if(effect.naval)out.push(value('naval',effect.naval));
+  if(effect.advance||effect.advanceColor)out.push(`<span class="sw-advance-effect ${effect.advanceColor?'sw-'+effect.advanceColor:''}">${icon('ship')}${icon('arrow')}<b>${effect.advance??1}</b></span>`);
+  if(effect.drawIsland||effect.explore)out.push(value('island',['I','II','III'][(effect.drawIsland??effect.explore)-1]));
+  if(effect.tax)out.push(value('tax',effect.tax));
+  if(effect.pirate)out.push(`${icon('amphora')}${icon('sell')}`);
+  if(effect.taxShield)out.push(`${icon('amphora')}${icon('shield')}`);
+  if(effect.commercialPoints)out.push(`${icon('amphora')}×${value('points',effect.commercialPoints)}`);
+  if(effect.majorityScience)out.push(`<span class="sw-majority-science">${scienceIcons.map(key=>icon(key)).join('')}<b>+1 MAX</b></span>`);
+  if(effect.scienceChange)out.push(`${icon('compass')}${icon('arrow')}${icon('gear')}`);
+  if(effect.scienceSet)out.push(`${icon('compass')}${value('points',`+${effect.scienceSet}`)}`);
+  if(effect.farTrade)out.push(`<span>${effect.farTrade.side==='left'?'‹‹':''}${icon('coin')}<b>1 ×${effect.farTrade.limit}</b>${effect.farTrade.side==='right'?'››':''}</span>`);
+  if(effect.boarding)out.push(`${effect.boarding==='left'?'‹‹':''}${icon('shield')}${effect.boarding==='right'?'››':''}`);
+  if(effect.advanceCoins)out.push(`${icon('ship')}×${value('coin',1)}`);
+  if(effect.wonderAdvance)out.push(`${icon('wonder')}${icon('arrow')}${icon('ship')}`);
+  if(effect.reduceNaval)out.push(`${icon('ship')}<b>−1</b>${icon('building')}`);
+  if(effect.navalChoice)out.push(`${icon('naval')}<b>?</b>`);
+  if(effect.islandPoints)out.push(`${icon('island')}×${value('points',effect.islandPoints)}`);
+  if(effect.maxColorPoints)out.push(`${icon('cards')}<b>MAX</b>${value('points',1)}`);
+  if(effect.freeLeaders)out.push(`${icon('crown')}<b>0</b>${icon('coin')}`);
+  if(effect.freePurple)out.push(`${target('purple')}<b>0</b>${icon('coin')}`);
+  if(effect.reduceColor||effect.reduceWonder)out.push(`${effect.reduceColor?target(effect.reduceColor):icon('wonder')}<b>−1</b>${icon('building')}`);
+  if(effect.bankResource)out.push(`${icon('building')}${value('coin',1)}<b>1×</b>`);
+  if(effect.stagePoints)out.push(`${icon('wonder')}×${value('points',effect.stagePoints)}`);
+  if(effect.leaderColorPoints)out.push(`${target(effect.leaderColorPoints.color)}×${value('points',effect.leaderColorPoints.points)}`);
+  if(effect.colorSet)out.push(`<span class="sw-color-set">${effect.colorSet.colors.map(c=>target(c)).join('')}${value('points',effect.colorSet.points)}</span>`);
+  if(effect.victoryPoints||effect.victoryPairs)out.push(`${icon('shield')}×${value('points',effect.victoryPoints??'?')}`);
+  if(effect.treasuryBonus)out.push(`${value('coin',3)}×${value('points',effect.treasuryBonus)}`);
+  if(effect.yellowCoins)out.push(`${target('yellow')}${value('coin',`+${effect.yellowCoins}`)}`);
+  if(effect.chainCoins)out.push(`${icon('chain')}${value('coin',`+${effect.chainCoins}`)}`);
+  if(effect.bankBonus||effect.tradeRefund)out.push(`${icon(effect.tradeRefund?'arrow':'building')}${value('coin','+1')}`);
+  if(effect.onlyLeader)out.push(`${icon('crown')}<b>1×</b>${value('points',7)}`);
+  if(effect.noDefeat)out.push(`${icon('shield')}${icon('check')}${value('points',6)}`);
+  if(effect.majority)out.push(`${effect.majority==='coins'?icon('coin'):target(effect.majority)}<b>›</b>${value('points',5)}`);
+  if(effect.victoryToken)out.push(`${icon('shield')}<b>+ I / II / III</b>`);
+  if(effect.removeDefeats)out.push(`${icon('shield')}${icon('close')}`);
+  if(effect.reflectDefeat)out.push(`${icon('shield')}${icon('arrow')}`);
+  if(effect.drawLeaders)out.push(`${icon('crown')}<b>+${effect.drawLeaders}</b>`);
+  if(effect.recruitExtra)out.push(`${icon('crown')}<b>+1</b>`);
+  if(effect.mummify)out.push(`${icon('crown')}${icon('wonder')}<b>×2</b>`);
   return out.join('');
 }

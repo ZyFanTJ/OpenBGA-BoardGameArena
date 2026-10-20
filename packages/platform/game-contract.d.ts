@@ -7,6 +7,10 @@ export interface GameModule<State, Command, View, Options = Record<string, unkno
   /** Explicit allowlist. Never serialize authoritative state to a client. */
   view(state: State, playerId: string, transition?: { before: State | null; actorId: string; command: Command | { type: 'start' } }): View;
   isFinished(state: State): boolean;
+  /** Game-owned pure migration. Bootstrap persists it atomically before recovery. */
+  migrate?(state: unknown, fromVersion: number): State;
+  /** Final public summary only. Must not contain cards, hands, decks or full state. */
+  result?(state: State): { winners: string[]; rounds?: number; scoreDirection?: 'lower' | 'higher'; players: { id: string; score: number; rank: number; breakdown?: { label: string; value: number }[] }[] };
   /** Optional local AI: receives only its own view. Memory is ephemeral, never part of game state. */
   bot?: {
     observe(view: View, playerId: string, previous?: Memory, ownCommand?: Command | null): Memory;

@@ -1,0 +1,24 @@
+name: moon-table
+services:
+  app:
+    image: ${IMAGE_REF:-happy-online:0.5.1}
+    build:
+      context: .
+      target: runtime
+    ports:
+      - "${BIND_ADDRESS:-0.0.0.0}:${PORT:-3100}:3000"
+    environment:
+      SECURE_COOKIES: "0"
+      ADMIN_BOOTSTRAP_HANDLE: "${ADMIN_BOOTSTRAP_HANDLE:-}"
+    volumes:
+      - moon-data:/data
+    restart: unless-stopped
+    init: true
+    read_only: true
+    tmpfs:
+      - /tmp:size=16m,mode=1777
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    stop_grace_period: 20s
+volumes:
+  moon-data:

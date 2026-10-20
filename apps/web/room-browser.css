@@ -1,0 +1,63 @@
+/* Public room discovery shares the navy and gold platform palette. */
+.moon-lobby .lobby-main{grid-template-rows:minmax(0,1fr) auto}
+body:has(.room-browser) .lobby-search{visibility:hidden;pointer-events:none}
+.room-browser{max-width:1600px;min-height:calc(100dvh - 108px);margin:auto;padding:34px 42px 48px;background:radial-gradient(ellipse at 80% 0,#22344966,transparent 55%)}
+.rb-heading{display:flex;align-items:center;justify-content:space-between;gap:24px;margin-bottom:26px}
+.rb-eyebrow{display:block;font-size:10px;font-weight:700;letter-spacing:.23em;color:#cbb27d;margin-bottom:8px}
+.rb-heading h1{font-size:36px;color:#f5ead4;letter-spacing:.015em}
+.rb-actions{display:flex;gap:12px}.rb-actions button{min-height:44px;padding:10px 22px;font-size:14px;border-radius:5px}
+.rb-toolbar{display:flex;align-items:center;gap:12px;padding:14px 0;border-top:1px solid #c1b28d33;border-bottom:1px solid #c1b28d33}
+.rb-search{display:flex;align-items:center;gap:12px;flex:1;margin:0;min-width:160px;border:1px solid #71818e66;border-radius:5px;padding:0 14px;background:#080f18}
+.rb-search .ui-icon{width:19px;color:#b4c0ca}.rb-search input{border:0!important;background:transparent!important;padding:12px 0;font-size:14px;min-width:0;outline-offset:0}
+.rb-game{margin:0;flex-basis:180px}.rb-game select{padding:12px;font-size:14px;border-radius:5px}
+.rb-filters{display:flex;gap:4px;padding:3px;border:1px solid #71818e44;border-radius:5px;background:#101b27}
+.rb-filters button{border:1px solid transparent;border-radius:3px;background:transparent;color:#acb8c5;padding:8px 17px;font-size:13px;white-space:nowrap;min-height:38px}
+.rb-filters button[aria-pressed=true]{border-color:#d5b77588;background:#d2b5741a;color:#f3dbab}
+.rb-filters button:hover:not(:disabled){background:#253646;color:#f5e5c6}
+.rb-refresh{display:grid;place-items:center;min-width:44px;height:44px;padding:10px;background:#142431;color:#d5e0e6;border:1px solid #71818e66;border-radius:5px}
+.rb-refresh:hover:not(:disabled){background:#263b4c}.rb-refresh:disabled .ui-icon{animation:rb-spin 1s linear infinite}
+@keyframes rb-spin{to{transform:rotate(360deg)}}
+.rb-summary{display:flex;align-items:center;gap:16px;min-height:58px;color:#aebbc6;font-size:13px}
+#room-refresh-error{color:#f3b69d;margin-left:auto}
+.rb-pagination{margin-left:auto;display:flex;align-items:center;gap:12px}.rb-pagination button{padding:0;width:34px;height:34px;background:#142431;border:1px solid #71818e66;border-radius:4px;color:#e4cf9e;font-size:23px}.rb-pagination output{min-width:40px;text-align:center;font-variant-numeric:tabular-nums}
+.rb-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
+.rb-card{position:relative;isolation:isolate;overflow:hidden;min-width:0;border:1px solid #71818e55;border-radius:7px;background:linear-gradient(140deg,#192a3a,#0d1723);box-shadow:0 8px 25px #0003}
+.rb-card.is-open{border-top:2px solid #dfc38d}.rb-card:hover{border-color:#d6bb8477}
+.rb-art.game-cover{position:absolute;z-index:-2;right:-8px;top:-25px;width:65%;height:195px;aspect-ratio:auto;opacity:.5;mask-image:linear-gradient(90deg,transparent,#000 30%);pointer-events:none}
+.rb-art::after{background:linear-gradient(0deg,#101d2b,transparent 95%)}
+.rb-art .sw-cover-title{display:none}.rb-art .display-card{width:24%}
+.rb-card-top{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:18px 20px 0;font-size:12px}
+.rb-game-title{color:#f0d7a4;font-weight:700;letter-spacing:.04em}.rb-state{display:flex;align-items:center;gap:6px;color:#c1cad2;background:#080f18ba;border:1px solid #9aa8b533;border-radius:3px;padding:3px 8px;white-space:nowrap}
+.rb-state i{width:5px;height:5px;background:#8294a5;border-radius:50%}.is-open .rb-state{color:#a5dcc7}.is-open .rb-state i{background:#8ed6b5;box-shadow:0 0 7px #8ed6b566}
+.rb-card-copy{padding:21px 20px 0}.rb-card-copy h2{font-size:23px;font-weight:750;color:#f5f0e5;letter-spacing:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;text-shadow:0 2px 5px #0009}
+.rb-code{display:block;font-family:ui-monospace,monospace;font-size:11px;letter-spacing:.1em;color:#9cabb9;margin-top:5px}
+.rb-occupancy{display:flex;align-items:end;justify-content:space-between;gap:12px;padding:17px 20px 14px}
+.rb-host{display:flex;align-items:center;gap:7px;min-width:0;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-size:13px;color:#bdc9d2}.rb-host .ui-icon{width:16px;height:16px}
+.rb-player-count{flex-shrink:0;font-variant-numeric:tabular-nums;font-size:13px;color:#a9b6c3;white-space:nowrap}.rb-player-count b{font-size:29px;line-height:1;color:#f1dfbb;font-weight:650}.rb-player-count>span{font-size:11px;margin-left:5px}
+.rb-card footer{display:flex;align-items:center;justify-content:space-between;gap:14px;padding:14px 20px;border-top:1px solid #71818e33;background:#070e1680}
+.rb-seat-track{display:flex;flex:1;gap:5px;max-width:125px}.rb-seat-track i{flex:1;height:5px;background:#253647;border:1px solid #71818e44;border-radius:1px}.rb-seat-track i.occupied{background:#cdb17b;border-color:#f0d39c88}
+.rb-card footer button{min-height:39px;border-radius:4px;font-size:13px;padding:7px 17px}.rb-card footer button:disabled{opacity:.65}
+.rb-empty{grid-column:1/-1;min-height:360px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;border:1px solid #71818e33;background:radial-gradient(at 50% 0,#20344788,#0c1621);border-radius:7px}
+.rb-empty-symbol{color:#cbb27d;font-size:48px;line-height:1}.rb-empty-symbol>.ui-icon{width:44px;height:44px}.rb-empty h2{font-size:22px;color:#dce5e8;font-weight:600}.rb-empty button{min-height:44px;font-size:14px;border-radius:4px}
+body:has(.room-browser) #lobby-join-dialog #join-panel{border:0;padding:12px 0 0;background:transparent}
+body:has(.room-browser) #lobby-join-dialog h2{margin:0}body:has(.room-browser) #lobby-join-dialog form{display:block}
+body:has(.room-browser) #lobby-join-dialog label{margin:16px 0 7px}
+@media(max-width:1100px){.room-browser{padding:28px 24px 36px}.rb-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.rb-toolbar{flex-wrap:wrap}.rb-search{flex-basis:55%}.rb-game{flex:1}.rb-filters{flex:1}.rb-filters button{flex:1}.rb-card-copy h2{font-size:22px}}
+@media(min-width:761px) and (max-width:900px){
+ body:has(.moon-lobby,.room-browser) .lobby-nav{gap:10px}
+ body:has(.moon-lobby,.room-browser) .lobby-brand{gap:9px}
+ body:has(.moon-lobby,.room-browser) .lobby-brand b{font-size:15px;letter-spacing:.1em}
+ body:has(.moon-lobby,.room-browser) .lobby-nav nav button{padding:12px 8px}
+}
+@media(max-width:760px){
+ .moon-lobby .lobby-main{grid-template-rows:82px minmax(0,1fr)}
+ .room-browser{min-height:calc(100dvh - 108px);padding:22px 14px 28px}
+ .rb-heading{align-items:flex-start;gap:18px;flex-direction:column;margin-bottom:20px}.rb-heading h1{font-size:30px}.rb-eyebrow{font-size:9px;margin-bottom:6px}
+ .rb-actions{width:100%;gap:10px}.rb-actions button{flex:1;min-height:44px;padding:10px;font-size:13px}
+ .rb-toolbar{gap:10px;padding:12px 0}.rb-search{flex:1 1 100%;min-width:0}.rb-search input{font-size:13px}.rb-game{flex:1 1 100%}.rb-game select{font-size:13px;min-height:44px}.rb-filters{min-width:0}.rb-filters button{padding:8px 9px;font-size:12px}
+ .rb-summary{min-height:52px;font-size:12px;gap:8px}.rb-pagination{gap:6px}.rb-pagination button{width:32px}
+ .rb-grid{grid-template-columns:1fr;gap:14px}.rb-card-copy{padding-top:19px}.rb-art.game-cover{width:64%;opacity:.55}.rb-card-copy h2{font-size:23px}
+ .rb-empty{min-height:300px}.rb-empty h2{font-size:20px}#room-refresh-error{font-size:11px}
+}
+@media(prefers-reduced-motion:reduce){.rb-refresh:disabled .ui-icon{animation:none}}
+@media(max-width:360px){body:has(.moon-lobby,.room-browser) #app .lobby-nav nav button{padding:6px 3px;font-size:12px}body:has(.moon-lobby,.room-browser) #app .lobby-nav nav .ui-icon{display:none}}

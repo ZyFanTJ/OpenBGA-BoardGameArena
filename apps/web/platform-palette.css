@@ -1,0 +1,140 @@
+/* Color alignment only. Keep all existing geometry, typography and artwork. */
+body:has(.moon-lobby,.room-browser,.room-empty,.room-layout.is-waiting){--bg:#080f18;--panel:#142431;--line:#abb4bb28;--text:#eef0ed;--muted:#9fadb9;--mint:#e4cf9e;--gold:#e6c98a;--ink:#191d24;background-color:#080f18;color:#eef0ed}
+body:has(.moon-lobby,.room-browser,.room-empty,.room-layout.is-waiting) .lobby-nav{background:linear-gradient(100deg,#0a131e,#0c1723 70%,#101d2b);border-bottom-color:#b2ac8a38}
+body:has(.moon-lobby,.room-browser,.room-empty,.room-layout.is-waiting) .lobby-nav nav button{color:#b9c7d1}
+body:has(.moon-lobby,.room-browser,.room-empty,.room-layout.is-waiting) .lobby-nav nav button[aria-current]{background:linear-gradient(0deg,#d2b57414,transparent);color:#e9d3a1;box-shadow:0 2px #e4c787}
+body:has(.moon-lobby,.room-browser,.room-empty,.room-layout.is-waiting) .lobby-nav nav button[aria-current] .ui-icon{fill:#e6c98a;stroke:#e6c98a}
+body:has(.moon-lobby,.room-browser,.room-empty,.room-layout.is-waiting) .lobby-nav nav button:hover{background:#263746;color:#f3dfb3}
+body:has(.moon-lobby,.room-browser,.room-empty,.room-layout.is-waiting) .lobby-search{border-color:#71818e66;color:#a4b5c2}
+body:has(.moon-lobby,.room-browser,.room-empty,.room-layout.is-waiting) .lobby-nav .lobby-profile{border-left-color:#b7c0c52e;color:#eef0ed}
+body:has(.moon-lobby,.room-browser,.room-empty,.room-layout.is-waiting) .profile-avatar{border-color:#dbbf88;background:radial-gradient(at 30% 20%,#385168,#142331);color:#efdeae}
+body:has(.moon-lobby,.room-browser,.room-empty,.room-layout.is-waiting) .lobby-profile small{color:#8cd4ba}
+body:has(.moon-lobby,.room-browser,.room-empty,.room-layout.is-waiting) :is(input,select){background-color:#080f18;border-color:#71818e66;color:#f6f4eb}
+body:has(.moon-lobby,.room-browser,.room-empty,.room-layout.is-waiting) :is(input,select)::placeholder{color:#8195a6}
+body:has(.moon-lobby,.room-browser,.room-empty,.room-layout.is-waiting) label{color:#acb7c1}
+body:has(.moon-lobby,.room-browser,.room-empty,.room-layout.is-waiting) .gold-button{background:linear-gradient(125deg,#efdcaa,#c6a66a)!important;border-color:#f3dfac;color:#191d24!important;box-shadow:inset 0 1px #fff0c9,0 4px 14px #0000002b}
+body:has(.moon-lobby,.room-browser,.room-empty,.room-layout.is-waiting) .gold-button:hover{background:#f8e8bc!important;border-color:#fff3cf}
+body:has(.moon-lobby,.room-browser,.room-empty,.room-layout.is-waiting) .outline-button{background:#10212ce6;border-color:#b7c0c549;color:#dce5e8}
+body:has(.moon-lobby,.room-browser,.room-empty,.room-layout.is-waiting) .outline-button:hover{background:#1c3444!important;border-color:#b8ced1a6;color:#f3dfb3}
+body:has(.moon-lobby,.room-browser,.room-empty,.room-layout.is-waiting) :is(button.secondary,button.quiet){background:#142431;color:#dce5e8;border-color:#71818e66}
+body:has(.moon-lobby,.room-browser,.room-empty,.room-layout.is-waiting) .text-button{color:#9fadb9}
+body:has(.moon-lobby,.room-browser,.room-empty,.room-layout.is-waiting) .text-button:hover{background:#1c3444!important;color:#f3dfb3}
+
+.moon-lobby{background:radial-gradient(at 40% 15%,#182838,#080f18 80%)}
+.moon-lobby .moon-hero{background-color:#0b1521;border-color:#bc986f55}
+.moon-lobby .moon-hero::after{background:linear-gradient(90deg,#0b1521 12%,#0b1521d9 36%,#0b152122 75%)}
+.moon-lobby .moon-hero h1{color:#f5ead3;text-shadow:0 2px 10px #000000}
+.moon-lobby .hero-statistics{color:#acbac5}
+.moon-lobby .hero-statistics>div{border-right-color:#abb4bb33}
+.moon-lobby .hero-statistics b{color:#f1e4c6}
+.moon-lobby .moon-join{background:linear-gradient(130deg,#182a39,#0d1824);border-color:#abb4bb38}
+.moon-lobby .moon-join h2{color:#f3ead5}
+.moon-lobby .moon-join h2 .ui-icon{color:#e6c98a}
+.moon-lobby .moon-join input{box-shadow:inset 0 2px 6px #00000044}
+.moon-lobby .moon-join .practice-link{border-color:#71818e55;color:#a7b8c5}
+.moon-lobby .section-heading h2{color:#f1e4c6}
+.moon-lobby :is(.section-heading h2>.ui-icon,.flame){color:#e6c98a}
+.moon-lobby .section-heading h2 small{color:#9fadb9}
+.moon-lobby .catalog-filters{background:#142431}
+.moon-lobby .catalog-filters button{color:#a8b8c5}
+.moon-lobby .catalog-filters button[aria-pressed=true]{border-color:#d0b57e;background:#d2b57414;color:#f1dba9}
+.moon-lobby .moon-game{background:linear-gradient(160deg,#192b3b,#0c1723);border-color:#abb4bb38}
+.moon-lobby .moon-game:hover{border-color:#c8ae7b}
+body:has(.moon-lobby,.room-browser,.room-empty,.room-layout.is-waiting) .game-cover::after{background:linear-gradient(transparent 45%,#0c1723)}
+body:has(.moon-lobby,.room-browser,.room-empty,.room-layout.is-waiting) .cover-cabo{background:radial-gradient(at 60% 20%,#435c72,#142331)}
+.moon-lobby .game-availability{background:#09131ed9;border-color:#e4cf9e44;color:#c1cad0}
+.moon-lobby .cover-cabo .game-availability{background:#263c46;color:#f1dba9}
+.moon-lobby .game-card-copy h3{color:#f4ead6}
+.moon-lobby .game-card-copy>p{color:#a5b8c6}
+.moon-lobby .small-tags span{background:#1b2d3c;border-color:#71818e44;color:#aebfcb}
+.moon-lobby .coming-button{background:#b8ad8033;border-color:#c7bd8b44;color:#cfc5a4}
+.moon-lobby .catalog-no-results{color:#9fadb9}
+.moon-lobby .public-room{background:linear-gradient(120deg,#1b2b39,#0e1925);border-color:#abb4bb38}
+.moon-lobby .room-thumb{background:#21384b;border-color:#baa57588;color:#e6c98a}
+.moon-lobby .public-room p{color:#a6b8c5}
+.moon-lobby .public-room footer{color:#9fadb9}
+.moon-lobby .room-status{background:#544a354d;color:#dfc68d}
+.moon-lobby .room-status.open{background:#385c573d;color:#9fd3bd}
+.moon-lobby .rooms-empty{background:#111e2c;border-color:#abb4bb38;color:#c4d0d9}
+.moon-lobby .rooms-empty>.ui-icon{color:#d4b77e}
+.moon-lobby .moon-friend-banner{background-color:#0b1521;border-color:#abb4bb38}
+.moon-lobby .friends-panel{background:linear-gradient(145deg,#162735,#0c1723);border-color:#abb4bb38}
+.moon-lobby .friends-empty{border-bottom-color:#abb4bb28}
+.moon-lobby .friend-orbits{background:#25384b;border-color:#a9976e66;color:#e0c58a;box-shadow:0 0 0 8px #d3b67e0d}
+.moon-lobby .practice-companions h3{color:#cbd4d9}
+.moon-lobby .companion-avatar{background:linear-gradient(140deg,#8c8068,#2b4055);border-color:#d3ba88;color:#f2dfb0}
+.moon-lobby .companion-1{background:linear-gradient(140deg,#7e9bad,#243b55)}
+.moon-lobby .companion-2{background:linear-gradient(140deg,#9584a4,#35314a)}
+.moon-lobby .companion b{color:#dce2e5}
+.moon-lobby .companion small{color:#8eb8ac}
+.moon-lobby .find-friends{background:linear-gradient(90deg,#142635ed,#101d2ba1),url('/assets/lobby/hero-v2.webp') 75% 70%/cover;border-color:#abb4bb38}
+.moon-lobby .teal-button{background:linear-gradient(110deg,#273d50,#1c2d3f);border-color:#8b9faa66;color:#e6d6b0}
+.moon-lobby .catalog-pagination button{background:#172938;border-color:#71818e66;color:#e6c98a}
+.moon-lobby .catalog-pagination output{color:#aebbc6}
+body:has(.moon-lobby,.room-browser,.room-empty) .moon-footer{background:#0a131e;border-top-color:#abb4bb28;color:#8499a9}
+body:has(.moon-lobby,.room-browser,.room-empty) .moon-footer b{color:#bdc9d0}
+
+.room-empty .room-empty-kicker{color:#c8ae7d}
+.room-empty h1{color:#f3ead5}
+.room-empty .room-empty-copy>p{color:#9fadb9}
+.room-empty .room-empty-games article{background:#142431;border-color:#abb4bb38}
+.room-empty .room-empty-games h2{color:#f1e4c6}
+.room-empty .room-empty-games p{color:#a5b5c1}
+.is-waiting .room-identity h1{color:#f1e4c6}
+.is-waiting .room-person{color:#aebbc6}
+.is-waiting .room-tools button{background:#142431;border-color:#71818e66;color:#dce5e8}
+.is-waiting .room-tools .room-invite{background:transparent;color:#e6c98a;border-color:#ad936455}
+.is-waiting .room-lounge{background:radial-gradient(ellipse at 50% 38%,#253b4d,#0e1b29 75%);border-color:#abb4bb38;box-shadow:0 20px 55px #00000038}
+.is-waiting .lounge-game-strip{background:#0a142080;border-bottom-color:#abb4bb28}
+.is-waiting .lounge-game-mark{background:#3c3e3155;border-color:#b6a07588;color:#e6c98a}
+.is-waiting .lounge-game-strip h2{color:#f3ead5}
+.is-waiting .lounge-game-strip p{color:#9fadb9}
+.is-waiting .lounge-game-facts{color:#b4c1ca}
+.is-waiting .lounge-room-status{color:#d4c5a2}
+.is-waiting .lounge-felt{background:radial-gradient(ellipse,#2d475d,#172b3d);border-color:#192b3b;box-shadow:0 0 0 1px #b29c6680,0 0 0 6px #162434,0 18px 0 6px #0a1420,0 30px 32px #00000080,inset 0 0 60px #08132080}
+.is-waiting .lounge-felt-inner{border-color:#d6c18755}
+.is-waiting .lounge-table-brand{color:#c4d2e144}
+.is-waiting .lounge-table-orbit{color:#d9c39555}
+.is-waiting .lounge-table-game>span{color:#e0cfaa}
+.is-waiting .lounge-table-game .game-cover{background-color:transparent;background-image:none}
+.is-waiting .lounge-seat{background:linear-gradient(140deg,#263e51ee,#111f2dee);border-color:#9aaebd55;box-shadow:0 8px 20px #0000004d}
+.is-waiting .lounge-seat-number{color:#7f96a9}
+.is-waiting .lounge-avatar{background:radial-gradient(at 30% 25%,#8e8b71,#344b61);border-color:#d6c08b;color:#f4dfac;box-shadow:0 0 0 4px #a2b8c52b}
+.is-waiting .lounge-player-1 .lounge-avatar{background:radial-gradient(at 30% 25%,#7b9bb2,#2a455f)}
+.is-waiting .lounge-player-2 .lounge-avatar{background:radial-gradient(at 30% 25%,#b19a81,#685241)}
+.is-waiting .lounge-player-3 .lounge-avatar{background:radial-gradient(at 30% 25%,#a591b6,#594772)}
+.is-waiting .lounge-crown{background:#e6c98a;color:#19232f;border-color:#1a2e40}
+.is-waiting .lounge-seat h3{color:#eef0ed}
+.is-waiting .lounge-seat h3 small{background:#aa966333;color:#edd6a0}
+.is-waiting .lounge-player-status{color:#9fadb9}
+.is-waiting .lounge-ready{border-color:#8cd4ba88}
+.is-waiting .lounge-ready .lounge-player-status{color:#a9d9bc}
+.is-waiting .lounge-self{border-color:#d3b97b;box-shadow:inset 0 0 0 1px #b8a56933,0 8px 20px #0000004d}
+.is-waiting .lounge-vacant{background:#102030aa;box-shadow:none}
+.is-waiting .lounge-vacant h3{color:#96aabd}
+.is-waiting .lounge-open{background:#2d425555;border-color:#a4b4bd88;color:#9fb4c5;box-shadow:none}
+.is-waiting .lounge-seat-actions button{background:transparent;border-color:#a4b4bd55;color:#c9d4dc}
+.is-waiting .lounge-seat-actions .lounge-add-ai{background:#314452;border-color:#b1a56e88;color:#eedba8}
+.is-waiting .lounge-remove{color:#9fadb9}
+.is-waiting .lounge-table-caption{color:#9fb1bf}
+.is-waiting .lounge-launch{background:#0a15229e;border-top-color:#abb4bb28}
+.is-waiting .lounge-launch p{color:#bdcad3}
+.is-waiting .lounge-launch-light{background:#6c8191}
+.is-waiting .lounge-launch-light.is-ready{background:#acd4a1;box-shadow:0 0 12px #a9d69766}
+.is-waiting.has-docked-chat .chat-panel,.is-waiting .chat-panel{background:linear-gradient(145deg,#182a3a,#0b1724);border-color:#abb4bb38}
+.is-waiting .lounge-invitation{border-bottom-color:#abb4bb28}
+.is-waiting .lounge-invitation>div{color:#e2d5b3}
+.is-waiting .lounge-invitation small{background:#1d3041;border-color:#9baebc44;color:#b0c3d0}
+.is-waiting .lounge-invitation button{background:#1a2c3d;border-color:#c6ae78;color:#efdbad}
+.is-waiting .chat-heading{border-bottom-color:#abb4bb28}
+.is-waiting .chat-heading h2{color:#e7dfc9}
+.is-waiting .chat-empty{color:#869eaf}
+.is-waiting .message>div{color:#a6b7c5}
+.is-waiting .message p{background:#253c50;color:#e7ecec}
+.is-waiting .message.mine p{background:#344952}
+.is-waiting #chat{border-top-color:#abb4bb28}
+
+body:has(.moon-lobby,.room-browser,.room-empty,.room-layout.is-waiting) :is(#create-room-dialog,.platform-dialog){background:linear-gradient(145deg,#1b2b39,#0b1521);border-color:#c7aa7277;color:#eef0ed;box-shadow:0 30px 100px #000000bb}
+body:has(.moon-lobby,.room-browser,.room-empty,.room-layout.is-waiting) :is(#create-room-dialog,.platform-dialog)::backdrop{background:#020912d9}
+body:has(.moon-lobby,.room-browser,.room-empty,.room-layout.is-waiting) .platform-dialog p{color:#aebfcb}
+body:has(.moon-lobby,.room-browser,.room-empty,.room-layout.is-waiting) :is(.create-heading button,.dialog-close){color:#d4dce1}

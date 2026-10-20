@@ -1,6 +1,10 @@
 @import url('/games/seven-wonders/style.css');
 @import url('/games/seven-wonders/atlas.css');
 @import url('/games/seven-wonders/hud.css');
+@import url('/games/seven-wonders/clarity.css');
+@import url('/games/seven-wonders/expansions.css');
+@import url('/games/seven-wonders/feedback.css');
+@import url('/games/seven-wonders/decision-hud.css');
 @import url('/games/marrakech/style.css');
 @import url('/games/cabo.css');
 @import url('/games/cabo/call-effect.css');
@@ -9,7 +13,15 @@
 @import url('/room-lounge.css');
 @import url('/games/cabo/mobile.css');
 @import url('/shell.css');
+@import url('/hub/hub.css');
+@import url('/platform-palette.css');
+@import url('/room-browser.css');
+@import url('/hub/profile.css');
+@import url('/room-invites.css');
+@import url('/forum/forum.css');
+@import url('/admin/admin.css');
 :root { color-scheme: dark; --bg:#082d38; --panel:#103f49; --line:#37636a; --text:#eef3df; --muted:#a6c6bf; --mint:#deedbc; --gold:#f1d782; --ink:#123d3d; font-family:system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif; font-size:16px; }
+.game-loading{min-height:200px;display:grid;place-content:center;gap:16px;text-align:center;color:var(--muted)}
 * { box-sizing:border-box; } [hidden] { display:none!important; }
 body { margin:0; background:var(--bg); color:var(--text); line-height:1.5; }
 button,input,select { font:inherit; } button { cursor:pointer; border:1px solid var(--mint); border-radius:9px; padding:.65rem 1.1rem; background:var(--mint); color:var(--ink); font-weight:700; transition:background .15s; }
@@ -51,4 +63,12 @@ h1,h2,h3,p { margin:0; } h1 { font-size:2.6rem; line-height:1.25; letter-spacing
 @media(max-width:1100px){.in-room .mk-board-wrap{max-width:min(580px,calc(100dvh - 320px))}}
 @media(max-width:760px){.in-room .room-bar{height:40px;padding:0 5px}.in-room .room-identity{display:block}.in-room .room-presence{font-size:9px}.in-room .room-tools button{min-height:30px;padding:4px 8px;font-size:11px}.in-room .room-tools .room-invite{font-size:9px}.in-room .chat-panel{top:145px;height:calc(100dvh - 160px)}}
 @media(max-width:600px){.in-room .mk-board-wrap{max-width:min(100%,calc(100dvh - 462px))}}
+
+.clipboard-buffer{position:fixed;top:0;left:0;width:1px;height:1px;opacity:0;pointer-events:none;font-size:16px}
+.clipboard-dialog{width:min(420px,calc(100vw - 32px));padding:28px;border:1px solid #8d7a52;background:#142330;color:#eee3c7;box-shadow:0 24px 80px #0009}
+.clipboard-dialog::backdrop{background:#020a12bb}
+.clipboard-dialog h2{font-size:21px;margin:0 0 22px}
+.clipboard-dialog input{display:block;width:100%;padding:14px;font:20px monospace;letter-spacing:.06em;text-align:center;color:#ffdf92;background:#0a1722;border:1px solid #716345;user-select:text}
+.clipboard-dialog p{margin:14px 0 24px;color:#a9b8c3;font-size:13px}
+.clipboard-dialog>button{display:block;margin-left:auto;min-height:40px;padding:8px 24px;background:#dbc082;color:#172631;border:1px solid #eddbab}
 

@@ -12,6 +12,17 @@
 
 CABO 卡片沿用用户已有素材 `assets/cabo/reference-style/cabo-atlas-v1.png`，未替换。
 
+## 网页加载版本
+
+原始素材保留，网页使用 WebP 无损编码和原图裁片。没有缩小分辨率或重新生成绘画，解码后的像素逐一校验一致。
+
+- `hero-v2.webp`、`moon-v2.webp` 分别用于横幅与侧栏。
+- `cover-{werewolf,avalon,undercover,uno,ludo,catan}-v1.webp` 是六格封面的独立裁片，当前目录页可见后才加载。
+- `cabo-{0,4,9}-v1.webp` 只供大厅三张展示牌使用；牌桌使用完整的 `/assets/cabo-atlas-v2.webp`。
+- `wonders-cover-v1.webp` 是奇迹图集中的封面一格，使用懒加载图片保留原来的裁切效果。
+
+`python scripts/optimize-assets.py` 可从原素材重新生成以上文件，需要 Pillow；运行网站无需 Python 或额外依赖。测量与缓存策略见 [性能优化](performance.md)。
+
 ## 最终生成提示词
 
 ### 主横幅

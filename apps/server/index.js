@@ -6,7 +6,7 @@ import { createApp } from './http.js';
 const port = Number(process.env.PORT ?? 3000);
 const host = process.env.HOST ?? '127.0.0.1';
 const app = createApp({ store: new JsonStore(resolve(process.env.DATA_FILE ?? '.data/platform.json')), registry: games,
-  secureCookies: process.env.SECURE_COOKIES === '1' });
+  secureCookies: process.env.SECURE_COOKIES === '1',adminBootstrapHandle:process.env.ADMIN_BOOTSTRAP_HANDLE });
 app.server.listen(port, host, () => console.log(`Moon Table ready: http://${host}:${port}`));
 for (const signal of ['SIGINT', 'SIGTERM']) process.on(signal, () => {
   app.closeStreams(); app.server.close(() => process.exit(0));

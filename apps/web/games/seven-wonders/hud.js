@@ -1,5 +1,6 @@
 import {escapeHtml as e} from '../../ui.js';
 import {icon,resourceNames,production,effectSymbols,scienceIcons,colorNames,colorIcons} from './symbols.js';
+import {chainMark} from './chains.js';
 
 const count=(slots,key)=>slots.filter(slot=>slot===key).length;
 export function resourceLedger(slots,{compact=false,gained=[]}={}) {
@@ -13,7 +14,7 @@ export function collectionBar(p) {
 }
 const delta=(symbol,label,before,after,extra='')=>`<div class="sw-delta ${before!==after?'sw-delta-changed':''}">${icon(symbol)}<span>${label}</span><span class="sw-delta-values"><s>${before}</s>${icon('arrow')}<b>${after}</b></span>${extra}</div>`;
 export function outcomePreview(game,p,effect,preview,payment,mode) {
-  const out=[],paid=payment?payment.left+payment.right+payment.bank:0;
+  const out=[],paid=payment?payment.left+payment.right+payment.bank+(payment.farLeft??0)+(payment.farRight??0):0;
   if(mode==='sell')return delta('coin','钱币',p.coins,p.coins+3);
   if(!preview)return `<div class="sw-ability-preview">${effectSymbols(effect)}</div>`;
   const rule=effect.scoring??effect.income;
@@ -30,12 +31,15 @@ export function outcomePreview(game,p,effect,preview,payment,mode) {
     out.push(delta('shield','军力',p.shields,preview.shields));
     out.push(`<div class="sw-military-preview"><small>按当前军力</small>${game.neighbors.map((id,i)=>{const n=game.players.find(x=>x.id===id),r=preview.shields-n.shields;return `<span class="${r>0?'sw-winning':r<0?'sw-losing':''}">${i===0?'左邻':'右邻'} ${n.shields} ${r>0?'胜':r<0?'负':'平'}</span>`;}).join('')}</div>`);
   }
-  if(Number.isInteger(effect.science)||effect.wild)out.push(delta('compass','科技计分',preview.scienceBefore,preview.science.points,`<small>${preview.science.counts.map((n,i)=>`${icon(scienceIcons[i])}${n}`).join(' ')}${preview.science.wild?' + 任选':''}</small>`));
+  if(Number.isInteger(effect.science)||effect.wild||effect.majorityScience||effect.scienceChange)out.push(delta('compass','科技计分',preview.scienceBefore,preview.science.points,`<small>${preview.science.counts.map((n,i)=>`${icon(scienceIcons[i])}${n}`).join(' ')}${preview.science.wild?' + 任选':''}</small>`));
+  if(effect.naval)out.push(delta('naval','海军',p.naval,preview.naval));
   if(preview.pointsDelta||effect.scoring||effect.complete)out.push(`<div class="sw-delta ${preview.pointsDelta?'sw-delta-changed':''}">${icon('points')}<span>${effect.scoring||effect.complete?'按当前城市计分':'计分变化'}</span><strong class="sw-score-gain">${preview.pointsDelta>=0?'+':''}${preview.pointsDelta}</strong></div>`);
   if(effect.discount||effect.revive||effect.double||effect.freeColor||effect.freeFirst||effect.freeLast)out.push(`<div class="sw-ability-preview">${effectSymbols(effect)}<b>${effect.discount?'贸易优惠':effect.revive?'从弃牌免费建造':effect.double?'时代末额外行动':'免费建造能力'}</b></div>`);
   return out.join('');
 }
 export function chainDetails(c,p){
   if(!c.chains||!c.chains.from.length&&!c.chains.to.length)return '';
-  return `<details class="sw-chain-detail"><summary>${icon('chain')}连锁建筑 <span>${c.chains.to.length?`${c.chains.to.length} 个后继`:''}</span></summary>${c.chains.from.length?`<div><small>前置</small>${c.chains.from.map(x=>`<span class="${p.cards.some(y=>y.kind===x.kind)?'sw-chain-owned':''}">${e(x.name)}${p.cards.some(y=>y.kind===x.kind)?icon('check'):''}</span>`).join('')}</div>`:''}${c.chains.to.length?`<div><small>后继</small>${c.chains.to.map(x=>`<span>${e(x.name)}<small>${['I','II','III'][x.age-1]}</small></span>`).join('')}</div>`:''}</details>`;
+  const from=c.chains.from,owned=from.some(x=>p.cards.some(y=>y.kind===x.kind));
+  const proof=from.length?`<div class="sw-chain-proof ${owned?'sw-chain-proof-ready':''}">${chainMark(from[0].symbol)}<div><small>${owned?'已持有连锁前置':'连锁前置'}</small><span>${from.map(x=>`<b class="${p.cards.some(y=>y.kind===x.kind)?'sw-chain-owned':''}">${e(x.name)}${p.cards.some(y=>y.kind===x.kind)?icon('check'):''}</b>`).join('<i>或</i>')}</span></div>${icon(owned?'check':'lock')}</div>`:'';
+  return `${proof}${c.chains.to.length?`<section class="sw-chain-next"><small>建成后解锁</small><div>${c.chains.to.map(x=>`<span class="sw-${x.color}">${chainMark(x.symbol)}<b>${e(x.name)}</b><i>${['I','II','III'][x.age-1]}</i></span>`).join('')}</div></section>`:''}`;
 }

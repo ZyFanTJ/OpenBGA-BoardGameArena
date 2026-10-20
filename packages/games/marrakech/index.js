@@ -90,5 +90,8 @@ function view(state, viewerId) {
 }
 export const marrakech = {
   manifest: { id: 'marrakech', title: '魔毯商人', rulesVersion: 'Gigamic 11-2024 · standard / insufficient-payment elimination', stateVersion: 1, minPlayers: 2, maxPlayers: 4 },
-  create, apply, view, isFinished: state => state.phase === 'finished', bot: marrakechBot,
+  create, apply, view,
+  turn:s=>s.phase==='finished'?null:{key:String(s.turnNumber),players:[s.players[s.turn].id]},
+  timeout:(view,id)=>marrakechBot.decide(view,id,{}),
+  result(state){const rows=scores(state),compare=(a,b)=>Number(state.winners.includes(b.id))-Number(state.winners.includes(a.id))||Number(a.eliminated)-Number(b.eliminated)||b.total-a.total||b.coins-a.coins;return {winners:[...state.winners],rounds:1,scoreDirection:'higher',players:rows.map(p=>({id:p.id,score:p.total,rank:1+rows.filter(q=>compare(q,p)<0).length,breakdown:[{label:'钱币',value:p.coins},{label:'领地',value:p.area}]}))};}, isFinished: state => state.phase === 'finished', bot: marrakechBot,
 };

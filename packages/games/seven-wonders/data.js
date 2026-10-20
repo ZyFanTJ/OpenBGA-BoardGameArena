@@ -1,5 +1,8 @@
 // Second edition (2020), base game. Printed costs and player-count marks;
 // see docs/seven-wonders-rules.md for sources and timing decisions.
+import {LEADERS} from './leaders.js';
+import {ARMADA_CARDS,ISLANDS} from './armada.js';
+import {EXPANSION_WONDERS} from './extra-wonders.js';
 export const RESOURCES = { w:'木', s:'石', c:'砖', o:'矿', g:'玻璃', p:'纸', t:'布' };
 export const COLORS = { brown:'原料', grey:'制品', blue:'市政', yellow:'商业', red:'军事', green:'科技', purple:'行会' };
 const rows = [];
@@ -33,7 +36,17 @@ add(3,'purple','decorators','装饰师行会',[],'oost',{complete:7},'完成全�
 add(3,'purple','scientists','科学家行会',[],'wwoop',{wild:1},'终局任选 1 个科技符号');
 add(3,'purple','shipowners','船主行会',[],'wwwpg',{scoring:{color:['brown','grey','purple'],scope:'own',points:1}},'自己每张原料、制品、行会牌，终局 +1 分');
 export const CARDS = Object.fromEntries(rows.map(c=>[c.key,c]));
-export const card = id => CARDS[id.split('@')[0]];
+// Second-edition printed chain symbols, keyed by the building they unlock.
+// These are public reference metadata, never stored in a game's state.
+export const CHAIN_SYMBOLS = {
+ statue:['rosette','花结'],aqueduct:['drop','水滴'],pantheon:['star','星辰'],gardens:['mask','面具'],
+ caravansery:['camel','骆驼'],forum:['table','商桌'],lighthouse:['beacon','灯塔'],haven:['barrel','木桶'],
+ stables:['horseshoe','马蹄铁'],dispensary:['mortar','药钵'],arena:['bolt','闪电'],lodge:['torch','火炬'],
+ archery:['target','箭靶'],laboratory:['lamp','油灯'],siege:['saw','锯子'],observatory:['planet','行星'],
+ courthouse:['scales','天平'],library:['book','书本'],senate:['columns','立柱'],university:['scroll','卷轴'],
+ academy:['lyre','竖琴'],study:['feather','羽毛'],fortifications:['battlement','城垛'],circus:['helmet','头盔'],
+};
+export const card = id => {const key=id.split('@')[0];return CARDS[key]??LEADERS[key]??ARMADA_CARDS[key]??ISLANDS[key];};
 const stage = (resources,effect,text) => ({cost:{resources,coins:0},effect,text});
 export const WONDERS = {
   alexandria:{name:'亚历山大',subtitle:'灯塔',resource:'g',day:[stage('ss',{points:3},'3 分'),stage('oo',prod('wsoc'),'任选 1 木 / 石 / 矿 / 砖'),stage('pt',{points:7},'7 分')],night:[stage('cc',prod('wsoc'),'任选 1 木 / 石 / 矿 / 砖'),stage('ooo',prod('gpt'),'任选 1 玻璃 / 纸 / 布'),stage('wwww',{points:7},'7 分')]},
@@ -44,5 +57,7 @@ export const WONDERS = {
   olympia:{name:'奥林匹亚',subtitle:'宙斯神像',resource:'c',day:[stage('ss',{points:3},'3 分'),stage('ww',{freeColor:true},'尚未拥有的颜色，首张建筑免费'),stage('ccc',{points:7},'7 分')],night:[stage('oo',{points:2,freeFirst:true},'2 分 · 每时代第 1 张建筑免费'),stage('ccc',{points:3,freeLast:true},'3 分 · 每时代第 6 张建筑免费'),stage('gpt',{points:5},'5 分')]},
   rhodes:{name:'罗得岛',subtitle:'太阳神巨像',resource:'o',day:[stage('ww',{points:3},'3 分'),stage('ccc',{shields:2},'军力 +2'),stage('oooo',{points:7},'7 分')],night:[stage('sss',{points:3,coins:3,shields:1},'3 分 · +3 钱币 · 军力 +1'),stage('oooo',{points:4,coins:4,shields:1},'4 分 · +4 钱币 · 军力 +1')]},
 };
+Object.assign(WONDERS,EXPANSION_WONDERS);
 export const stages = player => player.side ? WONDERS[player.wonder][player.side] : [];
-export const effects = player => [...player.cards.map(id=>card(id).effect),...stages(player).slice(0,player.stages).map(s=>s.effect)];
+export const builtStages = player => player.builtStages?.length===player.stages?player.builtStages:Array.from({length:player.stages},(_,i)=>i);
+export const effects = player => [...player.cards,...(player.leaders??[]),...(player.islands??[])].map(id=>card(id).effect).concat(builtStages(player).map(i=>stages(player)[i].effect),player.wonder==='roma'&&player.side?[player.side==='day'?{freeLeaders:true}:{leaderDiscount:2}]:[]);

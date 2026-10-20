@@ -1,0 +1,900 @@
+{
+  "edition": "7 Wonders Leaders, second edition",
+  "retrieved": "2026-10-19",
+  "rights": "7 Wonders artwork and trademarks belong to Repos Production and their respective rights holders. Source availability is not an open redistribution license.",
+  "sources": {
+    "publisher-press-kit": {
+      "page": "https://www.rprod.com/en/press/7-wonders-leaders",
+      "download": "https://cdn.svc.asmodee.net/production-rprod/storage/extensions/7W-leaders/press/7le-press-kit-en-1610026087UACwQ.zip"
+    },
+    "community-card-atlas": {
+      "page": "https://steamcommunity.com/sharedfiles/filedetails/?id=2620130114",
+      "download": "https://cdn.steamusercontent.com/ugc/1636486705929106205/CA7416A75386B4E8F6DDEB0DFD7B2F1C29CB8A6D/",
+      "sha256": "05d6c230c8ebfda9dedda62bf46c9b7eb3c5e1d50ff6bca411c3ab9523f71fb0"
+    }
+  },
+  "portraits": [
+    {
+      "key": "leader-aganice",
+      "name": "Aganice",
+      "asset": "/assets/seven-wonders/leaders/aganice-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2803,
+      "crop": [
+        1264,
+        174,
+        1590,
+        614
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 14438,
+      "sha256": "334b4693d12c5ef1eca949be4d9172500cb95b2fd8bf0617da2905fd8fefdb44"
+    },
+    {
+      "key": "leader-agrippina",
+      "name": "Agrippina",
+      "asset": "/assets/seven-wonders/leaders/agrippina-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2806,
+      "crop": [
+        2459,
+        174,
+        2785,
+        614
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 13390,
+      "sha256": "38f5e9bff84c8ca68111d9ad925f1909e3fb78ff42ac92933646628696a96175"
+    },
+    {
+      "key": "leader-alexander",
+      "name": "Alexander",
+      "asset": "/assets/seven-wonders/leaders/alexander-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2841,
+      "crop": [
+        466,
+        2661,
+        792,
+        3101
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 21366,
+      "sha256": "4c73c45af1eb099422030e58df77807047e57dc1ffe622007e30686dbc33c07f"
+    },
+    {
+      "key": "leader-amytis",
+      "name": "Amytis",
+      "asset": "/assets/seven-wonders/leaders/amytis-v1.webp",
+      "source": "publisher-press-kit",
+      "sourceFile": "7LE_EN_Cards_1.png",
+      "cardId": 2832,
+      "crop": [
+        261,
+        661,
+        1517,
+        2334
+      ],
+      "width": 640,
+      "height": 852,
+      "bytes": 82550,
+      "sha256": "cf6f05c25df11c7c09f1cf732d564f88cf2a2288be544f6dbba34a334810e855"
+    },
+    {
+      "key": "leader-archimedes",
+      "name": "Archimedes",
+      "asset": "/assets/seven-wonders/leaders/archimedes-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2853,
+      "crop": [
+        1264,
+        3283,
+        1590,
+        3723
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 18558,
+      "sha256": "72c1a29b92ca35c4939eba65b33e4f5ad9c083e599996043843341efccc9be67"
+    },
+    {
+      "key": "leader-aristotle",
+      "name": "Aristotle",
+      "asset": "/assets/seven-wonders/leaders/aristotle-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2811,
+      "crop": [
+        466,
+        796,
+        792,
+        1236
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 12850,
+      "sha256": "af58d850cf1537a67a188be570856bc086567907cce1ca54f78b182ef4a5d352"
+    },
+    {
+      "key": "leader-berenice",
+      "name": "Berenice",
+      "asset": "/assets/seven-wonders/leaders/berenice-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2827,
+      "crop": [
+        2858,
+        1418,
+        3184,
+        1858
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 21254,
+      "sha256": "4d7694aa68b1683b940d9026d65dfbef97f98ee18f2c0b79fd171babf2002270"
+    },
+    {
+      "key": "leader-bilkis",
+      "name": "Bilkis",
+      "asset": "/assets/seven-wonders/leaders/bilkis-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2801,
+      "crop": [
+        466,
+        174,
+        792,
+        614
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 22680,
+      "sha256": "3b9b5f6ef63a0f97d9bf292c3d9f36e856e91c0e37a3ee567e2088136562423b"
+    },
+    {
+      "key": "leader-caesar",
+      "name": "Caesar",
+      "asset": "/assets/seven-wonders/leaders/caesar-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2848,
+      "crop": [
+        3257,
+        2661,
+        3583,
+        3101
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 22272,
+      "sha256": "77070e5ffda6f8f6499e35ccd8e75be439916b9d7e722d364249f23b14f2cbbd"
+    },
+    {
+      "key": "leader-cleopatra",
+      "name": "Cleopatra",
+      "asset": "/assets/seven-wonders/leaders/cleopatra-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2810,
+      "crop": [
+        68,
+        796,
+        394,
+        1236
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 15860,
+      "sha256": "96c0252eaf880915f25dceaef3cdc2a220242ed5519733859e489a29a6ac8550"
+    },
+    {
+      "key": "leader-cornelia",
+      "name": "Cornelia",
+      "asset": "/assets/seven-wonders/leaders/cornelia-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2825,
+      "crop": [
+        2061,
+        1418,
+        2387,
+        1858
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 17038,
+      "sha256": "0dad9d9afce3a7b6c547a07c9b1ec40b6c8862c5bedab1b4488396a38f8ab331"
+    },
+    {
+      "key": "leader-croesus",
+      "name": "Croesus",
+      "asset": "/assets/seven-wonders/leaders/croesus-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2849,
+      "crop": [
+        3655,
+        2661,
+        3981,
+        3101
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 20424,
+      "sha256": "c3fe42fca5181a0bb2fe40ec70dbc0618b4aaab97a750a896b617d826875e573"
+    },
+    {
+      "key": "leader-cynisca",
+      "name": "Cynisca",
+      "asset": "/assets/seven-wonders/leaders/cynisca-v1.webp",
+      "source": "publisher-press-kit",
+      "sourceFile": "7LE_EN_Cards_81.png",
+      "cardId": 2842,
+      "crop": [
+        261,
+        661,
+        1517,
+        2334
+      ],
+      "width": 640,
+      "height": 852,
+      "bytes": 73104,
+      "sha256": "524cba2bb295bc8d7ea7f140f9b0ac7dd848cd4d654ca84653df4e0e9e9c79dd"
+    },
+    {
+      "key": "leader-enheduanna",
+      "name": "Enheduanna",
+      "asset": "/assets/seven-wonders/leaders/enheduanna-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2819,
+      "crop": [
+        3655,
+        796,
+        3981,
+        1236
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 19060,
+      "sha256": "c3f41323740b9003af2e0d83a7e8b91426c9ab196f77b32520c1d69b750d132d"
+    },
+    {
+      "key": "leader-euclid",
+      "name": "Euclid",
+      "asset": "/assets/seven-wonders/leaders/euclid-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2837,
+      "crop": [
+        2858,
+        2039,
+        3184,
+        2479
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 19108,
+      "sha256": "121517ebd55ad55fc66377e03055e9c5b4c6041122f4dcb753d7baa9c61e44b7"
+    },
+    {
+      "key": "leader-eurypyle",
+      "name": "Eurypyle",
+      "asset": "/assets/seven-wonders/leaders/eurypyle-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2831,
+      "crop": [
+        466,
+        2039,
+        792,
+        2479
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 22092,
+      "sha256": "2058fa117b78614a86165844f29a322fbec934710a81d4dea603fb4b5eecdf07"
+    },
+    {
+      "key": "leader-gorgo",
+      "name": "Gorgo",
+      "asset": "/assets/seven-wonders/leaders/gorgo-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2820,
+      "crop": [
+        68,
+        1418,
+        394,
+        1858
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 20436,
+      "sha256": "1d16b0ffac3aeed18d9c5fbff54f2f26f92e3df9ab3df8fbc7af006c158675e7"
+    },
+    {
+      "key": "leader-hammurabi",
+      "name": "Hammurabi",
+      "asset": "/assets/seven-wonders/leaders/hammurabi-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2828,
+      "crop": [
+        3257,
+        1418,
+        3583,
+        1858
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 17894,
+      "sha256": "fc656ce35b4e7ce0d16a1fd489f28cc12ba67b5ef62e4cbfd546137ab114670c"
+    },
+    {
+      "key": "leader-hannibal",
+      "name": "Hannibal",
+      "asset": "/assets/seven-wonders/leaders/hannibal-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2804,
+      "crop": [
+        1662,
+        174,
+        1988,
+        614
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 15882,
+      "sha256": "beb613730aed00a366e47d2377ee830f27f51b2f80f1df0289f4fbcbfa49851d"
+    },
+    {
+      "key": "leader-hatshepsut",
+      "name": "Hatshepsut",
+      "asset": "/assets/seven-wonders/leaders/hatshepsut-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2826,
+      "crop": [
+        2459,
+        1418,
+        2785,
+        1858
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 23190,
+      "sha256": "1a6021ca034b0008f697f04f76a9a5383b89f7916e34ad1016708903a154f966"
+    },
+    {
+      "key": "leader-hiram",
+      "name": "Hiram",
+      "asset": "/assets/seven-wonders/leaders/hiram-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2854,
+      "crop": [
+        1662,
+        3283,
+        1988,
+        3723
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 19524,
+      "sha256": "4682c56a4b82eafd3276a19efabb74fc2869473204529306dff3ae9b9e6cfe0f"
+    },
+    {
+      "key": "leader-hypatia",
+      "name": "Hypatia",
+      "asset": "/assets/seven-wonders/leaders/hypatia-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2838,
+      "crop": [
+        3257,
+        2039,
+        3583,
+        2479
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 16172,
+      "sha256": "761b8c97d09481cbaa41a3471200d44fc376f0c9048fc587c3d69e95b18dc668"
+    },
+    {
+      "key": "leader-imhotep",
+      "name": "Imhotep",
+      "asset": "/assets/seven-wonders/leaders/imhotep-v1.webp",
+      "source": "publisher-press-kit",
+      "sourceFile": "7LE_EN_Cards_7.png",
+      "cardId": 2814,
+      "crop": [
+        261,
+        661,
+        1517,
+        2334
+      ],
+      "width": 640,
+      "height": 852,
+      "bytes": 80788,
+      "sha256": "1fb9f56f58318efd4ca1044704fb80110d67abf72910b9f6e53f5a7f097d0bb5"
+    },
+    {
+      "key": "leader-justinian",
+      "name": "Justinian",
+      "asset": "/assets/seven-wonders/leaders/justinian-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2805,
+      "crop": [
+        2061,
+        174,
+        2387,
+        614
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 17750,
+      "sha256": "4ff89ed6c37c7347d91fa84bd18c9caf35a05e42c663c929d555106302b13752"
+    },
+    {
+      "key": "leader-leonidas",
+      "name": "Leonidas",
+      "asset": "/assets/seven-wonders/leaders/leonidas-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2845,
+      "crop": [
+        2061,
+        2661,
+        2387,
+        3101
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 16808,
+      "sha256": "1efa1b00fbf10951151bd4baf4594b5f3f39a4154bcb471e9b40dec7d64ce6c5"
+    },
+    {
+      "key": "leader-maecenas",
+      "name": "Maecenas",
+      "asset": "/assets/seven-wonders/leaders/maecenas-v1.webp",
+      "source": "publisher-press-kit",
+      "sourceFile": "7LE_EN_Cards_5.png",
+      "cardId": 2846,
+      "crop": [
+        261,
+        661,
+        1517,
+        2334
+      ],
+      "width": 640,
+      "height": 852,
+      "bytes": 43170,
+      "sha256": "376dcd54f75f3fb9b147141adfa995f9d93d9d1060a4d2a3baf7374e8b42388f"
+    },
+    {
+      "key": "leader-makeda",
+      "name": "Makeda",
+      "asset": "/assets/seven-wonders/leaders/makeda-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2822,
+      "crop": [
+        865,
+        1418,
+        1191,
+        1858
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 22522,
+      "sha256": "46380f819efc043840412277309e81821eda165d70f824e6a1590edefdb12cc8"
+    },
+    {
+      "key": "leader-midas",
+      "name": "Midas",
+      "asset": "/assets/seven-wonders/leaders/midas-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2823,
+      "crop": [
+        1264,
+        1418,
+        1590,
+        1858
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 15978,
+      "sha256": "ea92fbac588f6b498d8387418e8d94d7446374b58158348cfd7eaa4f538dfa55"
+    },
+    {
+      "key": "leader-nebuchadnezzar",
+      "name": "Nebuchadnezzar",
+      "asset": "/assets/seven-wonders/leaders/nebuchadnezzar-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2802,
+      "crop": [
+        865,
+        174,
+        1191,
+        614
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 14590,
+      "sha256": "3b4c00e85c9530fba83f1b1f58aac1949620265af045740c6ba7e94e0f8e20df"
+    },
+    {
+      "key": "leader-nefertiti",
+      "name": "Nefertiti",
+      "asset": "/assets/seven-wonders/leaders/nefertiti-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2844,
+      "crop": [
+        1662,
+        2661,
+        1988,
+        3101
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 17514,
+      "sha256": "24cb6d20b221c8fee9201e3cfc09429b7d300aac458cf901bf47007dc3c89ebe"
+    },
+    {
+      "key": "leader-nero",
+      "name": "Nero",
+      "asset": "/assets/seven-wonders/leaders/nero-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2843,
+      "crop": [
+        1264,
+        2661,
+        1590,
+        3101
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 21206,
+      "sha256": "a22682ab1f047a6367ff489be2ae4a790aee76e0f8a0801f9dac65f1d538d28a"
+    },
+    {
+      "key": "leader-nitocris",
+      "name": "Nitocris",
+      "asset": "/assets/seven-wonders/leaders/nitocris-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2809,
+      "crop": [
+        3655,
+        174,
+        3981,
+        614
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 18032,
+      "sha256": "8ee8151e869535c8e23ede0e7692653c27c70892299d29b9a4f35e181ddef7e9"
+    },
+    {
+      "key": "leader-pericles",
+      "name": "Pericles",
+      "asset": "/assets/seven-wonders/leaders/pericles-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2852,
+      "crop": [
+        865,
+        3283,
+        1191,
+        3723
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 21124,
+      "sha256": "f55297228f05c5326f76a9827b33604f2ddbeb5bb44ec4127acd1738177fe11d"
+    },
+    {
+      "key": "leader-phidias",
+      "name": "Phidias",
+      "asset": "/assets/seven-wonders/leaders/phidias-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2817,
+      "crop": [
+        2858,
+        796,
+        3184,
+        1236
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 15796,
+      "sha256": "5978c8a381db841b4c419f45b67f583079e1cafb5722b5fb3585a72d74ffe544"
+    },
+    {
+      "key": "leader-phryne",
+      "name": "Phryne",
+      "asset": "/assets/seven-wonders/leaders/phryne-v1.webp",
+      "source": "publisher-press-kit",
+      "sourceFile": "7LE_EN_Cards_95.png",
+      "cardId": 2829,
+      "crop": [
+        261,
+        661,
+        1517,
+        2334
+      ],
+      "width": 640,
+      "height": 852,
+      "bytes": 78510,
+      "sha256": "9e54f12ef794fa6e31c4a8535d5fa7b53c9fd9e5fa5d84fb695269d9c819471b"
+    },
+    {
+      "key": "leader-plato",
+      "name": "Plato",
+      "asset": "/assets/seven-wonders/leaders/plato-v1.webp",
+      "source": "publisher-press-kit",
+      "sourceFile": "7LE_EN_Cards_3.png",
+      "cardId": 2816,
+      "crop": [
+        261,
+        661,
+        1517,
+        2334
+      ],
+      "width": 640,
+      "height": 852,
+      "bytes": 118292,
+      "sha256": "9beb438432a53f0b390b0aca3760d3d139268c9d619b8107572387e96c7a2ad3"
+    },
+    {
+      "key": "leader-praxiteles",
+      "name": "Praxiteles",
+      "asset": "/assets/seven-wonders/leaders/praxiteles-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2847,
+      "crop": [
+        2858,
+        2661,
+        3184,
+        3101
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 14952,
+      "sha256": "bbde72bc515e8a697404d0927a67e293a0e2e5d778a620f61b52f0f03f6593b9"
+    },
+    {
+      "key": "leader-ptolemy",
+      "name": "Ptolemy",
+      "asset": "/assets/seven-wonders/leaders/ptolemy-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2800,
+      "crop": [
+        68,
+        174,
+        394,
+        614
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 18440,
+      "sha256": "b1b39745dd9db4251280fb23807ea1b35949bff623f5fdf623025615ce1c9213"
+    },
+    {
+      "key": "leader-pythagoras",
+      "name": "Pythagoras",
+      "asset": "/assets/seven-wonders/leaders/pythagoras-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2818,
+      "crop": [
+        3257,
+        796,
+        3583,
+        1236
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 20144,
+      "sha256": "da016a8279f537f898e90dd5b75e73f8f456e2893c832c1c4b63968e3fdfc4e0"
+    },
+    {
+      "key": "leader-ramses",
+      "name": "Ramses",
+      "asset": "/assets/seven-wonders/leaders/ramses-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2815,
+      "crop": [
+        2061,
+        796,
+        2387,
+        1236
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 17402,
+      "sha256": "ec9bf680d91e03d1aff1ed402b466af995fec4d9170e8e06cc1a6a760d015bd0"
+    },
+    {
+      "key": "leader-sappho",
+      "name": "Sappho",
+      "asset": "/assets/seven-wonders/leaders/sappho-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2850,
+      "crop": [
+        68,
+        3283,
+        394,
+        3723
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 13620,
+      "sha256": "43f68da2214f877075c60d4f9ad9ab46ecba259632913b8242ddbf71d58ae74f"
+    },
+    {
+      "key": "leader-solomon",
+      "name": "Solomon",
+      "asset": "/assets/seven-wonders/leaders/solomon-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2834,
+      "crop": [
+        1662,
+        2039,
+        1988,
+        2479
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 26528,
+      "sha256": "4b33c8d6f4d1540ddb19ccfae874652b645b762e7270b9e6e6f2c039f8aa00e2"
+    },
+    {
+      "key": "leader-telesilla",
+      "name": "Telesilla",
+      "asset": "/assets/seven-wonders/leaders/telesilla-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2840,
+      "crop": [
+        68,
+        2661,
+        394,
+        3101
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 16180,
+      "sha256": "d9de32922226af3945974e1356c6fbf3565e7c9497d069ba2aa3e9eb170df518"
+    },
+    {
+      "key": "leader-theano",
+      "name": "Theano",
+      "asset": "/assets/seven-wonders/leaders/theano-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2808,
+      "crop": [
+        3257,
+        174,
+        3583,
+        614
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 18086,
+      "sha256": "98c894f588e22048480131b755bd13959f5b93635315ddd2ed71733c75bead9d"
+    },
+    {
+      "key": "leader-tomyris",
+      "name": "Tomyris",
+      "asset": "/assets/seven-wonders/leaders/tomyris-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2836,
+      "crop": [
+        2459,
+        2039,
+        2785,
+        2479
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 14438,
+      "sha256": "e03b2cac8a06acf3e712b3e864da70432f08459f94c27eb4601fa72297f15166"
+    },
+    {
+      "key": "leader-varro",
+      "name": "Varro",
+      "asset": "/assets/seven-wonders/leaders/varro-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2821,
+      "crop": [
+        466,
+        1418,
+        792,
+        1858
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 12624,
+      "sha256": "af613c8f034c45f5f53ff20789e0d8539db8beb3cb82f6c42621c9a12c05979e"
+    },
+    {
+      "key": "leader-vitruvius",
+      "name": "Vitruvius",
+      "asset": "/assets/seven-wonders/leaders/vitruvius-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2835,
+      "crop": [
+        2061,
+        2039,
+        2387,
+        2479
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 16212,
+      "sha256": "11f56987f4c39496091851e79db13aa6a9d2e88fb763390140bc71e5c4d4eef9"
+    },
+    {
+      "key": "leader-xenophon",
+      "name": "Xenophon",
+      "asset": "/assets/seven-wonders/leaders/xenophon-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2839,
+      "crop": [
+        3655,
+        2039,
+        3981,
+        2479
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 14806,
+      "sha256": "d88a68d66acecc851d6be39e97ed74bb9d831b9f878a7debc99131114d612d94"
+    },
+    {
+      "key": "leader-zenobia",
+      "name": "Zenobia",
+      "asset": "/assets/seven-wonders/leaders/zenobia-v1.webp",
+      "source": "community-card-atlas",
+      "sourceFile": "leader-cards-reference.png",
+      "cardId": 2851,
+      "crop": [
+        466,
+        3283,
+        792,
+        3723
+      ],
+      "width": 326,
+      "height": 440,
+      "bytes": 18368,
+      "sha256": "1e33afbfd57b8d8becf7c548e35034ed02dea2f2077f58fb00033c81bfe21c54"
+    }
+  ]
+}

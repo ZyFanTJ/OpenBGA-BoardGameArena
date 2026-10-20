@@ -23,3 +23,16 @@
  #app .lobby-nav{height:36px;grid-template-columns:auto 1fr 36px;grid-template-rows:30px}#app .lobby-nav nav{grid-column:2;grid-row:1}#app .lobby-profile{display:none}#app .lobby-nav nav button{height:30px}#app .shell-menu-toggle{height:30px}
  #app .moon-lobby,#app .room-empty{height:calc(100dvh - 64px)}
 }
+
+/* Reserve the search slot so section changes never redistribute navigation. */
+.lobby-search.is-inactive{visibility:hidden;pointer-events:none}
+@media(min-width:761px) and (max-width:1100px){#app .lobby-nav nav{gap:0}#app .lobby-nav nav button{padding:13px 8px;font-size:11px;gap:5px}#app .lobby-nav nav .ui-icon{width:17px;height:17px}}
+@media(max-width:760px){#app .lobby-nav nav :is([data-action=friends],[data-action=history],[data-action=shop]){display:none}}
+
+@media(min-width:761px) and (max-width:950px){
+ #app .lobby-nav{padding-inline:12px;gap:10px}
+ #app .lobby-brand{gap:10px}#app .lobby-brand b{font-size:15px;letter-spacing:.12em}#app .lobby-brand .moon-mark{width:28px;height:28px}
+ #app .lobby-nav nav button{font-size:10px;padding-inline:6px;gap:4px}#app .lobby-nav nav .ui-icon{width:15px;height:15px}
+ #app .lobby-nav .lobby-profile{min-width:82px;padding-left:10px;gap:7px}#app .profile-avatar{width:32px;height:32px}#app .lobby-profile>span:last-child{display:none}
+ #app .shell-admin-entry{font-size:10px;padding:5px 7px;white-space:nowrap}
+}

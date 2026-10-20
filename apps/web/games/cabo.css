@@ -29,7 +29,7 @@
 .seat-west .playing-card + .playing-card,.seat-east .playing-card + .playing-card { margin-left: -16px; }
 .seat-south .table-hand { gap: 12px; margin: 0; overflow-x: auto; justify-content: safe center; scrollbar-width: thin; scrollbar-color: #80b4a0 transparent; }
 .playing-card { position: relative; flex-shrink: 0; width: 61px; height: 92px; padding: 0; display: block; border: 3px solid #e5e3c4; border-radius: 6px; background: #164357; color: #fffdf0; box-shadow: 2px 5px 0 #06384066,0 8px 13px #002e3b66; transition: transform .16s,box-shadow .16s; }
-.playing-card:disabled { opacity: 1; }.playing-card .card-art { position: absolute; inset: 0; border-radius: 3px; background-image: url('/assets/cabo-atlas-v1.png'); background-size: 400% 400%; }
+.playing-card:disabled { opacity: 1; }.playing-card .card-art { position: absolute; inset: 0; border-radius: 3px; background-image: url('/assets/cabo-atlas-v2.webp'); background-size: 400% 400%; }
 .playing-card:hover:not(:disabled) { background: #164357; transform: translateY(-8px); z-index: 4; box-shadow: 0 0 0 2px #fff1b7,0 14px 22px #00354199; }
 .playing-card.selected,.playing-card.revealed { transform: translateY(-12px); border-color: #ffdf70; box-shadow: 0 0 0 3px #f7d877,0 13px 28px #001d3266; }
 .playing-card.selected::after { content: '✓'; position: absolute; top: -12px; right: -10px; background: #ffdf70; color: #16404a; width: 22px; height: 22px; border-radius: 50%; font-size: 14px; font-weight: 900; }

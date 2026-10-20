@@ -1,0 +1,32 @@
+name: moon-table
+services:
+  app:
+    image: ${IMAGE_REF:?Set IMAGE_REF to your uploaded image and tag}
+    environment:
+      SECURE_COOKIES: "1"
+    volumes:
+      - moon-data:/data
+    restart: unless-stopped
+    init: true
+    read_only: true
+    tmpfs: ["/tmp:size=16m,mode=1777"]
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    stop_grace_period: 20s
+  gateway:
+    image: caddy:2-alpine
+    environment:
+      DOMAIN: ${DOMAIN:?Set DOMAIN to your public domain}
+    ports: ["80:80", "443:443", "443:443/udp"]
+    volumes:
+      - ./Caddyfile:/etc/caddy/Caddyfile:ro
+      - caddy-data:/data
+      - caddy-config:/config
+    depends_on:
+      app:
+        condition: service_healthy
+    restart: unless-stopped
+volumes:
+  moon-data:
+  caddy-data:
+  caddy-config:
