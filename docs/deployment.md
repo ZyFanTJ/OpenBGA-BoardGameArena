@@ -1,6 +1,6 @@
 # Docker 打包与部署
 
-镜像 `happy-online:0.5.1` 包含服务端、三个游戏、好友、账号、战绩、商城和全部运行所需美术。Linux amd64，Node 22，非 root 用户运行，无需额外 npm 依赖。构建时必须通过全部测试，最终镜像不包含测试、工作数据、会话或生成素材原稿。
+镜像 `happy-online:0.7.0` 包含服务端、CABO、魔毯商人、七大奇迹、忍者之夜、雾灯纪行（DND）、好友、账号、战绩、商城、管理员 AI DM 配置和全部运行所需美术。Linux amd64，Node 22，非 root 用户运行，无需额外 npm 依赖。构建时必须通过全部测试，最终镜像不包含测试、工作数据、会话或生成素材原稿。
 
 ## 在本机部署
 
@@ -28,11 +28,11 @@ docker compose down
 npm run image:package
 ```
 
-生成 `dist/happy-online-0.5.1-linux-amd64.tar.gz` 和同名 `.sha256`。将压缩包与 `compose.yaml` 复制到目标 Linux 机器；此处 `compose.yaml` 的 `build` 配置在 `--no-build` 时不会使用。
+生成 `dist/happy-online-0.7.0-linux-amd64.tar.gz` 和同名 `.sha256`。将压缩包与 `compose.yaml` 复制到目标 Linux 机器；此处 `compose.yaml` 的 `build` 配置在 `--no-build` 时不会使用。
 
 ```sh
-sha256sum -c happy-online-0.5.1-linux-amd64.tar.gz.sha256
-docker load -i happy-online-0.5.1-linux-amd64.tar.gz
+sha256sum -c happy-online-0.7.0-linux-amd64.tar.gz.sha256
+docker load -i happy-online-0.7.0-linux-amd64.tar.gz
 docker compose up -d --no-build --wait
 ```
 
@@ -41,12 +41,12 @@ docker compose up -d --no-build --wait
 先在自己的终端完成对应仓库的 `docker login`，再传入明确的镜像名：
 
 ```sh
-npm run image:push -- your-account/moon-table:0.5.1
+npm run image:push -- your-account/moon-table:0.7.0
 # 或
-npm run image:push -- ghcr.io/your-account/moon-table:0.5.1
+npm run image:push -- ghcr.io/your-account/moon-table:0.7.0
 ```
 
-脚本会将本地 `happy-online:0.5.1` 标记为指定名称并上传。仓库账号、命名空间和权限由部署方配置；不会默认向任何外部账号上传。
+脚本会将本地 `happy-online:0.6.0` 标记为指定名称并上传。仓库账号、命名空间和权限由部署方配置；不会默认向任何外部账号上传。
 
 ## 域名与 HTTPS
 
@@ -61,7 +61,11 @@ Caddy 自动申请 TLS 证书并反向代理。正式配置不暴露应用的 30
 
 ## 升级、存档与恢复
 
-目前是单实例事务 JSON 存储，一个数据卷仅供一个应用进程使用；不要横向扩容多个副本。建议升级前停止服务并备份整个数据卷，尤其是首次升级存储格式前。
+目前是单实例 SQLite WAL 存储，一个数据卷仅供一个应用进程使用；不要横向扩容多个副本。首次启动自动把旧 `/data/platform.json` 导入 `/data/platform.json.sqlite`，保留原文件和 `/data/platform.json.secrets.key`。后续写入仅更新数据库，原 JSON 不再代表最新数据。建议升级前停止服务并备份整个数据卷。
+
+运行需要 Node.js 22.13+。`DATABASE_FILE` 可指定数据库路径；`DATA_FILE` 继续指定旧 JSON 导入路径及其密钥位置。备份整个卷必须停服，包含数据库、可能存在的 `-wal`/`-shm` 文件和加密密钥；不能只复制正在运行的主数据库文件。回退旧 JSON 版本必须恢复升级前的整卷备份；保留下来的 JSON 只对应导入时刻。
+
+生产配置通过 Caddy 作为唯一入口，应用服务不映射宿主端口，设置 `TRUSTED_PROXY_HOPS=1` 读取最近一层代理追加的地址。直接部署默认 `0`，忽略客户端转发头。改变网关拓扑时同时核对代理层数与应用端口隔离。已认证写请求按玩家 ID 独立计数（240/分钟）；匿名请求按来源计数；登录/注册另有来源（120/分钟）和标准化账号（15/分钟）两层保护。
 
 ```sh
 docker compose stop app
@@ -71,7 +75,7 @@ docker run --rm -v moon-table_moon-data:/data:ro -v "${PWD}:/backup" alpine:3.22
 docker compose up -d --wait
 ```
 
-恢复时先停止应用，将备份解压到目标卷再启动；不要覆盖运行中的文件。0.5.1 的平台存储格式为 v6，启动时按顺序自动迁移 v1–v5，并以原始版本保留一次性备份。0.5.0 与 0.5.1 使用相同存储格式；降回 0.4.5 及更早镜像前必须停止服务并恢复升级前存档，旧镜像不能直接读取 v6。
+恢复时先停止应用，将备份解压到目标卷再启动；不要覆盖运行中的文件。0.6.0 的平台存储格式为 v7，启动时按顺序自动迁移 v1–v6，并以原始版本保留一次性备份。0.5.x 使用 v6；降回 0.5.x 及更早镜像前必须停止服务并恢复升级前存档，旧镜像不能直接读取 v7。
 
 已有原生 Node 存档可在停止原服务后复制至数据卷的 `/data/platform.json`，设置属主为 UID/GID 1000，再启动容器。浏览器地址保持相同时原 Cookie 仍可使用；地址不同的游客先在原地址绑定账号，再到新地址登录。
 
@@ -120,3 +124,15 @@ docker compose up -d --wait
 玩家论坛、好友、战绩和商城共用 `apps/web/page-header.js`，统一页面宽度、顶部边距、标题及操作区域。论坛沿用月夜社交插画，话题分类与列表保留原有结构。搜索框在非搜索页面预留导航位置，移动端导航规则统一归属 `shell.css`；好友、战绩和商城加载时保留同一头部，避免闪空和位移。
 
 平台存储保持 v6，所有游戏状态版本不变。174 项测试通过，实际浏览器覆盖 320/390/600/768/1024/1280/1440/1920px 的导航、头图和标题坐标一致性、无横向溢出，以及发帖、搜索、分类、回复、匿名发帖入口和慢速加载。管理员导航另覆盖 10 种宽度。本地 8 个房间、8 份资料及完整存档逐项比对保持不变。线上更新与备份记录见 `docs/remote-deployment.md`。
+
+### 0.6.0 本人操作提示与单轮时限（本地）
+
+三个游戏增加顶部倒计时、本人名牌和操作区域高亮、最后十秒警示，以及房间创建/等待区的不限时、30/60/120/300 秒选项。服务端按完整决策窗口计时并自动完成超时操作；解散投票冻结剩余时间，刷新和重连不会重置时限。论坛整行话题使用原生链接覆盖，支持键盘及新标签页访问。
+
+平台存储 v7 增加房间计时元数据并递增旧房间 revision，旧房间保持不限时。全部游戏内部状态与 stateVersion 不变，自动保留原始 `.v6.bak`。186 项测试及三个游戏的浏览器交互验证通过，详细策略见 `docs/turn-limits.md`。本次更新本地镜像和容器；云端仍为 0.5.1，后续部署需先备份整卷并验证 v6 → v7 迁移，回滚到 0.5.x 需恢复该升级前备份。
+
+### 0.7.0 忍者之夜、DND 与 AI DM 管理配置
+
+完整运行镜像包含五款游戏，并加入忍者轮抽与技能反馈、DND 三个副本与全部运行美术、管理员 AI DM 配置。平台存储为 v8，只增加模型服务配置，不修改原有房间与游戏状态。原始 v7 文件自动保留 `.v7.bak`；回滚需恢复升级前整卷数据。密钥加密保存在 JSON 中，独立加密密钥位于数据卷内的 `platform.json.secrets.key`，备份与恢复必须包含该文件。详见 [管理员配置](administration.md)。
+
+镜像构建通过全部 251 项测试，实际浏览器验证五游戏创建菜单、忍者开局轮抽、DND 建角掷骰、管理员密钥保存与清除、刷新和手机适配。本地及云端均已更新；线上镜像 ID、包摘要、备份和逐项验收见 [线上记录](remote-deployment.md)。

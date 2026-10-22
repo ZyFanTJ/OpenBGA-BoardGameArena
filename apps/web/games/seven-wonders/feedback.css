@@ -121,3 +121,8 @@
 }
 @media(max-width:360px){.sw-report-feature>div{flex-direction:column;align-items:flex-start}.sw-report-table th small{display:none}.sw-report-table th:first-child{max-width:90px}.sw-report-tokens{gap:3px}.sw-report-rival strong .sw-icon{display:none}.sw-leader-flow ol{gap:5px}}
 @media(prefers-reduced-motion:reduce){.sw-report-content{animation:none}}
+
+.is-my-turn .sw-seat.sw-self{border:2px solid #93ffd1;background:linear-gradient(105deg,#1e5843,#113d31);box-shadow:0 0 22px #6dffc33b;color:#e2fff0}
+.is-my-turn .sw-hand-section{box-shadow:inset 0 3px #90ffcf,0 -8px 28px #6dffc31a}
+.is-my-turn .sw-turn-status{background:#164e3b;color:#bfffdf;border:1px solid #8af4bc;font-weight:750}
+.is-my-turn .sw-own-board{border-color:#86efbd}

@@ -5,13 +5,14 @@ COPY package.json ./
 COPY packages ./packages
 COPY apps ./apps
 COPY assets/cabo/reference-style/cabo-atlas-v1.png ./assets/cabo/reference-style/cabo-atlas-v1.png
+COPY assets/dnd/manifest.json ./assets/dnd/manifest.json
 COPY tests ./tests
 RUN npm test
 
 FROM node:22-alpine AS runtime
 LABEL org.opencontainers.image.title="Moon Table" \
       org.opencontainers.image.description="Multiplayer board games with friends, match records and cosmetic collections" \
-      org.opencontainers.image.version="0.5.1"
+      org.opencontainers.image.version="0.8.4"
 ENV NODE_ENV=production HOST=0.0.0.0 PORT=3000 DATA_FILE=/data/platform.json
 WORKDIR /app
 COPY --from=verified --chown=node:node /source/package.json ./

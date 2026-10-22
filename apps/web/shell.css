@@ -16,12 +16,12 @@
  #app .shell-menu-toggle{display:block;grid-column:3;grid-row:1;width:36px;height:34px;padding:0;background:transparent;color:var(--text);border:0;font-size:21px}
  #app .lobby-brand{min-width:0}#app .lobby-brand b{letter-spacing:.1em}
 
- #app .moon-lobby,#app .room-empty{height:calc(100dvh - 108px)}
+ #app .moon-lobby{height:auto;min-height:calc(100dvh - 108px)}#app .room-empty{height:calc(100dvh - 108px)}
  #app .room-lounge{height:calc(100dvh - 146px)}
 }
 @media(orientation:landscape) and (max-height:500px) and (max-width:1000px){
  #app .lobby-nav{height:36px;grid-template-columns:auto 1fr 36px;grid-template-rows:30px}#app .lobby-nav nav{grid-column:2;grid-row:1}#app .lobby-profile{display:none}#app .lobby-nav nav button{height:30px}#app .shell-menu-toggle{height:30px}
- #app .moon-lobby,#app .room-empty{height:calc(100dvh - 64px)}
+ #app .moon-lobby{height:auto;min-height:calc(100dvh - 64px)}#app .room-empty{height:calc(100dvh - 64px)}
 }
 
 /* Reserve the search slot so section changes never redistribute navigation. */

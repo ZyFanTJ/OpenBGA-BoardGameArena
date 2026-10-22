@@ -21,14 +21,15 @@ test('v4 storage migrates to an empty forum, preserves unrelated data and backs 
   const f = fixture(), input = structuredClone(f.store.data); input.version = 4; delete input.forum;
   input.rooms.preserve = {stateVersion: 9, revision: 2, game: {secret: ['unchanged']}};
   const original = structuredClone(input), migrated = migrateStorage(input);
-  assert.equal(migrated.version, 6); assert.deepEqual(migrated.forum, {nextNumber: 1, topics: {}});
-  for (const key of Object.keys(original).filter(k => k !== 'version')) assert.deepEqual(migrated[key], original[key]);
+  assert.equal(migrated.version, 9); assert.deepEqual(migrated.forum, {nextNumber: 1, topics: {}});
+  for (const key of Object.keys(original).filter(k => !['version','rooms'].includes(k))) assert.deepEqual(migrated[key], original[key]);
+  assert.deepEqual(migrated.rooms.preserve,{...original.rooms.preserve,revision:3,turnSeconds:0,turnClock:null,lastTimeout:null});
   assert.deepEqual(input, original); assert.deepEqual(migrateStorage(migrated), migrated);
   const base = resolve('work'); mkdirSync(base, {recursive: true});
   const dir = mkdtempSync(join(base, 'forum-migrate-'));
   try {
     const file = join(dir, 'platform.json'), source = JSON.stringify(input); writeFileSync(file, source);
-    const store = new JsonStore(file); assert.equal(store.data.version, 6);
+    const store = new JsonStore(file); assert.equal(store.data.version, 9);
     assert.equal(readFileSync(file + '.v4.bak', 'utf8'), source);
     new JsonStore(file); assert.equal(readFileSync(file + '.v4.bak', 'utf8'), source);
   } finally { rmSync(dir, {recursive: true, force: true}); }

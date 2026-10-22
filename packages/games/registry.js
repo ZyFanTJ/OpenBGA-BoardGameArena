@@ -1,6 +1,9 @@
 import { sevenWonders } from './seven-wonders/index.js';
 import { marrakech } from './marrakech/index.js';
 import { cabo } from './cabo/index.js';
+import { nightOfTheNinja } from './night-of-the-ninja/index.js';
+import { dnd } from './dnd/index.js';
+import { uno } from './uno/index.js';
 import { ensure } from '../platform/errors.js';
 
 /** The platform knows only this contract; game rules never enter room/HTTP code. */
@@ -15,5 +18,5 @@ export function createRegistry(modules) {
     ensure(entries.has(id), '游戏不存在', 404); return entries.get(id);
   } };
 }
-export const games = createRegistry([cabo, marrakech, sevenWonders]);
+export const games = createRegistry([cabo, marrakech, sevenWonders, nightOfTheNinja, dnd, uno]);
 

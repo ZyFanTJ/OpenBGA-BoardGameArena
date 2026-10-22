@@ -52,3 +52,7 @@
  .mk-actions>button{align-self:end;height:44px}.mk-phase-orient .mk-actions>button{align-self:center;height:70px}
 }
 @media(max-width:380px){.mk-actions,.mk-phase-orient .mk-actions{grid-template-columns:126px minmax(0,1fr);gap:5px}}
+
+.is-my-turn .mk-seat.mk-active{border:2px solid #a2ffcf;background:linear-gradient(110deg,#245840,#12372e);box-shadow:0 0 24px #78ffc642;color:#ecfff3}
+.is-my-turn .mk-operation-panel{box-shadow:inset 0 0 0 2px #8effc8,0 0 25px #69ffc32b}
+.is-my-turn .mk-controls>p{color:#bfffdf;font-weight:750}

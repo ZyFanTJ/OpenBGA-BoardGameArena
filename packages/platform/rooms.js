@@ -3,6 +3,7 @@ import { ensure } from './errors.js';
 import { boundedText } from './validation.js';
 import {archiveMatch} from './records.js';
 import {systemSettings} from './system.js';
+import {cosmetics} from './economy.js';
 import {validateTurnSeconds,syncTurnClock,turnWindow,turnView} from './turns.js';
 
 const secureRandom = () => randomInt(0, 0x100000000) / 0x100000000;
@@ -11,6 +12,7 @@ const orderSeats=players=>players.sort((a,b)=>a.seat-b.seat);
 export class RoomService {
   constructor(store, registry, { random = secureRandom, notify = () => {}, now = () => Date.now() } = {}) {
     this.now = now; this.store = store; this.registry = registry; this.random = random; this.notify = notify;
+    this.effectProgress = new Map(); this.progressSequence = 0;
   }
   room(id, data = this.store.data) {
     const room = data.rooms[id]; ensure(room, '房间不存在', 404); return room;
@@ -24,6 +26,10 @@ export class RoomService {
       host: this.store.data.profiles[r.hostId]?.name ?? r.players.find(p => p.id === r.hostId)?.name ?? '房主',
     }));
   }
+  invitation(id) {
+    const r = this.room(id), game = this.registry.get(r.gameId);
+    return {id:r.id,title:r.title,gameId:r.gameId,gameTitle:game.manifest.title,status:r.status,revision:r.revision,count:r.players.length,maxPlayers:game.manifest.maxPlayers,host:r.players.find(p=>p.id===r.hostId)?.name??'房主'};
+  }
   createRoom(user, input) {
     ensure(!this.currentRoom(user), '请先离开当前房间');
     const game = this.registry.get(input.gameId);
@@ -32,7 +38,7 @@ export class RoomService {
     const room = { id: code, title: boundedText(input.title, 40), gameId: game.manifest.id,
       stateVersion: game.manifest.stateVersion, options: input.options ?? {}, hostId: user.id,
       players: [{ id: user.id, name: user.name, ready: false, seat: 0 }], status: 'lobby', revision: 0,
-      game: null, chat: [], turnSeconds:validateTurnSeconds(input.turnSeconds??(game.turn&&game.timeout?60:0),game),turnClock:null,lastTimeout:null,createdAt: this.now(), visibility: input.visibility === 'public' ? 'public' : 'private' };
+      game: null, chat: [], turnSeconds:validateTurnSeconds(input.turnSeconds===undefined?(game.manifest.defaultTurnSeconds??(game.turn&&game.timeout?60:0)):input.turnSeconds,game),turnClock:null,lastTimeout:null,createdAt: this.now(), visibility: input.visibility === 'public' ? 'public' : 'private' };
     // Validate options through the game before storing a room.
     game.create(Array.from({ length: game.manifest.minPlayers }, (_, i) => String(i)), room.options, this.random);
     this.store.transaction(data => { ensure(systemSettings(data).roomCreationEnabled,'新建房间暂时关闭，已有房间可继续游戏',403);data.rooms[code] = room; });
@@ -58,8 +64,15 @@ export class RoomService {
     this.store.transaction(data => {
       const r = this.room(id, data); this.member(r, user, bot);
       ensure(!bot || input.type === 'game', 'AI 只能执行游戏行动', 403);
-      ensure(Number.isInteger(input.revision) && input.revision === r.revision, '房间已更新，请按最新状态重试', 409);
       const game = this.registry.get(r.gameId);
+      // Only explicitly independent submissions may cross room revisions. Both
+      // match and decision window are checked here, in the persistence transaction.
+      const submissionKey = input.type === 'game' && r.status === 'playing' && !r.dissolution
+        ? game.submissionKey?.(r.game, user.id, input.command) : null;
+      const independent = input.matchId === r.matchId && typeof input.submissionKey === 'string'
+        && input.submissionKey === submissionKey;
+      ensure(Number.isInteger(input.revision) && input.revision >= 0 && input.revision <= r.revision
+        && (input.revision === r.revision || independent), '房间已更新，请按最新状态重试', 409);
       ensure(r.stateVersion === game.manifest.stateVersion, '存档版本不匹配，需要迁移', 409);
       switch (input.type) {
         case 'updateOptions': {
@@ -68,7 +81,7 @@ export class RoomService {
           // Validation stays with the selected game, inside the revision-checked transaction.
           game.create(Array.from({length:Math.max(game.manifest.minPlayers,r.players.length)},(_,i)=>String(i)),input.options,this.random);
           r.options=structuredClone(input.options);
-          r.turnSeconds=validateTurnSeconds(input.turnSeconds??r.turnSeconds??0,game);
+          r.turnSeconds=validateTurnSeconds(input.turnSeconds===undefined?(r.turnSeconds??0):input.turnSeconds,game);
           r.players.forEach(player=>{player.ready=!!player.isBot;});
           break;
         }
@@ -105,10 +118,13 @@ export class RoomService {
           transition = { before: r.game, actorId: user.id, command: input.command };
           r.game = game.apply(r.game, user.id, input.command, { random: this.random, isHost: r.hostId === user.id });
           if (game.isFinished(r.game)){r.status = 'finished';archiveMatch(data,r,game);} break;
+        case 'rematchReady':
+          ensure(r.status === 'finished', '本局尚未结束',409);
+          r.rematchVotes = [...new Set([...(r.rematchVotes??[]),user.id])]; break;
         case 'rematch':
           ensure(r.hostId === user.id && r.status === 'finished', '只有房主可以在终局后再开一局');
-          r.status = 'lobby'; r.game = null; r.players = r.players.filter(p => !p.departed);
-          r.players.forEach(p => { p.ready = !!p.isBot; }); break;
+          r.status = 'lobby'; r.game = null;r.lastTimeout=null; r.players = r.players.filter(p => !p.departed);
+          r.players.forEach(p => { p.ready = !!p.isBot || (r.rematchVotes??[]).includes(p.id); }); delete r.rematchVotes; break;
         case 'requestDissolve':
           ensure(r.hostId === user.id && r.status === 'playing', '只有房主可以发起中途解散', 403);
           ensure(!r.dissolution, '已有解散投票正在进行', 409);
@@ -121,6 +137,7 @@ export class RoomService {
           else r.dissolution.votes.push(user.id);
           break;
         case 'leave':
+          if(r.rematchVotes)r.rematchVotes=r.rematchVotes.filter(playerId=>playerId!==user.id);
           if (r.status === 'playing' && game.bot) {
             const seat = r.players.find(p => p.id === user.id);
             seat.isBot = true; seat.departed = true; seat.name += ' · AI';
@@ -142,6 +159,22 @@ export class RoomService {
     });
     this.notify(id, transition);
     return input.type === 'leave' || !this.store.data.rooms[id] ? { left: true, reason: input.type === 'leave' ? 'left' : 'dissolved' } : this.snapshot(id, user, transition, bot);
+  }
+  /** Internal capability used only by EffectRunner; never exposed as a player command. */
+  completeEffect(id, { revision, matchId, effectId, result }) {
+    let changed = false;
+    this.store.transaction(data => {
+      const room = data.rooms[id];
+      if (!room || room.revision !== revision || room.matchId !== matchId || room.status !== 'playing' || room.dissolution) return;
+      const game = this.registry.get(room.gameId);
+      ensure(room.stateVersion === game.manifest.stateVersion, '存档版本不匹配，需要迁移', 409);
+      if (!game.effect || !game.applyEffect || game.effect(room.game)?.id !== effectId) return;
+      room.game = game.applyEffect(room.game, effectId, result, { random: this.random });
+      if (game.isFinished(room.game)) { room.status = 'finished'; archiveMatch(data, room, game); }
+      syncTurnClock(room, game, this.now()); room.revision++; changed = true;
+    });
+    if (changed) this.notify(id);
+    return changed;
   }
   expireTurn(id,{revision,key,deadlineAt}) {
     let changed=false;
@@ -170,14 +203,47 @@ export class RoomService {
     if(changed)this.notify(id);
     return changed;
   }
+  publishEffectProgress(id, { matchId, effectId, fingerprint, value }) {
+    const room = this.store.data.rooms[id];
+    if (!room || room.status !== 'playing' || room.matchId !== matchId || room.dissolution) return false;
+    const effect = this.registry.get(room.gameId).effect?.(room.game);
+    if (effect?.id !== effectId || JSON.stringify([room.matchId, room.stateVersion, effect]) !== fingerprint) return false;
+    this.effectProgress.set(id, { matchId, effectId, value: structuredClone(value), sequence: ++this.progressSequence });
+    this.notify(id, undefined, { type: 'presentation' }); return true;
+  }
+  clearEffectProgress(id, matchId, effectId) {
+    const current = this.effectProgress.get(id);
+    if (current?.matchId !== matchId || current.effectId !== effectId) return;
+    this.effectProgress.delete(id);
+  }
+  visibleProgress(room, game) {
+    const progress = this.effectProgress.get(room.id);
+    return progress && room.game && progress.matchId === room.matchId && game.effect?.(room.game)?.id === progress.effectId && !room.dissolution ? progress : null;
+  }
+  presentation(id, user) {
+    const room = this.room(id); this.member(room, user);
+    const game = this.registry.get(room.gameId);
+    if (!game.presentation) return null;
+    const progress = this.visibleProgress(room, game);
+    return { type: 'presentation', id, matchId: room.matchId, revision: room.revision, presentationRevision: progress?.sequence ?? 0,
+      game: game.presentation(room.game, user.id, { effectProgress: progress?.value ?? null }) };
+  }
   snapshot(id, user, transition, bot = false) {
     const r = this.room(id); this.member(r, user, bot);
     const game = this.registry.get(r.gameId);
+    const visibleProgress = this.visibleProgress(r, game);
     return { id: r.id, matchId: r.matchId ?? null, title: r.title, gameId: r.gameId, options: r.options, hostId: r.hostId,
-      players: r.players.map(p=>({...p,...(!p.isBot&&this.store.data.profiles[p.id]?{name:this.store.data.profiles[p.id].name,appearance:{...this.store.data.profiles[p.id].equipped}}: {})})), status: r.status, revision: r.revision, chat: r.chat,
-      dissolution: r.dissolution ?? null, visibility: r.visibility ?? 'private',
+      players: r.players.map(p=>{
+        const profile=!p.isBot&&this.store.data.profiles[p.id];
+        if(!profile)return {...p};
+        const item=cosmetics.find(item=>item.type==='title'&&item.id===profile.equipped.title);
+        return {...p,name:profile.name,appearance:{...profile.equipped},title:item?{id:item.id,name:item.name,rarity:item.rarity}:null};
+      }), status: r.status, revision: r.revision, chat: r.chat,
+      dissolution: r.dissolution ?? null, visibility: r.visibility ?? 'private', rematchVotes:r.rematchVotes??[],
       maxPlayers: game.manifest.maxPlayers,
+      submissionKey: r.status === 'playing' && !r.dissolution ? game.submissionKey?.(r.game, user.id) ?? null : null,
       supportsBots: !!game.bot,turnSeconds:r.turnSeconds??0,turn:turnView(r,game,user.id,this.now()),
-      game: r.game ? game.view(r.game, user.id, transition) : null };
+      presentationRevision: visibleProgress?.sequence ?? 0,
+      game: r.game ? game.view(r.game, user.id, transition, { effectProgress: visibleProgress?.value ?? null }) : null };
   }
 }

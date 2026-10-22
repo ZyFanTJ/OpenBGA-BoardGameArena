@@ -1,4 +1,4 @@
-/** A single shelf of games, filtered and paged at the current card width. */
+/** Responsive shelves, filtered and paged at the current card width. */
 export function createCatalog(root) {
   const grid = root.querySelector('.moon-game-grid');
   // Cards start hidden so measuring the grid cannot fetch every cover first.
@@ -9,7 +9,10 @@ export function createCatalog(root) {
     if (reset) page = 0;
     const query = root.querySelector('#lobby-search')?.value.trim().toLowerCase() ?? '';
     const category = root.querySelector('[data-filter][aria-pressed=true]')?.dataset.filter ?? '全部';
-    pageSize = Math.max(1, getComputedStyle(grid).gridTemplateColumns.split(' ').length);
+    const layout = getComputedStyle(grid);
+    const columns = layout.gridTemplateColumns.trim().split(/\s+/).length;
+    const rows = Math.max(1, Number(layout.getPropertyValue('--catalog-rows')) || 1);
+    pageSize = Math.max(1, columns * rows);
     const matches = cards.filter(card => card.dataset.gameSearch.includes(query) && (category === '全部' || card.dataset.category === category));
     const pages = Math.max(1, Math.ceil(matches.length / pageSize));
     page = Math.min(page, pages - 1);

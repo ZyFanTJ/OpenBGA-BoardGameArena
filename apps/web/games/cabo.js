@@ -6,19 +6,34 @@ import { caboResults } from './cabo/results.js';
 
 export function createCaboRenderer(send, rerender) {
   let selected = [], previousKey = '';
-  let current, user, room, motion;
+  let current, user, room, motion, container, settlementKey, settlementOpen = true;
+  function showSettlement(open) {
+    settlementOpen = open;
+    container?.querySelectorAll('[data-cabo-settlement]').forEach(el => { el.hidden = !open; });
+    const summary = container?.querySelector('.cabo-settlement-summary');
+    if (summary) summary.hidden = open;
+    const target = container?.querySelector(open ? '[data-action="game:settlement-close"]' : '[data-action="game:settlement-open"]');
+    target?.focus({preventScroll:true});
+  }
+  const escapeSettlement = event => {
+    if (event.key==='Escape' && settlementOpen && ['roundEnd','finished'].includes(current?.phase) && !event.target.closest('dialog[open]')) {event.preventDefault();showSettlement(false);}
+  };
   const keyOf = (id, slot) => `${id}:${slot}`;
   function ownSlots() { return selected.filter(x => x.id === user.id).map(x => x.slot); }
   const renderer = {
-    update(container, snapshot, me) {
+    update(target, snapshot, me) {
+      if (container!==target) {container?.removeEventListener('keydown',escapeSettlement);container=target;container.addEventListener('keydown',escapeSettlement);}
       if (!container.querySelector('.cabo-board')) container.innerHTML = caboShell(snapshot.game.expert);
       motion ??= createTableAnimator((snapshot, me) => renderer.render(snapshot, me));
       motion.update(container.querySelector('.cabo-board'), snapshot, me);
     },
-    dispose() { motion?.dispose(); motion = null; },
+    dispose() { motion?.dispose(); motion = null;container?.removeEventListener('keydown',escapeSettlement); },
+    beforeOverlay() { showSettlement(false); },
     render(snapshot, me) {
       room = snapshot; current = room.game; user = me;
       const s = current;
+      const resultKey = `${room.id}:${room.matchId}:${s.round}:${s.phase}`;
+      if (resultKey !== settlementKey) { settlementKey = resultKey; settlementOpen = true; }
       const key = `${s.round}:${s.phase}:${s.turnId}:${s.setup?.confirmed}:${s.setup?.slots?.join(',')}`;
       if (previousKey !== key) { selected = []; previousKey = key; }
       const myTurn = s.turnId === user.id;
@@ -35,7 +50,8 @@ export function createCaboRenderer(send, rerender) {
       } else if (['roundEnd', 'finished'].includes(s.phase)) {
         help = s.phase === 'finished' ? `${s.winners.map(name).join('、')} 获胜` : '本轮结算';
         controls = caboResults(s, name, user.id);
-        if (room.hostId === user.id) controls += s.phase === 'roundEnd' ? b('下一轮', 'game:nextRound') : b('再来一局', 'rematch');
+        if (room.hostId === user.id && s.phase === 'roundEnd') controls += b('下一轮', 'game:nextRound');
+        if (s.phase === 'finished') controls += b('分享战绩', 'table:share');
       } else if (!myTurn) help = `${name(s.turnId)} 的回合`;
       else if (s.phase === 'turn') {
         help = '你的回合 · 选择牌堆';
@@ -56,9 +72,11 @@ export function createCaboRenderer(send, rerender) {
         controls = b('盖牌', 'game:confirm');
       }
       if (s.caller && myTurn && !['setup', 'roundEnd', 'finished'].includes(s.phase)) help = `最后一次行动 · ${help}`;
-      return renderCaboTable({ s, room, user, name, selectable, selected, help, controls });
+      const summaryControls = s.phase === 'roundEnd' && room.hostId === user.id ? b('下一轮','game:nextRound') : s.phase === 'finished' ? b('分享战绩','table:share') : '';
+      return renderCaboTable({ s, room, user, name, selectable, selected, help, controls, settlementOpen, summaryControls });
     },
     async handle(action, element) {
+      if (action === 'settlement-close' || action === 'settlement-open') { showSettlement(action === 'settlement-open'); return; }
       if (action === 'guide-open') { document.querySelector('#cabo-guide-dialog').showModal(); return; }
       if (action === 'guide-close') { document.querySelector('#cabo-guide-dialog').close(); return; }
       if (motion?.busy) return;

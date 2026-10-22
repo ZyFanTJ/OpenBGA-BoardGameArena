@@ -1,5 +1,6 @@
 import { escapeHtml as e, button as plainButton } from './ui.js';
 import { icon } from './icons.js';
+import {turnLimitField} from './turn-feedback.js';
 // Labels here are trusted icon markup; all dynamic fields are escaped at insertion.
 const b = (html, ...args) => plainButton('', ...args).replace('</button>', html + '</button>');
 
@@ -7,7 +8,6 @@ const upcoming = [
   ['werewolf', '狼人杀', '6–18', '15–30', '聚会推理', '推理 · 社交 · 经典', 0],
   ['avalon', '阿瓦隆', '5–10', '30–60', '策略对战', '身份 · 策略 · 阵营', 1],
   ['undercover', '谁是卧底', '4–12', '15–30', '聚会推理', '推理 · 聚会 · 轻松', 2],
-  ['uno', 'UNO', '2–10', '10–20', '卡牌游戏', '休闲 · 欢乐 · 家庭', 3],
   ['ludo', '飞行棋', '2–4', '15–30', '家庭休闲', '休闲 · 亲子 · 经典', 4],
   ['catan', '卡坦岛', '3–4', '60–120', '策略对战', '策略 · 经营 · 经典', 5],
 ];
@@ -35,7 +35,7 @@ export function joinPanel(user) { return `<section class="moon-join" id="join-pa
 export function lobbyFooter() { return `<footer class="moon-footer"><span><span class="moon-mark"></span><b>MOON TABLE</b></span><div>${b('关于我们','about',false,'class="text-button"')}${b('玩法帮助','help',false,'class="text-button"')}</div></footer>`; }
 export function lobbyDialogs(user,games,metadata,{joinInDialog=false}={}) {
   const meta=metadata[games[0]?.id]??{};
-  return `<dialog id="create-room-dialog" aria-labelledby="create-room-title"><div class="create-heading"><div><h2 id="create-room-title">开个新房间</h2></div>${b('×','close-create',false,'class="quiet" aria-label="关闭创建房间"')}</div><form data-form="create"><label for="create-game">桌游类型</label><select id="create-game" name="gameId" required>${games.map(g=>`<option value="${e(g.id)}">${e(g.title)} · ${g.minPlayers}–${g.maxPlayers} 人</option>`).join('')}</select>${user?'':'<label for="create-name">你的昵称</label><input id="create-name" name="name" maxlength="24" placeholder="牌桌上怎么称呼你" required autocomplete="nickname">'}<label for="create-title">房间名称</label><input id="create-title" name="title" maxlength="40" value="${e(user?`${user.name} 的牌桌`:'今晚的牌桌')}" required><div id="game-options">${meta.optionsHtml??''}</div><label class="check"><input type="checkbox" name="public" checked>公开房间 · 展示在大厅</label><input type="hidden" id="practice-mode" name="practice" value=""><button class="gold-button create-submit">创建房间</button></form></dialog>
+  return `<dialog id="create-room-dialog" aria-labelledby="create-room-title"><div class="create-heading"><div><h2 id="create-room-title">开个新房间</h2></div>${b('×','close-create',false,'class="quiet" aria-label="关闭创建房间"')}</div><form data-form="create"><label for="create-game">桌游类型</label><select id="create-game" name="gameId" required>${games.map(g=>`<option value="${e(g.id)}">${e(g.title)} · ${g.minPlayers}–${g.maxPlayers} 人</option>`).join('')}</select>${user?'':'<label for="create-name">你的昵称</label><input id="create-name" name="name" maxlength="24" placeholder="牌桌上怎么称呼你" required autocomplete="nickname">'}<label for="create-title">房间名称</label><input id="create-title" name="title" maxlength="40" value="${e(user?`${user.name} 的牌桌`:'今晚的牌桌')}" required><div id="game-options">${meta.optionsHtml??''}</div>${turnLimitField()}<label class="check"><input type="checkbox" name="public" checked>公开房间 · 展示在大厅</label><input type="hidden" id="practice-mode" name="practice" value=""><p class="create-share-hint">创建后即可复制房间链接、分享群聊，朋友点开就能加入。</p><button class="gold-button create-submit">创建房间</button></form></dialog>
     <dialog id="lobby-join-dialog" class="platform-dialog" aria-label="加入房间"><button class="dialog-close" data-action="close-join" aria-label="关闭加入房间">×</button>${joinInDialog?joinPanel(user):''}</dialog>${infoDialog()}`;
 }
 

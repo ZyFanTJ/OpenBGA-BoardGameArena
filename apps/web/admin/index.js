@@ -102,6 +102,12 @@ export function createAdmin({root,shell,getUser,setUser,notify,onSettingsChanged
     if(result.id===getUser()?.id)setUser(result.profile);
     close();notify('用户信息已更新');await load();return;
    }
+   if(type==='ai'){
+    if(!form.dataset.requestId)form.dataset.requestId=requestId();
+    const result=await api('/admin/ai',{settings:{enabled:form.elements.enabled.checked,baseUrl:values.baseUrl,model:values.model,apiKey:values.apiKey,clearApiKey:!!form.elements.clearApiKey?.checked,contextTokens:Number(values.contextTokens),temperature:values.temperature.trim()===''?null:Number(values.temperature),dmStylePrompt:values.dmStylePrompt},reason:values.reason,revision:Number(form.dataset.revision),requestId:form.dataset.requestId});
+    if(!active||run!==generation)return;
+    data=result;show();notify('AI DM 配置已保存，后续请求立即生效');return;
+   }
    if(type==='settings'){
     const settings={...data.settings};
     for(const [key,value]of Object.entries(settings))settings[key]=typeof value==='boolean'?form.elements[key].checked:typeof value==='number'?Number(values[key]):values[key];

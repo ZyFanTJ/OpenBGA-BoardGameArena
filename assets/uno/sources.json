@@ -1,0 +1,12 @@
+{
+  "checkedAt": "2026-10-22",
+  "completeOfficialCardAssetPackFound": false,
+  "runtimeArt": "Original SVG artwork in apps/web/games/uno/art.js; existing lobby cover",
+  "sources": [
+    {"type":"primary-rules","url":"https://service.mattel.com/instruction_sheets/W2085-Eng.pdf","edition":"108-card classic","status":"verified"},
+    {"type":"supplemental-rules","url":"https://service.mattel.com/instruction_sheets/42001pr.pdf","scope":"two-player reverse; old four-card UNO penalty excluded","status":"verified"},
+    {"type":"official-media-page","url":"https://mattel.iprsoftware.com/news/unoR-celebrates-50-years-of-bringing-people-together","status":"verified","contents":"Anniversary product images, not a complete card-face atlas"},
+    {"type":"official-media-download","url":"https://mattel.iprsoftware.com/_gallery/get_files/?page_id=5ffc55eb2cfac204adc526fa","status":"fetch-failed","downloaded":false},
+    {"type":"official-product-image","url":"https://s3.amazonaws.com/cms.ipressroom.com/236/files/20210/5ffc57552cfac20813c2504b_UNO%2B50th%2BAnniversary%2BCard%2BDeck/UNO%2B50th%2BAnniversary%2BCard%2BDeck_c5baa3ad-02b8-4d74-bda3-7e4b2b55467c-prv.jpg?v=c5baa3ad-02b8-4d74-bda3-7e4b2b55467c","status":"linked-from-official-media-page; image-fetch-failed","downloaded":false}
+  ]
+}

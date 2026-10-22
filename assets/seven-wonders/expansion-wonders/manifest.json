@@ -1,0 +1,35 @@
+{
+  "created": "2026-10-20",
+  "generator": "image_gen built-in",
+  "artwork": "Original generated city illustrations; no printed card artwork",
+  "encoding": "Lossless WebP; original pixels and dimensions preserved",
+  "images": [
+    {
+      "wonder": "roma",
+      "path": "apps/web/assets/seven-wonders/wonders/roma-v1.webp",
+      "width": 2172,
+      "height": 724,
+      "bytes": 2214632,
+      "sha256": "4fb8b3d738d271d6fd986256f2801889c4090cf177903fca0a604b246ea5e301",
+      "source": "exec-465d48db-b71e-4b96-a2c3-337d87bee5dc.png"
+    },
+    {
+      "wonder": "abu-simbel",
+      "path": "apps/web/assets/seven-wonders/wonders/abu-simbel-v1.webp",
+      "width": 2172,
+      "height": 724,
+      "bytes": 2159752,
+      "sha256": "6f4d8250e05803acd13fe4c70c7ff0689d968be09624a7521fe3233b366fe41f",
+      "source": "exec-7b0de741-d72a-4b42-8b41-c281148e070b.png"
+    },
+    {
+      "wonder": "siracusa",
+      "path": "apps/web/assets/seven-wonders/wonders/siracusa-v1.webp",
+      "width": 2172,
+      "height": 724,
+      "bytes": 2354568,
+      "sha256": "590dfb65973b3fc392ef807761d9632536bae5849e6c73d27e6394566cfcdaf9",
+      "source": "exec-fa58ede6-7d3e-4838-86d4-46c6894bf77e.png"
+    }
+  ]
+}

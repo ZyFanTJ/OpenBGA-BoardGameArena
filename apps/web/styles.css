@@ -1,4 +1,11 @@
+@import url('/table-social.css');
+@import url('/room-chat.css');
+@import url('/games/dnd/style.css');
+@import url('/games/dnd/immersion.css');
+@import url('/games/dnd/play.css');
+@import url('/games/dnd/art.css');
 @import url('/games/seven-wonders/style.css');
+@import url('/games/seven-wonders/setup.css');
 @import url('/games/seven-wonders/atlas.css');
 @import url('/games/seven-wonders/hud.css');
 @import url('/games/seven-wonders/clarity.css');
@@ -6,6 +13,7 @@
 @import url('/games/seven-wonders/feedback.css');
 @import url('/games/seven-wonders/decision-hud.css');
 @import url('/games/marrakech/style.css');
+@import url('/games/night-of-the-ninja/style.css');
 @import url('/games/cabo.css');
 @import url('/games/cabo/call-effect.css');
 @import url('/games/cabo-guide.css');
@@ -17,9 +25,11 @@
 @import url('/platform-palette.css');
 @import url('/room-browser.css');
 @import url('/hub/profile.css');
+@import url('/hub/titles.css');
 @import url('/room-invites.css');
 @import url('/forum/forum.css');
 @import url('/admin/admin.css');
+@import url('/turn-feedback.css');
 :root { color-scheme: dark; --bg:#082d38; --panel:#103f49; --line:#37636a; --text:#eef3df; --muted:#a6c6bf; --mint:#deedbc; --gold:#f1d782; --ink:#123d3d; font-family:system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif; font-size:16px; }
 .game-loading{min-height:200px;display:grid;place-content:center;gap:16px;text-align:center;color:var(--muted)}
 * { box-sizing:border-box; } [hidden] { display:none!important; }

@@ -1,0 +1,10 @@
+.turn-limit-note{font-size:11px;color:#9fadb9;margin:6px 0 14px;line-height:1.5}
+.turn-cue{--turn-accent:#8fffd0;--turn-progress:1;flex-shrink:0;display:flex;align-items:center;justify-content:center;position:relative;gap:9px;min-height:34px;padding:4px 14px;border:1px solid #617b8b55;border-radius:3px;background:#112333;color:#b4c4ce;overflow:hidden;font-size:12px;white-space:nowrap}
+.turn-cue-label{font-weight:700}.turn-cue-dot{width:7px;height:7px;border-radius:50%;background:currentColor;flex-shrink:0}.turn-countdown{font-size:18px;font-weight:750;font-variant-numeric:tabular-nums;line-height:1.2;color:inherit;min-width:42px;text-align:center}
+.turn-cue-progress{position:absolute;inset:auto 0 0;height:2px;background:currentColor;transform:scaleX(var(--turn-progress));transform-origin:left;opacity:.8}
+.turn-cue.is-required{color:#bcffe5;border-color:#76eab8;background:linear-gradient(105deg,#174e40,#10362d);box-shadow:0 0 20px #6dffc526,inset 0 0 16px #6dffc50d}.turn-cue.is-required .turn-cue-dot{box-shadow:0 0 10px #8fffd0}.turn-cue.is-urgent{color:#fff1c9;border-color:#ffc569;background:linear-gradient(105deg,#69421d,#3b2918);box-shadow:0 0 18px #ffbf5533}
+.turn-arrival{animation:turn-arrival .7s ease-out 2}.is-my-turn .room-bar{box-shadow:0 2px 0 #79ecc0,0 5px 18px #42db9e20}
+@keyframes turn-arrival{0%,100%{filter:brightness(1)}35%{filter:brightness(1.65)}}
+@media(max-width:1100px){.in-room .room-identity h1{max-width:160px}.turn-cue{padding:4px 9px;gap:7px;font-size:11px}.turn-countdown{font-size:17px}}
+@media(max-width:760px){.in-room .room-bar{gap:6px}.in-room .room-logo{display:none}.in-room .room-identity{min-width:0;flex:1}.in-room .room-identity h1{max-width:85px}.in-room .room-presence .room-person{display:none}.turn-cue{min-height:30px;font-size:10px;padding:4px 7px;gap:6px}.turn-countdown{font-size:15px;min-width:34px}.turn-cue-dot{width:5px;height:5px}.in-room .room-tools .room-invite{display:none}.in-room .room-tools{gap:4px}.in-room .room-tools button{padding:4px 6px}}
+@media(prefers-reduced-motion:reduce){.turn-arrival{animation:none}}

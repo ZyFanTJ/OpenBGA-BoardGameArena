@@ -4,6 +4,8 @@ import {boundedText} from './validation.js';
 import {userAccess,requireAdmin} from './access.js';
 import {systemSettings,validateSettings} from './system.js';
 import {cosmetics} from './economy.js';
+import {createHash} from 'node:crypto';
+import {textProviderView,validateTextProvider} from './integrations.js';
 
 const pageQuery=query=>{
  const page=Number(query.page??1);ensure(Number.isSafeInteger(page)&&page>=1&&page<=100000,'页码无效');
@@ -15,7 +17,7 @@ const stripTransaction=t=>({id:t.id,kind:t.kind,amount:t.amount,balance:t.balanc
 
 /** Owns privileged account operations, system configuration and their audit trail. */
 export class AdminService{
- constructor(store,{social,now=()=>Date.now()}={}){this.store=store;this.social=social;this.now=now;}
+ constructor(store,{social,now=()=>Date.now(),providerSecrets}={}){this.store=store;this.social=social;this.now=now;this.providerSecrets=providerSecrets;}
  bootstrap(handle){
   if(!handle)return;
   ensure(typeof handle==='string'&&/^[a-zA-Z0-9_]{3,24}$/.test(handle),'初始管理员账号无效');
@@ -61,10 +63,25 @@ export class AdminService{
  }
  audit(user,query={}){
   requireAdmin(this.store.data,user);const {page,q,size}=pageQuery(query);
-  const rows=[...this.store.data.administration.audit].reverse().map(a=>({id:a.id,action:a.action,actorId:a.actorId,actorName:this.store.data.profiles[a.actorId]?.name??'系统',targetId:a.targetId,targetName:this.store.data.profiles[a.targetId]?.name??(a.action==='settings'?'系统设置':'未知用户'),reason:a.reason,before:structuredClone(a.before),after:structuredClone(a.after),at:a.at}));
+  const rows=[...this.store.data.administration.audit].reverse().map(a=>({id:a.id,action:a.action,actorId:a.actorId,actorName:this.store.data.profiles[a.actorId]?.name??'系统',targetId:a.targetId,targetName:this.store.data.profiles[a.targetId]?.name??(a.action==='settings'?'系统设置':a.action==='ai'?'AI DM':'未知用户'),reason:a.reason,before:structuredClone(a.before),after:structuredClone(a.after),at:a.at}));
   return paginate(rows.filter(r=>!q||[r.actorName,r.targetName,r.reason,r.action].some(v=>v.toLowerCase().includes(q))),page,size);
  }
  settings(user){requireAdmin(this.store.data,user);return {revision:this.store.data.system.revision,settings:systemSettings(this.store.data)};}
+ ai(user){requireAdmin(this.store.data,user);return textProviderView(this.store.data);}
+ updateAi(user,input){
+  requireAdmin(this.store.data,user);const value=validateTextProvider(input.settings,this.store.data.integrations.textProvider);
+  const fingerprint={...value,apiKey:value.apiKey?createHash('sha256').update(value.apiKey).digest('hex'):''};
+  for(const key of ['contextTokens','temperature','dmStylePrompt'])if(!Object.hasOwn(input.settings,key))delete fingerprint[key];
+  this.write(user,input,'ai',null,fingerprint,data=>{
+   ensure(data.integrations.revision===input.revision,'AI 服务设置已更新，请重新载入',409);
+   const before=textProviderView(data),old=data.integrations.textProvider;
+   const encryptedKey=value.clearApiKey?null:value.apiKey?this.providerSecrets?.seal(value.apiKey):old.encryptedKey;
+   ensure(!value.apiKey||encryptedKey,'密钥存储尚未就绪');
+   ensure(!value.enabled||value.model&&encryptedKey,'启用 AI DM 前请填写模型并保存密钥');
+   data.integrations={revision:data.integrations.revision+1,textProvider:{enabled:value.enabled,baseUrl:value.baseUrl,model:value.model,encryptedKey,contextTokens:value.contextTokens,temperature:value.temperature,dmStylePrompt:value.dmStylePrompt}};
+   return {before,after:{...textProviderView(data),keyAction:value.clearApiKey?'已清除':value.apiKey?'已替换':'保留'}};
+  });return this.ai(user);
+ }
  write(user,input,action,targetId,value,update){
   ensure(typeof input.requestId==='string'&&/^[a-zA-Z0-9-]{16,80}$/.test(input.requestId),'管理请求标识无效');
   ensure(typeof input.reason==='string'&&input.reason.trim().length>=2&&input.reason.trim().length<=200,'请填写 2–200 字的操作备注');

@@ -1,0 +1,1253 @@
+{
+  "version": 1,
+  "generator": "image_gen built-in",
+  "assets": [
+    {
+      "id": "village",
+      "group": "scenes",
+      "path": "apps/web/assets/dnd/scenes/village-v1.webp",
+      "width": 887,
+      "height": 444,
+      "bytes": 109300,
+      "sha256": "f3fd7460d89be4500e4f91093863267aaecdf323e311eb0fe8b5547443108d29",
+      "pack": "mistlight",
+      "atlas": "mistlight-v1.png",
+      "crop": [
+        0,
+        0,
+        887,
+        444
+      ]
+    },
+    {
+      "id": "trail",
+      "group": "scenes",
+      "path": "apps/web/assets/dnd/scenes/trail-v1.webp",
+      "width": 887,
+      "height": 444,
+      "bytes": 154040,
+      "sha256": "cf005ed7f395401d7e804f57b80af983bef14fa000dbb364b0bf56dfbce1e966",
+      "pack": "mistlight",
+      "atlas": "mistlight-v1.png",
+      "crop": [
+        887,
+        0,
+        1774,
+        444
+      ]
+    },
+    {
+      "id": "gate",
+      "group": "scenes",
+      "path": "apps/web/assets/dnd/scenes/gate-v1.webp",
+      "width": 887,
+      "height": 443,
+      "bytes": 128026,
+      "sha256": "7fdf8197aebaa4ab0855d066431e729db6cee81dbc977d9e971f11639e0ca74e",
+      "pack": "mistlight",
+      "atlas": "mistlight-v1.png",
+      "crop": [
+        0,
+        444,
+        887,
+        887
+      ]
+    },
+    {
+      "id": "vault",
+      "group": "scenes",
+      "path": "apps/web/assets/dnd/scenes/vault-v1.webp",
+      "width": 887,
+      "height": 443,
+      "bytes": 130108,
+      "sha256": "13f337d5f2e3d6623b1772f8defdb39c825bfa3b7f55439112c0e18e4c830a1e",
+      "pack": "mistlight",
+      "atlas": "mistlight-v1.png",
+      "crop": [
+        887,
+        444,
+        1774,
+        887
+      ]
+    },
+    {
+      "id": "mistlight",
+      "group": "covers",
+      "path": "apps/web/assets/dnd/covers/mistlight-v1.webp",
+      "width": 382,
+      "height": 444,
+      "bytes": 43968,
+      "sha256": "b9549e4f7f920671770117c6674c99314c39c7492f8eaf54cc842bc3f143643c",
+      "derivedFrom": "village"
+    },
+    {
+      "id": "appleVillage",
+      "group": "scenes",
+      "path": "apps/web/assets/dnd/scenes/appleVillage-v1.webp",
+      "width": 561,
+      "height": 280,
+      "bytes": 65562,
+      "sha256": "e346f35b440a6648479e95d7144bf7474f6238c6aa58d254681b5ce2b2f76f46",
+      "pack": "blackapple",
+      "atlas": "blackapple-v1.png",
+      "crop": [
+        0,
+        0,
+        561,
+        280
+      ]
+    },
+    {
+      "id": "sanitarium",
+      "group": "scenes",
+      "path": "apps/web/assets/dnd/scenes/sanitarium-v1.webp",
+      "width": 561,
+      "height": 280,
+      "bytes": 53206,
+      "sha256": "e498eb0a5ac24d46e84df2565c7a2c75d7dee45b0c5abfefca844b0f77e87470",
+      "pack": "blackapple",
+      "atlas": "blackapple-v1.png",
+      "crop": [
+        561,
+        0,
+        1122,
+        280
+      ]
+    },
+    {
+      "id": "manor",
+      "group": "scenes",
+      "path": "apps/web/assets/dnd/scenes/manor-v1.webp",
+      "width": 561,
+      "height": 281,
+      "bytes": 64344,
+      "sha256": "611cc13cf92f7cab041cd0e3fe5619b08b8cf3e9347ce36068c37b6469a5f572",
+      "pack": "blackapple",
+      "atlas": "blackapple-v1.png",
+      "crop": [
+        0,
+        280,
+        561,
+        561
+      ]
+    },
+    {
+      "id": "tavern",
+      "group": "scenes",
+      "path": "apps/web/assets/dnd/scenes/tavern-v1.webp",
+      "width": 561,
+      "height": 281,
+      "bytes": 60992,
+      "sha256": "9f2e42b4f6c54be62e871ffa5589645991111ff99564b35727ca53001a89f810",
+      "pack": "blackapple",
+      "atlas": "blackapple-v1.png",
+      "crop": [
+        561,
+        280,
+        1122,
+        561
+      ]
+    },
+    {
+      "id": "cloakroom",
+      "group": "scenes",
+      "path": "apps/web/assets/dnd/scenes/cloakroom-v1.webp",
+      "width": 561,
+      "height": 280,
+      "bytes": 61046,
+      "sha256": "1e872b7945b403779410c8dcf109bab7d83f90cc3b4ae34840348906af5345eb",
+      "pack": "blackapple",
+      "atlas": "blackapple-v1.png",
+      "crop": [
+        0,
+        561,
+        561,
+        841
+      ]
+    },
+    {
+      "id": "bluehouse",
+      "group": "scenes",
+      "path": "apps/web/assets/dnd/scenes/bluehouse-v1.webp",
+      "width": 561,
+      "height": 280,
+      "bytes": 74964,
+      "sha256": "134620a94a66d3ad652747aebc3c207cd86765926919375927cddb4c36acd6e2",
+      "pack": "blackapple",
+      "atlas": "blackapple-v1.png",
+      "crop": [
+        561,
+        561,
+        1122,
+        841
+      ]
+    },
+    {
+      "id": "banquet",
+      "group": "scenes",
+      "path": "apps/web/assets/dnd/scenes/banquet-v1.webp",
+      "width": 561,
+      "height": 281,
+      "bytes": 64492,
+      "sha256": "7dedb5bf0abc4d735e0a0df7c79d40bb96b0315da2122fd5dd393e76da8ae32a",
+      "pack": "blackapple",
+      "atlas": "blackapple-v1.png",
+      "crop": [
+        0,
+        841,
+        561,
+        1122
+      ]
+    },
+    {
+      "id": "service",
+      "group": "scenes",
+      "path": "apps/web/assets/dnd/scenes/service-v1.webp",
+      "width": 561,
+      "height": 281,
+      "bytes": 64922,
+      "sha256": "d7ea6976af581d31b8eae7b960958538161cbb583aa672be4be3a6849acc9bd5",
+      "pack": "blackapple",
+      "atlas": "blackapple-v1.png",
+      "crop": [
+        561,
+        841,
+        1122,
+        1122
+      ]
+    },
+    {
+      "id": "cellar",
+      "group": "scenes",
+      "path": "apps/web/assets/dnd/scenes/cellar-v1.webp",
+      "width": 561,
+      "height": 280,
+      "bytes": 61204,
+      "sha256": "f8fbb8480608facf5064c9013a209dfd0cc1938c57f3c4238991f7cc8b8002a2",
+      "pack": "blackapple",
+      "atlas": "blackapple-v1.png",
+      "crop": [
+        0,
+        1122,
+        561,
+        1402
+      ]
+    },
+    {
+      "id": "treasury",
+      "group": "scenes",
+      "path": "apps/web/assets/dnd/scenes/treasury-v1.webp",
+      "width": 561,
+      "height": 280,
+      "bytes": 72252,
+      "sha256": "46b7cce03989648399f6be4f8c9ecf030a20c32ad0b700e288575553764d9320",
+      "pack": "blackapple",
+      "atlas": "blackapple-v1.png",
+      "crop": [
+        561,
+        1122,
+        1122,
+        1402
+      ]
+    },
+    {
+      "id": "blackapple",
+      "group": "covers",
+      "path": "apps/web/assets/dnd/covers/blackapple-v1.webp",
+      "width": 241,
+      "height": 280,
+      "bytes": 26198,
+      "sha256": "d8cba2ffbb70592dc05545dfa2b86e37139b82ff1a355860827e394cfa977e7f",
+      "derivedFrom": "appleVillage"
+    },
+    {
+      "id": "dragonInn",
+      "group": "scenes",
+      "path": "apps/web/assets/dnd/scenes/dragonInn-v1.webp",
+      "width": 591,
+      "height": 296,
+      "bytes": 72334,
+      "sha256": "0ef310925f37c413b2d2e4a6e9a70018a575bbec0ff9fde1acbf249978e5c9d6",
+      "pack": "morgansfort",
+      "atlas": "morgansfort-v1.png",
+      "crop": [
+        0,
+        0,
+        591,
+        296
+      ]
+    },
+    {
+      "id": "river",
+      "group": "scenes",
+      "path": "apps/web/assets/dnd/scenes/river-v1.webp",
+      "width": 592,
+      "height": 296,
+      "bytes": 62250,
+      "sha256": "f74729726f5cdd4868418015974aa7bce8a05a0a79a133e5d9a22ac7e7963609",
+      "pack": "morgansfort",
+      "atlas": "morgansfort-v1.png",
+      "crop": [
+        591,
+        0,
+        1183,
+        296
+      ]
+    },
+    {
+      "id": "entry",
+      "group": "scenes",
+      "path": "apps/web/assets/dnd/scenes/entry-v1.webp",
+      "width": 591,
+      "height": 296,
+      "bytes": 71470,
+      "sha256": "f38bdf61ae99f84618ffd8181a9116986e04b8f59ae178abac3add55ab69bee8",
+      "pack": "morgansfort",
+      "atlas": "morgansfort-v1.png",
+      "crop": [
+        1183,
+        0,
+        1774,
+        296
+      ]
+    },
+    {
+      "id": "wolvesDen",
+      "group": "scenes",
+      "path": "apps/web/assets/dnd/scenes/wolvesDen-v1.webp",
+      "width": 591,
+      "height": 295,
+      "bytes": 67494,
+      "sha256": "c98be50822ab2aa0c3f682fd752b00fa61017ee7ce0464d54c86ea7f1d8cc97b",
+      "pack": "morgansfort",
+      "atlas": "morgansfort-v1.png",
+      "crop": [
+        0,
+        296,
+        591,
+        591
+      ]
+    },
+    {
+      "id": "traps",
+      "group": "scenes",
+      "path": "apps/web/assets/dnd/scenes/traps-v1.webp",
+      "width": 592,
+      "height": 295,
+      "bytes": 67050,
+      "sha256": "41301ea98b8664440e17f2a5d656e9ba0b10379d2cdb7671848bb15f4a40558f",
+      "pack": "morgansfort",
+      "atlas": "morgansfort-v1.png",
+      "crop": [
+        591,
+        296,
+        1183,
+        591
+      ]
+    },
+    {
+      "id": "kobolds",
+      "group": "scenes",
+      "path": "apps/web/assets/dnd/scenes/kobolds-v1.webp",
+      "width": 591,
+      "height": 295,
+      "bytes": 66736,
+      "sha256": "a303174871202dbf8ee2bd7f6f146fb5b2f3c54363e16b590c7e2b28958b8b15",
+      "pack": "morgansfort",
+      "atlas": "morgansfort-v1.png",
+      "crop": [
+        1183,
+        296,
+        1774,
+        591
+      ]
+    },
+    {
+      "id": "store",
+      "group": "scenes",
+      "path": "apps/web/assets/dnd/scenes/store-v1.webp",
+      "width": 591,
+      "height": 296,
+      "bytes": 66530,
+      "sha256": "5c20116ada6ce91708af9ac241dfc2302775aaac9de9ff69715efbc1c07767b0",
+      "pack": "morgansfort",
+      "atlas": "morgansfort-v1.png",
+      "crop": [
+        0,
+        591,
+        591,
+        887
+      ]
+    },
+    {
+      "id": "lower",
+      "group": "scenes",
+      "path": "apps/web/assets/dnd/scenes/lower-v1.webp",
+      "width": 592,
+      "height": 296,
+      "bytes": 65742,
+      "sha256": "1f2b542f6b6e8f13da91225bb1d1e7a53066073a37e6b862fee1dab6a3802632",
+      "pack": "morgansfort",
+      "atlas": "morgansfort-v1.png",
+      "crop": [
+        591,
+        591,
+        1183,
+        887
+      ]
+    },
+    {
+      "id": "nest",
+      "group": "scenes",
+      "path": "apps/web/assets/dnd/scenes/nest-v1.webp",
+      "width": 591,
+      "height": 296,
+      "bytes": 62344,
+      "sha256": "45df7f3d6c0af5ff32a8f8f659621f831b6f25370542c854341c0f709f54515e",
+      "pack": "morgansfort",
+      "atlas": "morgansfort-v1.png",
+      "crop": [
+        1183,
+        591,
+        1774,
+        887
+      ]
+    },
+    {
+      "id": "morgansfort",
+      "group": "covers",
+      "path": "apps/web/assets/dnd/covers/morgansfort-v1.webp",
+      "width": 255,
+      "height": 296,
+      "bytes": 25586,
+      "sha256": "990c12f986e54a6b6f3affb6fae8846d6ebfd77a47da50881cdde953a6c63a3b",
+      "derivedFrom": "river"
+    },
+    {
+      "id": "fighter",
+      "group": "actors",
+      "path": "apps/web/assets/dnd/actors/fighter-v1.webp",
+      "width": 224,
+      "height": 256,
+      "bytes": 44766,
+      "sha256": "3aed5d6fb8e9ccba767d28eee785f475cfdb216dd20f6691e423df0309b350ef",
+      "atlas": "characters-v1.png",
+      "crop": [
+        17,
+        10,
+        348,
+        329
+      ],
+      "alpha": true
+    },
+    {
+      "id": "fighter",
+      "group": "portraits",
+      "path": "apps/web/assets/dnd/portraits/fighter-v1.webp",
+      "width": 128,
+      "height": 128,
+      "bytes": 24452,
+      "sha256": "872a9602d19f79750488163a6880ef47ba81df552f48b6bbb059ee34705ac3d0",
+      "derivedFrom": "fighter",
+      "alpha": true
+    },
+    {
+      "id": "rogue",
+      "group": "actors",
+      "path": "apps/web/assets/dnd/actors/rogue-v1.webp",
+      "width": 224,
+      "height": 256,
+      "bytes": 32030,
+      "sha256": "b0212ae1445a270541e2195f95be2b2db39c45ca39df5df8416bcfcaf58e7606",
+      "atlas": "characters-v1.png",
+      "crop": [
+        422,
+        21,
+        634,
+        327
+      ],
+      "alpha": true
+    },
+    {
+      "id": "rogue",
+      "group": "portraits",
+      "path": "apps/web/assets/dnd/portraits/rogue-v1.webp",
+      "width": 128,
+      "height": 128,
+      "bytes": 20634,
+      "sha256": "928379f2a57316fd935d916fee84489f290725489eccbd5189413d53823d30ec",
+      "derivedFrom": "rogue",
+      "alpha": true
+    },
+    {
+      "id": "cleric",
+      "group": "actors",
+      "path": "apps/web/assets/dnd/actors/cleric-v1.webp",
+      "width": 224,
+      "height": 256,
+      "bytes": 40374,
+      "sha256": "372ab733fe64b894018eebe5988bf19a3b968282ad1a9c26902099caf14054bc",
+      "atlas": "characters-v1.png",
+      "crop": [
+        675,
+        14,
+        899,
+        323
+      ],
+      "alpha": true
+    },
+    {
+      "id": "cleric",
+      "group": "portraits",
+      "path": "apps/web/assets/dnd/portraits/cleric-v1.webp",
+      "width": 128,
+      "height": 128,
+      "bytes": 24692,
+      "sha256": "eb4cddecab069fbbd385b105eabf061e19f5e62185861cf755ec0e9c46a0e494",
+      "derivedFrom": "cleric",
+      "alpha": true
+    },
+    {
+      "id": "wizard",
+      "group": "actors",
+      "path": "apps/web/assets/dnd/actors/wizard-v1.webp",
+      "width": 224,
+      "height": 256,
+      "bytes": 42580,
+      "sha256": "8cab13fe23b2935a4d559d845d821cf3971a731eab5bba559b1a0161b5275541",
+      "atlas": "characters-v1.png",
+      "crop": [
+        965,
+        14,
+        1193,
+        327
+      ],
+      "alpha": true
+    },
+    {
+      "id": "wizard",
+      "group": "portraits",
+      "path": "apps/web/assets/dnd/portraits/wizard-v1.webp",
+      "width": 128,
+      "height": 128,
+      "bytes": 25222,
+      "sha256": "0624afe0a3492a6c3d9cf995ae4295eae3b4f5eda7ce7321caa4b47c749e5f10",
+      "derivedFrom": "wizard",
+      "alpha": true
+    },
+    {
+      "id": "messenger",
+      "group": "actors",
+      "path": "apps/web/assets/dnd/actors/messenger-v1.webp",
+      "width": 224,
+      "height": 256,
+      "bytes": 37116,
+      "sha256": "1f5ae84375df5327f38667831b0293034dfaab3b7ebacef295dc5fdeaa2eaec3",
+      "atlas": "characters-v1.png",
+      "crop": [
+        67,
+        334,
+        300,
+        641
+      ],
+      "alpha": true
+    },
+    {
+      "id": "messenger",
+      "group": "portraits",
+      "path": "apps/web/assets/dnd/portraits/messenger-v1.webp",
+      "width": 128,
+      "height": 128,
+      "bytes": 25052,
+      "sha256": "af6ac597fb58a43476d305224a64bba23ad56601ca05ccc7789aae8e949f8800",
+      "derivedFrom": "messenger",
+      "alpha": true
+    },
+    {
+      "id": "warden",
+      "group": "actors",
+      "path": "apps/web/assets/dnd/actors/warden-v1.webp",
+      "width": 224,
+      "height": 256,
+      "bytes": 35476,
+      "sha256": "1fe3e66eaee2f6d4f86208ba0892ed6eadc9b0bb7488ed46057cd86016725379",
+      "atlas": "characters-v1.png",
+      "crop": [
+        387,
+        314,
+        582,
+        642
+      ],
+      "alpha": true
+    },
+    {
+      "id": "warden",
+      "group": "portraits",
+      "path": "apps/web/assets/dnd/portraits/warden-v1.webp",
+      "width": 128,
+      "height": 128,
+      "bytes": 19514,
+      "sha256": "35e759127c9feab82eb1557e34e46570b28f860f9603d8226172890716f2ac6b",
+      "derivedFrom": "warden",
+      "alpha": true
+    },
+    {
+      "id": "mother",
+      "group": "actors",
+      "path": "apps/web/assets/dnd/actors/mother-v1.webp",
+      "width": 224,
+      "height": 256,
+      "bytes": 39046,
+      "sha256": "171687e081f77256e284f63b76a51fbb073c81b410107f921d753c78ccd4924e",
+      "atlas": "characters-v1.png",
+      "crop": [
+        683,
+        335,
+        903,
+        642
+      ],
+      "alpha": true
+    },
+    {
+      "id": "mother",
+      "group": "portraits",
+      "path": "apps/web/assets/dnd/portraits/mother-v1.webp",
+      "width": 128,
+      "height": 128,
+      "bytes": 24676,
+      "sha256": "6e46d1e03cf74c9a3f8210fd22203b6a5556ba9b68bd007636a73226d6b5edf1",
+      "derivedFrom": "mother",
+      "alpha": true
+    },
+    {
+      "id": "physician",
+      "group": "actors",
+      "path": "apps/web/assets/dnd/actors/physician-v1.webp",
+      "width": 224,
+      "height": 256,
+      "bytes": 34356,
+      "sha256": "57b506f9fcba48e6f2856c909e143f8bd92e48474e06a0c06a66036b316e4244",
+      "atlas": "characters-v1.png",
+      "crop": [
+        1008,
+        335,
+        1192,
+        642
+      ],
+      "alpha": true
+    },
+    {
+      "id": "physician",
+      "group": "portraits",
+      "path": "apps/web/assets/dnd/portraits/physician-v1.webp",
+      "width": 128,
+      "height": 128,
+      "bytes": 23688,
+      "sha256": "e691e84c958a1d4a180ce45d98bee06afa45479a4ae1ff086d0bb8729be43228",
+      "derivedFrom": "physician",
+      "alpha": true
+    },
+    {
+      "id": "fairy-lord",
+      "group": "actors",
+      "path": "apps/web/assets/dnd/actors/fairy-lord-v1.webp",
+      "width": 224,
+      "height": 256,
+      "bytes": 54096,
+      "sha256": "153d77ffaaf80129ee6e35497b92a5d3b692843253a28f6a3fbcb56a025fc62c",
+      "atlas": "characters-v1.png",
+      "crop": [
+        47,
+        641,
+        329,
+        980
+      ],
+      "alpha": true
+    },
+    {
+      "id": "fairy-lord",
+      "group": "portraits",
+      "path": "apps/web/assets/dnd/portraits/fairy-lord-v1.webp",
+      "width": 128,
+      "height": 128,
+      "bytes": 28970,
+      "sha256": "fb9ff5cc88670999c4abe02461764f7a2b29027608fd30ee3bf4a190b12fe158",
+      "derivedFrom": "fairy-lord",
+      "alpha": true
+    },
+    {
+      "id": "jester",
+      "group": "actors",
+      "path": "apps/web/assets/dnd/actors/jester-v1.webp",
+      "width": 224,
+      "height": 256,
+      "bytes": 39100,
+      "sha256": "9dbefd6bb0c51e21d271772336e431e1dcb983eb3515182cfc1d8e847d9ba45a",
+      "atlas": "characters-v1.png",
+      "crop": [
+        375,
+        640,
+        615,
+        981
+      ],
+      "alpha": true
+    },
+    {
+      "id": "jester",
+      "group": "portraits",
+      "path": "apps/web/assets/dnd/portraits/jester-v1.webp",
+      "width": 128,
+      "height": 128,
+      "bytes": 29084,
+      "sha256": "d755a3fba1c68343746347ecc4f8d558dc8fefb129fabdbd77a8256e7ba1c981",
+      "derivedFrom": "jester",
+      "alpha": true
+    },
+    {
+      "id": "attendant",
+      "group": "actors",
+      "path": "apps/web/assets/dnd/actors/attendant-v1.webp",
+      "width": 224,
+      "height": 256,
+      "bytes": 27254,
+      "sha256": "e4c5a43d62ea91766e81c66c6f590166c9a80a8cfc8d49f7b58354de0582e9d4",
+      "atlas": "characters-v1.png",
+      "crop": [
+        706,
+        683,
+        869,
+        980
+      ],
+      "alpha": true
+    },
+    {
+      "id": "attendant",
+      "group": "portraits",
+      "path": "apps/web/assets/dnd/portraits/attendant-v1.webp",
+      "width": 128,
+      "height": 128,
+      "bytes": 21334,
+      "sha256": "1710afd3bad731803aa4b6d8e12e1031b03f53aeedbf1936a7b0b34c0ac3daf8",
+      "derivedFrom": "attendant",
+      "alpha": true
+    },
+    {
+      "id": "bart",
+      "group": "actors",
+      "path": "apps/web/assets/dnd/actors/bart-v1.webp",
+      "width": 224,
+      "height": 256,
+      "bytes": 31678,
+      "sha256": "f4eb258354eae275b79384c3295e64dde2abb7b0474c992d540ef6d84df41afa",
+      "atlas": "characters-v1.png",
+      "crop": [
+        1011,
+        650,
+        1194,
+        980
+      ],
+      "alpha": true
+    },
+    {
+      "id": "bart",
+      "group": "portraits",
+      "path": "apps/web/assets/dnd/portraits/bart-v1.webp",
+      "width": 128,
+      "height": 128,
+      "bytes": 20902,
+      "sha256": "a333f55df699044f1892055da2341e78fb6ef328582f1c662c60b5742462b01b",
+      "derivedFrom": "bart",
+      "alpha": true
+    },
+    {
+      "id": "kobold-chief",
+      "group": "actors",
+      "path": "apps/web/assets/dnd/actors/kobold-chief-v1.webp",
+      "width": 224,
+      "height": 256,
+      "bytes": 33360,
+      "sha256": "908650eed3e19eb221aaaf82401c78219c79d1e50e7a1605c2400ce3932fa2e2",
+      "atlas": "characters-v1.png",
+      "crop": [
+        82,
+        974,
+        313,
+        1238
+      ],
+      "alpha": true
+    },
+    {
+      "id": "kobold-chief",
+      "group": "portraits",
+      "path": "apps/web/assets/dnd/portraits/kobold-chief-v1.webp",
+      "width": 128,
+      "height": 128,
+      "bytes": 21108,
+      "sha256": "57a54757e53f3e8485b2d888b300325a6e940bc4718a07e729d034467c32b091",
+      "derivedFrom": "kobold-chief",
+      "alpha": true
+    },
+    {
+      "id": "boy",
+      "group": "actors",
+      "path": "apps/web/assets/dnd/actors/boy-v1.webp",
+      "width": 224,
+      "height": 256,
+      "bytes": 17822,
+      "sha256": "1001823050788315f422dd3f6bdeb6c0adf29dabfe8db657ca43c416ac18e005",
+      "atlas": "characters-v1.png",
+      "crop": [
+        426,
+        989,
+        531,
+        1239
+      ],
+      "alpha": true
+    },
+    {
+      "id": "boy",
+      "group": "portraits",
+      "path": "apps/web/assets/dnd/portraits/boy-v1.webp",
+      "width": 128,
+      "height": 128,
+      "bytes": 11384,
+      "sha256": "e67de73ec38ddd9cc69f4be0c9950b36ea0434dd8c20c88afae1dfe9b47a35fe",
+      "derivedFrom": "boy",
+      "alpha": true
+    },
+    {
+      "id": "girl",
+      "group": "actors",
+      "path": "apps/web/assets/dnd/actors/girl-v1.webp",
+      "width": 224,
+      "height": 256,
+      "bytes": 15648,
+      "sha256": "8d3241c75394a3847b999cf9e29b78a5656238b897856aecf3ba3c3507978233",
+      "atlas": "characters-v1.png",
+      "crop": [
+        724,
+        1032,
+        826,
+        1239
+      ],
+      "alpha": true
+    },
+    {
+      "id": "girl",
+      "group": "portraits",
+      "path": "apps/web/assets/dnd/portraits/girl-v1.webp",
+      "width": 128,
+      "height": 128,
+      "bytes": 10844,
+      "sha256": "07be9359acc38a23a0403e431f72d7b9c80bd0200e8fb606403432ddbca49af4",
+      "derivedFrom": "girl",
+      "alpha": true
+    },
+    {
+      "id": "miner",
+      "group": "actors",
+      "path": "apps/web/assets/dnd/actors/miner-v1.webp",
+      "width": 224,
+      "height": 256,
+      "bytes": 24976,
+      "sha256": "769d860cdddc549aba25ab3c9eb760aa36a7bf924eec82e0e5f94b2a2042aff2",
+      "atlas": "characters-v1.png",
+      "crop": [
+        970,
+        969,
+        1159,
+        1238
+      ],
+      "alpha": true
+    },
+    {
+      "id": "miner",
+      "group": "portraits",
+      "path": "apps/web/assets/dnd/portraits/miner-v1.webp",
+      "width": 128,
+      "height": 128,
+      "bytes": 18886,
+      "sha256": "7d74e5c1ea776d6a4c1fea464dd5d38e264f6ebcb869f517379b02edaf80ef0b",
+      "derivedFrom": "miner",
+      "alpha": true
+    },
+    {
+      "id": "wolf",
+      "group": "foes",
+      "path": "apps/web/assets/dnd/foes/wolf-v1.webp",
+      "width": 256,
+      "height": 256,
+      "bytes": 53442,
+      "sha256": "db4bc3afe6e854e33b67c31f9e5c12f1a7e30d4cdaf55fe4ee47c43e1e4dabe7",
+      "atlas": "enemies-v1.png",
+      "crop": [
+        12,
+        71,
+        409,
+        400
+      ],
+      "alpha": true
+    },
+    {
+      "id": "den-wolf",
+      "group": "foes",
+      "path": "apps/web/assets/dnd/foes/den-wolf-v1.webp",
+      "width": 256,
+      "height": 256,
+      "bytes": 63006,
+      "sha256": "ded5c3f3b2682c75bf8f6d362b1936cc120902cafcbfecfc1a619781c7415354",
+      "atlas": "enemies-v1.png",
+      "crop": [
+        452,
+        43,
+        849,
+        402
+      ],
+      "alpha": true
+    },
+    {
+      "id": "sentinel",
+      "group": "foes",
+      "path": "apps/web/assets/dnd/foes/sentinel-v1.webp",
+      "width": 256,
+      "height": 256,
+      "bytes": 56718,
+      "sha256": "8449271a93bd54acea236cf80eec60688accd7b4222a03baae1c790d1c1c5054",
+      "atlas": "enemies-v1.png",
+      "crop": [
+        904,
+        20,
+        1329,
+        431
+      ],
+      "alpha": true
+    },
+    {
+      "id": "goat-guard",
+      "group": "foes",
+      "path": "apps/web/assets/dnd/foes/goat-guard-v1.webp",
+      "width": 256,
+      "height": 256,
+      "bytes": 47926,
+      "sha256": "a2f8f6e22d2e0f6c8b564389bd547acffacef908d5eb7ab6631a7d0167e39f69",
+      "atlas": "enemies-v1.png",
+      "crop": [
+        1397,
+        17,
+        1729,
+        433
+      ],
+      "alpha": true
+    },
+    {
+      "id": "mirror-guard",
+      "group": "foes",
+      "path": "apps/web/assets/dnd/foes/mirror-guard-v1.webp",
+      "width": 256,
+      "height": 256,
+      "bytes": 61962,
+      "sha256": "b0435c6d138c354a87b8ce56f9c1ed3a303ee99ee510663b0950f60f9bf8c108",
+      "atlas": "enemies-v1.png",
+      "crop": [
+        20,
+        453,
+        392,
+        870
+      ],
+      "alpha": true
+    },
+    {
+      "id": "stirge",
+      "group": "foes",
+      "path": "apps/web/assets/dnd/foes/stirge-v1.webp",
+      "width": 256,
+      "height": 256,
+      "bytes": 48250,
+      "sha256": "93d8eed93d31982d376f603356da02c22d9bd1160f3d668a5e899c1177f58bb2",
+      "atlas": "enemies-v1.png",
+      "crop": [
+        463,
+        450,
+        869,
+        843
+      ],
+      "alpha": true
+    },
+    {
+      "id": "kobold",
+      "group": "foes",
+      "path": "apps/web/assets/dnd/foes/kobold-v1.webp",
+      "width": 256,
+      "height": 256,
+      "bytes": 45094,
+      "sha256": "95275e62b0e1bed52f525497163b426f0f1565ae18e6ed159dd08b2a675b3961",
+      "atlas": "enemies-v1.png",
+      "crop": [
+        916,
+        503,
+        1310,
+        856
+      ],
+      "alpha": true
+    },
+    {
+      "id": "mine-warden",
+      "group": "foes",
+      "path": "apps/web/assets/dnd/foes/mine-warden-v1.webp",
+      "width": 256,
+      "height": 256,
+      "bytes": 45924,
+      "sha256": "94c4c3341edd1f03c431c81d6addeffe69e2cee9887c0da6901a7c0e0d3b953b",
+      "atlas": "enemies-v1.png",
+      "crop": [
+        1409,
+        462,
+        1748,
+        867
+      ],
+      "alpha": true
+    },
+    {
+      "id": "lantern",
+      "group": "props",
+      "path": "apps/web/assets/dnd/props/lantern-v1.webp",
+      "width": 256,
+      "height": 256,
+      "bytes": 50308,
+      "sha256": "ff44cb7f90e3693d9775c4416e1ca9cf4a5b4389ac4f71ee9213b0c27db92394",
+      "atlas": "props-v1.png",
+      "crop": [
+        90,
+        16,
+        275,
+        361
+      ],
+      "alpha": true
+    },
+    {
+      "id": "map",
+      "group": "props",
+      "path": "apps/web/assets/dnd/props/map-v1.webp",
+      "width": 256,
+      "height": 256,
+      "bytes": 62456,
+      "sha256": "a5a0f8754f3b48ec765f593f17ab2f44ea9429b511661964c8bd1339ded4283b",
+      "atlas": "props-v1.png",
+      "crop": [
+        373,
+        76,
+        734,
+        327
+      ],
+      "alpha": true
+    },
+    {
+      "id": "mirror",
+      "group": "props",
+      "path": "apps/web/assets/dnd/props/mirror-v1.webp",
+      "width": 256,
+      "height": 256,
+      "bytes": 52362,
+      "sha256": "f0efcc9434865fb6187c58bbb863c5b8ee177c36333c4b3f8f56c9ee761b9be9",
+      "atlas": "props-v1.png",
+      "crop": [
+        797,
+        16,
+        1014,
+        356
+      ],
+      "alpha": true
+    },
+    {
+      "id": "thread",
+      "group": "props",
+      "path": "apps/web/assets/dnd/props/thread-v1.webp",
+      "width": 256,
+      "height": 256,
+      "bytes": 77960,
+      "sha256": "e32705059831e6614ef00156f273753687c66d60828981d4b7a4123e7f97e297",
+      "atlas": "props-v1.png",
+      "crop": [
+        1134,
+        97,
+        1390,
+        344
+      ],
+      "alpha": true
+    },
+    {
+      "id": "rope",
+      "group": "props",
+      "path": "apps/web/assets/dnd/props/rope-v1.webp",
+      "width": 256,
+      "height": 256,
+      "bytes": 68204,
+      "sha256": "875b96add2a0ba5a1d34dce8cf77c73a0ee8cc31fd1fe0325ad6757966461f69",
+      "atlas": "props-v1.png",
+      "crop": [
+        32,
+        408,
+        353,
+        699
+      ],
+      "alpha": true
+    },
+    {
+      "id": "silver",
+      "group": "props",
+      "path": "apps/web/assets/dnd/props/silver-v1.webp",
+      "width": 256,
+      "height": 256,
+      "bytes": 68150,
+      "sha256": "681340a4f7395e50b9c76812b0f258011b0cff564609765ac71ac168e24fa408",
+      "atlas": "props-v1.png",
+      "crop": [
+        394,
+        407,
+        733,
+        691
+      ],
+      "alpha": true
+    },
+    {
+      "id": "jade",
+      "group": "props",
+      "path": "apps/web/assets/dnd/props/jade-v1.webp",
+      "width": 256,
+      "height": 256,
+      "bytes": 46932,
+      "sha256": "a2ef5e3491ab4b36ef6ea2f14c705d1080b2a4afe97efc3d05244d93a2b6ee97",
+      "atlas": "props-v1.png",
+      "crop": [
+        829,
+        382,
+        1061,
+        715
+      ],
+      "alpha": true
+    },
+    {
+      "id": "opener",
+      "group": "props",
+      "path": "apps/web/assets/dnd/props/opener-v1.webp",
+      "width": 256,
+      "height": 256,
+      "bytes": 32560,
+      "sha256": "483f5f7381340afe201ea71a6c4801c122c5d43fbf7b806cbac10dfa9eb117a9",
+      "atlas": "props-v1.png",
+      "crop": [
+        1121,
+        389,
+        1418,
+        704
+      ],
+      "alpha": true
+    },
+    {
+      "id": "key",
+      "group": "props",
+      "path": "apps/web/assets/dnd/props/key-v1.webp",
+      "width": 256,
+      "height": 256,
+      "bytes": 36016,
+      "sha256": "3f853a3357896a3171253525ad02d082020e30260c553af1ad52ea22cb7d87ef",
+      "atlas": "props-v1.png",
+      "crop": [
+        66,
+        725,
+        312,
+        1048
+      ],
+      "alpha": true
+    },
+    {
+      "id": "rune",
+      "group": "props",
+      "path": "apps/web/assets/dnd/props/rune-v1.webp",
+      "width": 256,
+      "height": 256,
+      "bytes": 91378,
+      "sha256": "f9e6e7553cd9f63d6978d9acbf3b259c50b0bde7f415416cbb6e4d62d35d2939",
+      "atlas": "props-v1.png",
+      "crop": [
+        391,
+        725,
+        694,
+        1031
+      ],
+      "alpha": true
+    },
+    {
+      "id": "potion",
+      "group": "props",
+      "path": "apps/web/assets/dnd/props/potion-v1.webp",
+      "width": 256,
+      "height": 256,
+      "bytes": 55862,
+      "sha256": "4f3fafbd8838ae8565149170ec8f1bf80af4ec70cb423aab338729efe7fdaa49",
+      "atlas": "props-v1.png",
+      "crop": [
+        807,
+        734,
+        1012,
+        1037
+      ],
+      "alpha": true
+    },
+    {
+      "id": "flower",
+      "group": "props",
+      "path": "apps/web/assets/dnd/props/flower-v1.webp",
+      "width": 256,
+      "height": 256,
+      "bytes": 66886,
+      "sha256": "197aa8f79d403d88cc5cd724fec46a138618d5262a89b988d13505766e73cec7",
+      "atlas": "props-v1.png",
+      "crop": [
+        1090,
+        762,
+        1426,
+        1045
+      ],
+      "alpha": true
+    }
+  ],
+  "sources": [
+    {
+      "path": "assets/dnd/source-atlases/blackapple-v1.png",
+      "width": 1122,
+      "height": 1402,
+      "sha256": "90f6f275a785e7e8e85b5c6fcbefaa0eb25b1a2fab8b8166cd74414a362ec963"
+    },
+    {
+      "path": "assets/dnd/source-atlases/characters-v1.png",
+      "width": 1254,
+      "height": 1254,
+      "sha256": "6c4052c560aa3a392f064cf70bcaa5b0a004cfaa3372c2847d20cf8b7a69e518"
+    },
+    {
+      "path": "assets/dnd/source-atlases/enemies-v1.png",
+      "width": 1774,
+      "height": 887,
+      "sha256": "27cb01cd5df7459440d018581771b348842766c983e305e01c8ed641959b32e2"
+    },
+    {
+      "path": "assets/dnd/source-atlases/mistlight-v1.png",
+      "width": 1774,
+      "height": 887,
+      "sha256": "b3916ec2caff1f5eb808492e4825b807a10d02d2272c6dbfb23d306db3bcabc6"
+    },
+    {
+      "path": "assets/dnd/source-atlases/morgansfort-v1.png",
+      "width": 1774,
+      "height": 887,
+      "sha256": "c2c67761ded523b81a5ec6de42861421e2ad309248582a9f897cb2f811f43b61"
+    },
+    {
+      "path": "assets/dnd/source-atlases/props-v1.png",
+      "width": 1448,
+      "height": 1086,
+      "sha256": "ac903c640dbd6855485cd84f7c0abd30b384fbb084ffff3d80ff3868f816faf1"
+    }
+  ]
+}

@@ -173,7 +173,7 @@ export function view(s, playerId, transition) {
 }
 function result(s){const last=id=>s.history.at(-1)?.results.find(p=>p.id===id)?.points??0;return {winners:[...s.winners],rounds:s.round,scoreDirection:'lower',players:s.players.map(p=>({id:p.id,score:p.total,rank:1+s.players.filter(q=>q.total<p.total||q.total===p.total&&last(q.id)<last(p.id)).length,breakdown:[{label:'累计罚分',value:p.total},{label:'末轮罚分',value:last(p.id)}]}))};}
 export const cabo = { manifest, create, apply, view, result, bot,
- turn(s){if(['finished','roundEnd'].includes(s.phase))return null;return {key:`${s.round}:${s.phase==='setup'?'setup':s.players[s.turn].id}`,players:s.phase==='setup'?s.players.filter(p=>!s.setup[p.id]?.confirmed).map(p=>p.id):[s.players[s.turn].id]};},
+ turn(s){if(['finished','roundEnd'].includes(s.phase))return null;return {key:`${s.round}:${s.phase==='setup'?'setup':'turn:'+s.players[s.turn].id}`,players:s.phase==='setup'?s.players.filter(p=>!s.setup[p.id]?.confirmed).map(p=>p.id):[s.players[s.turn].id]};},
  timeout(view,id){
   if(view.phase==='setup')return !view.setup?{type:'look',slots:[0,1]}:{type:'confirm'};
   if(view.turnId!==id)return null;

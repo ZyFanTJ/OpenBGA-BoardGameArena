@@ -30,6 +30,7 @@ export function lazyRenderer(load) {
         if (action === 'retryRenderer') { failed = false; rerender(); return; }
         return instance?.handle(action, target);
       },
+      beforeOverlay() { instance?.beforeOverlay?.(); },
       dispose() { generation++; pending = false; failed = false; instance?.dispose?.(); instance = null; },
     };
   };

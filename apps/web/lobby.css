@@ -29,7 +29,7 @@
 .catalog-toolbar{display:flex;align-items:center;justify-content:flex-end;gap:10px;min-width:0}
 .catalog-pagination{margin:0;gap:6px;flex-shrink:0}.catalog-pagination button{width:29px;height:29px}.catalog-pagination output{min-width:34px;font-size:10px}
 .moon-lobby{height:calc(100dvh - 98px);min-height:0;padding:10px 18px;gap:14px;align-items:stretch}
-.lobby-main{display:grid;grid-template-rows:minmax(0,1fr) auto 108px;gap:12px;min-height:0}
+.lobby-main{display:grid;grid-template-rows:minmax(0,1fr) auto;gap:12px;min-height:0}
 .lobby-feature-row{min-height:0}.moon-hero{min-height:0;height:100%;border-radius:13px}.moon-hero-copy{padding:18px 24px}.moon-hero h1{font-size:clamp(34px,5dvh,54px)}
 .hero-buttons{margin-top:18px;gap:12px}.hero-buttons button{height:40px;min-width:145px;font-size:13px}.hero-statistics{margin-top:18px;gap:18px}.hero-statistics b{font-size:14px}.hero-statistics small{font-size:10px}
 .moon-join{padding:12px 14px}.moon-join h2{font-size:19px;gap:8px}.moon-join h2 .ui-icon{width:23px;height:23px}
@@ -44,10 +44,10 @@
 @media(max-width:1100px){.lobby-sidebar{display:none}.moon-lobby{grid-template-columns:1fr}.moon-hero h1{font-size:40px}}
 @media(max-width:760px){
   .lobby-nav{height:100px;min-height:100px;padding:10px 12px 0;gap:5px 9px}.lobby-nav nav button{padding:8px 4px}.lobby-brand b{font-size:16px}
-  .moon-lobby{height:calc(100dvh - 128px);padding:8px 10px;display:block}.lobby-main{height:100%;grid-template-rows:82px minmax(0,1fr) 103px;gap:10px}
+  .moon-lobby{height:calc(100dvh - 128px);padding:8px 10px;display:block}.lobby-main{height:auto;grid-template-rows:82px auto;gap:16px}
   .lobby-feature-row{display:block}.lobby-feature-row>.moon-join{display:none}.moon-hero{min-height:0;background-position:65% 56%}.moon-hero-copy{padding:10px 12px;display:flex;align-items:center;gap:10px}.moon-hero h1{font-size:25px;white-space:nowrap}.hero-buttons{margin:0;gap:7px;flex:1}.hero-buttons button{min-width:0;height:40px;font-size:11px;padding:5px;gap:0}.hero-buttons .ui-icon{display:none}.hero-statistics{display:none}
-  .moon-catalog{align-self:center;min-width:0}.moon-catalog>.section-heading{gap:8px;margin:0 0 8px}.moon-catalog .section-heading h2{font-size:17px}.catalog-toolbar{width:100%;gap:5px}.catalog-filters{flex:1;min-width:0;width:auto;padding:1px}.catalog-filters button{padding:6px 4px;font-size:9px;white-space:nowrap}.catalog-pagination{gap:3px}.catalog-pagination button{width:25px;height:30px;font-size:20px}.catalog-pagination output{min-width:27px;font-size:9px}
-  .moon-game-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.game-cover{height:clamp(78px,17dvh,142px)}.game-card-copy{padding:0 9px 9px}.game-card-copy h3{font-size:16px}.game-card-copy>p{font-size:9px;gap:3px}.game-card-copy .ui-icon{width:11px;height:11px}.small-tags span{font-size:8px;padding:1px 4px}.game-card-copy button{min-height:34px;font-size:11px}
+  .moon-catalog{align-self:start;min-width:0}.moon-catalog>.section-heading{gap:8px;margin:0 0 8px}.moon-catalog .section-heading h2{font-size:17px}.catalog-toolbar{width:100%;gap:5px}.catalog-filters{flex:1;min-width:0;width:auto;padding:1px}.catalog-filters button{padding:6px 4px;font-size:9px;white-space:nowrap}.catalog-pagination{gap:3px}.catalog-pagination button{width:25px;height:30px;font-size:20px}.catalog-pagination output{min-width:27px;font-size:9px}
+  .moon-game-grid{--catalog-rows:3;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.game-cover{height:clamp(80px,13dvh,116px)}.game-card-copy{padding:0 9px 9px}.game-card-copy h3{font-size:16px}.game-card-copy>p{font-size:9px;gap:3px}.game-card-copy .ui-icon{width:11px;height:11px}.small-tags span{font-size:8px;padding:1px 4px}.game-card-copy button{min-height:34px;font-size:11px}
   .moon-rooms .section-heading{margin:0 0 6px}.moon-rooms .section-heading h2{font-size:16px}.public-rooms{grid-template-columns:1fr}.public-room{padding:6px 9px;grid-template-columns:28px minmax(0,1fr)}.room-thumb{width:28px;height:32px}.public-room h3{font-size:12px}.public-room footer button{min-height:26px}.rooms-empty{padding:8px 10px;font-size:12px}.rooms-empty button{font-size:11px;min-height:30px}
   .moon-footer{height:28px;padding:4px 12px;flex-direction:row;gap:4px}.moon-footer>div{gap:4px}.moon-footer .text-button{font-size:9px;padding:2px 4px}.moon-footer .moon-mark{width:16px;height:16px}.moon-footer>span{gap:6px}.moon-footer b{font-size:8px}
 }

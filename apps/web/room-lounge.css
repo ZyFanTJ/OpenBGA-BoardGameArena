@@ -1,4 +1,10 @@
 /* Shared waiting room: game rules and artwork stay in their own game modules. */
+.room-lounge.lounge-large-room .lounge-table-scene{overflow-y:auto;display:flex;flex-direction:column;gap:12px;padding:14px;scrollbar-width:thin}
+.lounge-large-room .lounge-table-game{display:none}.lounge-large-room .lounge-felt{inset:10%;border-radius:65px}
+.lounge-large-room .lounge-seats{position:static;inset:auto;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));grid-template-rows:none;align-items:stretch;gap:9px}
+.lounge-large-room .lounge-seat{padding:9px 6px}.lounge-large-room .lounge-avatar{width:32px;height:32px;font-size:17px;margin-bottom:5px}.lounge-large-room .lounge-avatar .ui-icon{width:19px;height:19px}
+.lounge-large-room .lounge-seat h3{font-size:11px}.lounge-large-room .lounge-player-status{font-size:9px}.lounge-large-room .lounge-table-caption{position:static;margin-top:auto;padding-top:4px;flex:none}
+@media(max-width:760px){.lounge-large-room .lounge-seats{grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}.room-lounge.lounge-large-room .lounge-table-scene{padding:10px}.lounge-large-room .lounge-avatar{width:28px;height:28px;font-size:15px}.lounge-large-room .lounge-seat{padding:9px 4px}.lounge-large-room .lounge-seat-actions{flex-wrap:wrap;gap:4px}.lounge-large-room .lounge-seat-actions button{font-size:8px;padding:3px}.lounge-large-room .lounge-seat h3{font-size:10px}.lounge-large-room .lounge-player-status{font-size:8px}}
 .room-layout.is-waiting{max-width:1500px;padding:0 22px 16px}
 .in-room .is-waiting .room-bar{height:64px;padding:0 4px}
 .in-room .is-waiting .room-identity h1{font-size:20px;color:#f2e5bf}

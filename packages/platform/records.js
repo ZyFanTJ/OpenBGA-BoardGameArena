@@ -28,4 +28,6 @@ export class RecordService{
   return {items,nextCursor:index+limit<filtered.length?items.at(-1).id:null,total:filtered.length,rewardPolicy,summary:{played:all.length,wins:all.filter(m=>own(m).won).length,practice:all.filter(m=>m.practice).length,perGame}};
  }
  detail(user,id){const match=this.store.data.matches[id];ensure(match&&match.participants.some(p=>p.id===user.id&&!p.isBot),'战绩不存在',404);return {...match,own:match.participants.find(p=>p.id===user.id)};}
+ share(user,id){this.detail(user,id);this.store.transaction(data=>{data.matches[id].shared=true;});return this.shared(id);}
+ shared(id){const m=this.store.data.matches[id];ensure(m?.shared,'分享不存在',404);return {id:m.id,gameId:m.gameId,gameTitle:m.gameTitle,roomTitle:m.roomTitle,endedAt:m.endedAt,rounds:m.rounds,practice:m.practice,participants:m.participants.map(p=>({name:p.name,rank:p.rank,score:p.score,won:p.won,isBot:p.isBot,left:p.left}))};}
 }

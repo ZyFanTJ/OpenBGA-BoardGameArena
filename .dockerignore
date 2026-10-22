@@ -17,6 +17,9 @@ assets/cabo/*
 !assets/cabo/reference-style
 assets/cabo/reference-style/*
 !assets/cabo/reference-style/cabo-atlas-v1.png
+!assets/dnd
+assets/dnd/*
+!assets/dnd/manifest.json
 docs
 deploy
 scripts

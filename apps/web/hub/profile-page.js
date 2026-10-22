@@ -1,10 +1,9 @@
 import {escapeHtml as e} from '../ui.js';
 import {icon} from '../icons.js';
-import {avatar,bannerClass,itemArt} from './cosmetics.js';
+import {avatar,bannerClass,itemArt,titleBadge} from './cosmetics.js';
 import {gameCards} from '../games/registry.js';
 
 const action=(label,name,attrs='')=>`<button type="button" data-action="hub:${name}" ${attrs}>${label}</button>`;
-const title=(user,items)=>items.find(item=>item.id===user.appearance.title)?.name??'初来乍到';
 const date=value=>value?new Date(value).toLocaleDateString('zh-CN',{year:'numeric',month:'2-digit',day:'2-digit'}):'历史存档';
 const presence={online:'当前在线',lobby:'等待同桌',playing:'正在对局',offline:'当前离线'};
 const pct=(wins,played)=>played?Math.round(wins/played*100)+'%':'—';
@@ -13,7 +12,7 @@ const art=(id)=>`<div class="game-cover ${e(gameCards[id]?.coverClass??'')}" ari
 
 export function profileIdentity(user,items,status='online'){
   const details=user.details??{};
-  return `<div class="pp-identity">${avatar(user,'pp-avatar')}<div class="pp-identity-copy"><span class="pp-title">${e(title(user,items))}</span><h1>${e(user.name)}</h1><div class="pp-identity-meta"><span class="pp-presence ${status==='offline'?'is-offline':''}"><i></i>${presence[status]??presence.online}</span><span>${new Date(user.createdAt).getFullYear()} 年加入</span></div>${details.bio?`<p class="pp-bio">${e(details.bio)}</p>`:''}</div></div>`;
+  return `<div class="pp-identity">${avatar(user,'pp-avatar')}<div class="pp-identity-copy">${titleBadge(user,items,'pp-title')}<h1>${e(user.name)}</h1><div class="pp-identity-meta"><span class="pp-presence ${status==='offline'?'is-offline':''}"><i></i>${presence[status]??presence.online}</span><span>${new Date(user.createdAt).getFullYear()} 年加入</span></div>${details.bio?`<p class="pp-bio">${e(details.bio)}</p>`:''}</div></div>`;
 }
 
 export function renderProfilePage(data,items,games){

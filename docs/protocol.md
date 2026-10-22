@@ -1,5 +1,15 @@
 # API 与存储协议
 
+房间 HTTP 响应及 SSE 快照中的 `players[]` 为真人玩家附带公开的已装备称号 `title: {id,name,rarity} | null`，与 `appearance.title` 同源，供游戏内昵称前的品质徽章使用。机器人不带称号。此字段由当前资料生成，不写入游戏状态或暴露背包、余额等私有资料。
+
+## AI 冒险命令
+
+`dnd` 沿用 `/api/rooms/:id/actions`，房间层输入 `{type:'game',revision,command}`。游戏命令包括 `{type:'character',archetype,name,note?}`、`{type:'choose',choiceId}`、`{type:'act',text}`、`{type:'roll'}` 和 `{type:'cancelCheck'}`；合法行动 ID 只取自该玩家当前 `game.choices`。角色名至多 24 字、私密背景 240 字、自由行动 600 字。等待 DM 期间禁止新的游戏行动。
+
+选择带骰子的行动后持久化 `pendingCheck`，仅当前玩家可以投骰或取消；确认前不取随机数、不扣资源。公开 `pendingCheck` 包含 id、playerId 与服务器计算的判定说明，`lastCheck` 包含最近已提交的结果。所有命令仍同事务校验 revision；重复投骰不能产生第二个结果。`world` 是经过探索权限过滤的地图、目标和实体状态视图。DND 状态 v2 通过纯迁移为 v1 补充 `pendingCheck / lastCheck`，其余原状态保留。
+
+`game.pending` 对客户端只公开当前是意图理解还是叙述，不发送 effect ID、系统提示或请求上下文。模型结果使用服务器内部 `RoomService.completeEffect`，HTTP 不开放同名命令，也不接受客户端指定的模型、密钥、骰点、HP 或结局。模型回复落库后以原有玩家专属快照推送。`dmStatus` 区分 `pending / ai / local / fallback`。规则版本、来源和限制见 [跑团方案](dnd-plan.md)。
+
 同源 JSON HTTP。身份来自 `moon_session` HttpOnly Cookie，所有房间操作校验成员。服务端默认绑定 `127.0.0.1:3000`。
 
 | 方法 | 路径 | 输入/用途 |
@@ -73,6 +83,25 @@ SSE 常规 `data` 是该玩家完整快照，不是可以向所有成员复用�
 
 平台存储 v4 在 v3 基础上给房间名册补充 `seat`，按原名册顺序分配，房间 revision 增加 1。迁移不改游戏内部状态或游戏状态版本，原存档以 `.v3.bak` 一次性备份。
 
+## 异步叙述的临时呈现
+
+新客户端连接 `GET /api/rooms/:id/events?protocol=2`。初次连接、重连、规则/名册变化和游戏提交仍返回完整玩家专属快照；未声明协议的旧客户端沿用完整快照推送。
+
+- 聊天更新为 `{type:"chat",id,revision,message}`，只含新增的一条消息，不附带游戏或重复历史，不调度机器人/计时器/效果。
+- 流式展示更新为 `{type:"presentation",id,matchId,revision,presentationRevision,game}`；`game` 为游戏可选 `presentation(state,viewerId,{effectProgress})` 生成的视图片段。DND 的该投影与完整 `view` 共用字段过滤，不公开原始模型片段、提示或意图识别内容。未提供该投影的插件兼容完整快照。
+- 客户端只合并同房间、同 match、同 revision 的展示片段，拒绝旧序号。遇到未知版本重新读取快照；重连首个快照允许新进程重置展示序号。延迟 HTTP 快照不会覆盖已收到的新聊天或同版本较新的展示进度。
+- SSE 写入受阻时不继续计算/堆积每个事件；drain 后补一个最新玩家快照。15 秒未恢复的连接关闭，由 EventSource 重连。多个标签页的同一玩家复用本次广播投影；不同玩家严格隔离。
+
+### 同时提交与客户端请求等待
+
+游戏可以提供纯函数 `submissionKey(state,playerId,command?)`，仅在尚未提交的独立选择窗口返回标识。玩家快照的 `submissionKey` 随状态更新。新客户端的命令附带 `matchId,submissionKey,revision`。
+
+服务器始终在提交事务内检查当前 revision。只有客户端版本落后、matchId 相同、当前游戏明确声明同一独立窗口且命令类型相符时，才基于当前状态继续校验并提交；`apply` 再次校验本人是否已提交、选择是否合法、阶段是否有效。重复、跨局、跨窗口、未来版本、解散中或截止后提交不会因此放行。不携带窗口的旧客户端仍严格要求 revision 相同。七大奇迹独立选面/轮抽/选牌/探索/海战选择、忍者之夜轮抽/亮牌、DND 建角已接入；平台不按游戏 ID 分支。顺序操作与其他房间命令保持原规则。
+
+浏览器请求的连接和响应正文共用 12 秒等待上限。写请求超时按“结果未确认”处理，刷新最新牌桌而不自动重放。正在提交的房间写操作只阻止另一项房间写操作，聊天、菜单、规则查看及导航仍可使用；离开后的旧响应不能重新打开旧房间。
+
+房间快照的 `presentationRevision` 表示临时效果进度，更新时游戏 revision 不变。客户端只更新游戏呈现，不重绘房间壳层。调度器在内存暂存进度，校验 matchId、effectId 和请求指纹，再通过 `view` 第四参数 `{effectProgress}` 让游戏决定投影。DND 只在叙述阶段公开 `narrationStream:{id,text}`，text 最多 1200 字；系统提示、意图识别片段和额外字段不公开。完整结果仍按原事务保存，之后 stream 为 null；片段不改变存档结构或规则状态。
+
 ## 玩家论坛
 
 `GET /api/forum` 与 `GET /api/forum/:id` 允许公开浏览；写入使用现有会话 Cookie，作者身份由服务端确定。
@@ -91,3 +120,29 @@ SSE 常规 `data` 是该玩家完整快照，不是可以向所有成员复用�
 ## 管理与系统设置
 
 `GET /api/system` 公开站点名称、公告及功能开放状态；管理接口在 `/api/admin/*`，仅注册且未停用的管理员可用。接口、revision、requestId、审计和 v6 迁移约束见 `docs/administration.md`。用户自己的账号投影提供 `admin` 能力标志，不能从客户端设置该标志获得权限。
+
+
+## 回合提示与操作时限（0.6.0）
+
+`POST /api/rooms` 可传平台级 `turnSeconds:0|30|60|120|300`，与游戏的 `options` 分开；三个现有游戏新建房间默认为 60。等待区房主的 `updateOptions` 同时支持 `turnSeconds`，在同一 revision 检查事务内更新并重置真人准备状态。省略时限会保留当前设置。
+
+每个成员快照新增 `turnSeconds` 及公开 `turn:{key,seconds,serverNow,required,playerIds,deadlineAt,paused,remainingMs,lastTimeout}`。`required` 仅表示当前查看者是否仍需操作，`playerIds` 为公开待操作玩家 ID；不包含选择内容或他人暗牌。`deadlineAt` 为服务端绝对时间，`remainingMs` 在暂停时冻结；`lastTimeout` 仅含对应房间 revision、玩家 ID 与时间。无决策阶段的 key/deadline 为 null，不限时房间仍返回操作提醒。普通操作、超时自动操作与投票均通过现有快照/SSE 更新。
+
+客户端不能请求强制超时。服务端调度在房间事务内重新验证 revision、窗口、截止时间和投票状态。具体适配器、自动行动和 v7 迁移约定见 `docs/turn-limits.md`。
+
+
+## 邀请与结算分享
+
+- `GET /api/room-invites/:code` 无需登录，返回房间标题、房主昵称、桌游、人数、状态与 revision；不返回玩家列表、聊天或游戏状态。邀请地址为 `/#invite/:code`，首次访客填写昵称创建现有游客会话后入座。`POST /api/rooms/:code/join` 支持传入 `revision`，在入座事务内校验，过期时返回 409。
+- 终局成员可发送 `rematchReady` 房间行动（携带 revision）表达继续意愿，推送的 `rematchVotes` 为已准备继续的玩家 ID。房主仍发送 `rematch` 返回原房间准备区，保留同桌、规则及已表达继续意愿者的准备状态，开始新局前房主需要准备。
+- `POST /api/history/:matchId/share` 由该局真人参与者主动开启公开分享；`GET /api/shares/:matchId` 仅对已开启的战绩返回标题、结束时间、轮数和参与者昵称 / 名次 / 分数 / 胜负 / AI 与离席标记。不包含玩家 ID、好友码、奖励、计分明细、聊天或原始游戏状态。地址为 `/#result/:matchId`，未开启分享的记录返回 404。
+- 结算图片在浏览器从已归档摘要绘制，支持 PNG 保存与系统文件分享。不支持系统文件分享的浏览器回退为图片下载。只有点击复制战绩链接才开启公开链接；保存图片不改变记录的公开状态。
+- 结算同桌好友入口复用 `/api/friends/request` 与 `/api/friends/respond`，游客绑定账号后沿用相同身份和关系。
+
+## 客户端异常恢复与展示
+
+HTTP 客户端会检查完整 JSON 响应，对空白、截断或代理 HTML 错误显示可读提示。写请求响应不确定时仅重新获取当前成员快照，不自动重发命令，避免重复出牌。SSE 在进入渲染器前验证快照结构；异常推送保留最后有效视图，重新同步并建立连接。版本冲突后的同步失败也不会产生未捕获的 Promise 错误。
+
+聊天继续复用房间内的 `chat` 和现有发送接口，不修改游戏 revision。前端快捷发言发送普通文本；新消息在聊天收起时显示限时气泡和未读数量，首次入房和重复推送不重播历史。离开房间时清理气泡与计时器。
+
+七大奇迹在 setup 阶段的成员视图 `setupChoices` 包含每面的公开 `startingResource`、`startingCoins`、`startingEffects` 与 `stages`。确认后保留选面参考信息，仍由服务器拒绝重复选择；开局后清空参考选项。这些字段由规则实时投影，未增加持久状态字段，不需要存档版本迁移。

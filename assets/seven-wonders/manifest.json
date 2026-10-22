@@ -2,6 +2,10 @@
   "version": 1,
   "created": "2026-10-16",
   "generator": "image_gen built-in",
+  "expansionWonders": {
+    "manifest": "assets/seven-wonders/expansion-wonders/manifest.json",
+    "prompts": "assets/seven-wonders/expansion-wonders/prompts.json"
+  },
   "cardKinds": {
     "lumber": {
       "sheet": "materials",

@@ -1,5 +1,5 @@
 {
-  "name": "moon-table", "version": "0.5.1", "private": true,
-  "type": "module", "engines": { "node": ">=22" },
+  "name": "moon-table", "version": "0.8.4", "private": true,
+  "type": "module", "engines": { "node": ">=22.13" },
   "scripts": { "start": "node apps/server/index.js", "dev": "node --watch apps/server/index.js", "test": "node --test tests/*.test.js", "image:build":"node scripts/docker.mjs build", "image:package":"node scripts/docker.mjs package", "image:push":"node scripts/docker.mjs push", "deploy":"node scripts/docker.mjs deploy" }
 }

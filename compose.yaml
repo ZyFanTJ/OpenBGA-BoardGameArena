@@ -1,7 +1,7 @@
 name: moon-table
 services:
   app:
-    image: ${IMAGE_REF:-happy-online:0.5.1}
+    image: ${IMAGE_REF:-happy-online:0.8.4}
     build:
       context: .
       target: runtime
@@ -10,6 +10,9 @@ services:
     environment:
       SECURE_COOKIES: "0"
       ADMIN_BOOTSTRAP_HANDLE: "${ADMIN_BOOTSTRAP_HANDLE:-}"
+      AI_DM_API_KEY: "${AI_DM_API_KEY:-}"
+      AI_DM_BASE_URL: "${AI_DM_BASE_URL:-https://api.openai.com/v1}"
+      AI_DM_MODEL: "${AI_DM_MODEL:-}"
     volumes:
       - moon-data:/data
     restart: unless-stopped

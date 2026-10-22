@@ -28,9 +28,10 @@ test('v5 administration migration is pure, gives nobody privileges, preserves al
  const store=new JsonStore(),sessions=new SessionService(store);sessions.create('迁移用户');
  const input=structuredClone(store.data);input.version=5;delete input.system;delete input.administration;
  input.rooms.X={revision:7,stateVersion:2,players:[{id:'a',seat:6}],game:{hand:['private'],pending:{a:'secret'}}};input.forum.topics.keep={body:'原有讨论'};
- const before=structuredClone(input),next=migrateStorage(input);assert.deepEqual(input,before);assert.equal(next.version,6);
+ const before=structuredClone(input),next=migrateStorage(input);assert.deepEqual(input,before);assert.equal(next.version,9);
  assert.deepEqual(next.system,{revision:0,settings:defaultSettings});assert.deepEqual(next.administration,{users:{},audit:[]});
- for(const key of Object.keys(before).filter(k=>k!=='version'))assert.deepEqual(next[key],before[key]);
+ for(const key of Object.keys(before).filter(k=>!['version','rooms'].includes(k)))assert.deepEqual(next[key],before[key]);
+ assert.deepEqual(next.rooms.X,{...before.rooms.X,revision:8,turnSeconds:0,turnClock:null,lastTimeout:null});
  const dir=mkdtempSync(join(tmpdir(),'moon-admin-'));try{const file=join(dir,'platform.json'),raw=JSON.stringify(input);writeFileSync(file,raw);assert.deepEqual(new JsonStore(file).data,next);assert.equal(readFileSync(file+'.v5.bak','utf8'),raw);new JsonStore(file);assert.equal(readFileSync(file+'.v5.bak','utf8'),raw);}finally{rmSync(dir,{recursive:true,force:true});}
 });
 

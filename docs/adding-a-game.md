@@ -43,4 +43,6 @@ export const example = {
 
 ## 5. 可选自动玩家
 
+如果游戏需要外部模型等 I/O，可额外提供纯 `effect(state)` 和 `applyEffect(state, effectId, result, {random})`，由 `EffectRunner` 执行请求并通过事务入口提交。网络调用不能放在规则或机器人决策函数中；不要向玩家视图暴露原始请求。`manifest.defaultTurnSeconds` 可声明适合该游戏的默认时限（例如跑团为 0）。完整契约和例子见 `packages/platform/game-contract.d.ts`、`packages/games/dnd/index.js` 与 `docs/dnd-plan.md`。
+
 在游戏模块导出 `bot: { observe, decide }`，签名见 `GameModule`。`observe(view, playerId, previous, ownCommand)` 返回新记忆，`decide(view, playerId, memory)` 返回合法游戏命令或 `null`（等待）。只根据自己的投影决策，不读取完整状态；函数保持纯计算。房间壳自动显示添加 AI，调度器负责执行和版本校验。重启时记忆可能为空，策略必须安全恢复。参考 `packages/games/marrakech/bot.js` 或 `packages/games/cabo/bot.js` 及 `tests/bots.test.js`。

@@ -1,0 +1,57 @@
+// Adapted from The Blackapple Brugh, Kyle Hettinger, 1e release 21.
+// Copyright © 2020–2021, 2023 Kyle Hettinger. Adaptation © 2026 Happy Online contributors.
+// Adventure text/data in this file: CC BY-SA 4.0. See NOTICE.md. No original illustrations used.
+const move = (id, label, next, extra = {}) => ({ id: `travel:${id}`, label, next, repeat: true, focus: 'exit', ...extra });
+const npc = (name, state, extra = {}) => ({ name, state, ...extra });
+export const blackapple = {
+  id: 'blackapple', title: '黑苹果妖丘', subtitle: '镜中的孩子', setting: '黑苹果村与妖精宫廷', start: 'appleVillage',
+  summary: '孩子们都回家了，却没有一个像从前。沿着村民的谎言与镜中的歌声，走入妖精的宴会。',
+  edition: '章节改编 · 调查 / 交涉 / 营救', duration: '45–90 分钟', theme: 'fairy',
+  source: { title: 'The Blackapple Brugh', author: 'Kyle Hettinger', edition: '1st Edition, Release 21', url: 'https://www.basicfantasy.org/downloads.html', publisherUrl: 'https://www.lulu.com/shop/kyle-hettinger-and-vasily-ermolaev/the-blackapple-brugh/paperback/product-v7qm8y.html', license: 'CC BY-SA 4.0', licenseUrl: 'https://creativecommons.org/licenses/by-sa/4.0/', copyright: '© 2020–2021, 2023 Kyle Hettinger', changes: '中文章节改编；合并房间、简化遭遇；新增交涉、警戒与营救分支。并非原书完整复刻。' },
+  quest: '带真正的孩子回家', winTitle: '镜外的黎明', lossTitle: '未竟的营救',
+  retreat: '你们暂时放弃营救，带着已知线索寻找援手。镜中宫廷的秘密仍未解决。',
+  defeat: '队伍已无力继续营救。妖丘里的孩子仍在等待，幸存者的故事将成为下一支队伍的线索。',
+  objectives: [{ text: '查明孩子们反常的原因', clue: 'impostors' }, { text: '寻找镜中宫廷的入口', visit: 'cloakroom' }, { text: '营救七名孩子', flags: ['gardenChild', 'hallChildren', 'kitchenChildren', 'arthur'] }, { text: '穿过宝库的出口镜', won: true }],
+  flagNames: { alarm: '妖精卫兵已经警觉', gardenChild: '吉尔斯已随队', hallChildren: '厄休拉、阿米莉亚与伯纳德已随队', kitchenChildren: '菲利普与史蒂维已随队', arthur: '亚瑟已随队', favour: '得到宴会宾客身份', mirrorOpen: '出口镜已开启' },
+  clueNames: { impostors: '村中的孩子是羊足妖精的替身', rhyme: '庄园镜子的召唤歌谣', illusion: '宫廷的华丽外观是幻象', exitMirror: '只有宝库的镜子通向外界', charm: '孩子左脚踝的金线维持着魅惑', passage: '侍者通道通往厨房与酒窖' },
+  scenes: {
+    appleVillage: { title: '黑苹果村', chapter: '第一章 · 归来的陌生人', art: 'hamlet', x: 14, y: 23, description: '炊烟升过苹果树，猪倌赶着牲口绕开林边。一个孩子唱着不合时宜的歌，母亲却把门关得更紧。菲格沃特夫人递来家书：请你们去看看她突然变了性情的儿子亚瑟。', exits: ['manor', 'sanitarium', 'tavern'], entities: [npc('菲格沃特夫人', '希望查明亚瑟为何性情大变'), npc('村里的孩子', '笑声尖细，不肯说起森林')], hotspots: { npc: '焦虑的家长', object: '反常的孩子', exit: '村外道路' } },
+    sanitarium: { title: '利维尼乌斯疗养院', chapter: '第一章 · 冒名者', art: 'study', x: 14, y: 63, description: '走廊尽头的窗户装着铁栏。利维尼乌斯医生搓着一块有孔的石头，坚称亚瑟只是生了怪病。门后的男孩听见母亲的名字，回答的却是一声压不住的羊叫。', exits: ['appleVillage'], entities: [npc('利维尼乌斯', '想弄清妖精魔法，愿意讨论当地传说'), npc('“亚瑟”', '回避家人的问题')], hotspots: { npc: '医生', object: '门后的男孩', exit: '返回村庄' } },
+    manor: { title: '菲格沃特庄园', chapter: '第一章 · 镜中来客', art: 'mirror', x: 36, y: 18, description: '壁炉里只有余烬。壁炉旁的高镜映出一个迟了半拍的你。夫人把亚瑟留下的歌谣摊在桌上，最后一行被泪水洇湿；镜框内侧有小指甲留下的划痕。', exits: ['appleVillage', 'cloakroom'], entities: [npc('菲格沃特夫人', '不愿再失去孩子，交出了歌谣'), npc('高镜', '对那首童谣有微弱回应')], hotspots: { npc: '菲格沃特夫人', object: '高镜', exit: '村庄 / 镜内' } },
+    tavern: { title: '母鸡牙酒馆', chapter: '第一章 · 林中的第二扇门', art: 'tavern', x: 36, y: 66, description: '林中酒馆的招牌随风轻碰。客人用鸟蛋付账，歌声从没有停过；墙上的镜子却映出另一间没有炉火的房间。店员避开你的目光，提醒你别轻易接受林中人的款待。', exits: ['appleVillage', 'cloakroom'], entities: [npc('酒馆店员', '不愿得罪妖精，害怕客人追问'), npc('墙镜', '镜后的房间似乎另有入口')], hotspots: { npc: '店员', object: '墙镜', exit: '林间道路' } },
+    cloakroom: { title: '镜后衣帽间', chapter: '第二章 · 华服之下', art: 'mirror', x: 54, y: 36, description: '脚步声突然变得空洞。羊足侍者伸手索要外衣，背后挂满精致披风。身后的镜面变回了冰冷玻璃。楼上传来舞曲，另一条窄道带来潮湿泥土与花叶的气味。', exits: ['bluehouse', 'banquet'], entities: [npc('羊足侍者', '把你们当作迟到的客人'), npc('入口镜', '只能进入，无法从这里返回')], hotspots: { npc: '衣帽间侍者', object: '华丽墙面', exit: '宫廷通道' } },
+    bluehouse: { variants: [{"flags":["gardenChild"],"description":"浇水壶已经倒在花盆旁。蓝玻璃下的花仍在无风摇动，吉尔斯站在你们身边，不愿再靠近那片花坛。温室里的差事终于停了。"}], title: '蓝色温室', chapter: '第二章 · 泥土里的名字', art: 'garden', x: 55, y: 76, description: '蓝色玻璃下，花朵无风自转。一个叫吉尔斯的男孩一遍遍给早已湿透的花盆浇水。他左脚踝缠着一根金线，浸过泥水仍亮得刺眼。', exits: ['cloakroom', 'service'], entities: [npc('吉尔斯', '不停浇花，对呼唤几乎没有反应', { flag: 'gardenChild', after: '已经解开脚踝金线，跟随队伍' })], hotspots: { npc: '吉尔斯', object: '脚踝金线', exit: '侍者通道' } },
+    banquet: { variants: [{"flags":["hallChildren"],"description":"长桌上的菜已经凉了，鼓声也停了。三名获救的孩子跟在你们身后；绿衣领主抬起白色眼睛，似乎终于发现这场宴会少了些什么。"}], title: '永不散席的宴会', chapter: '第二章 · 妖精领主', art: 'banquet', x: 74, y: 17, description: '绿衣领主端坐长桌尽头，白眼睛里只有针尖般的瞳孔。黑白衣的小丑“水中蛾”耍弄着短剑，催你们讲一个有趣的故事。两个孩子机械地端盘，舞厅那头还传来一个小女孩敲鼓的声音。', exits: ['cloakroom', 'service'], entities: [npc('妖精领主', '渴望奉承与有趣的故事；不愿承认孩子的来历'), npc('水中蛾', '喜欢炫耀，替领主传话'), npc('三名孩子', '仍被宴会差事束缚', { flag: 'hallChildren', after: '三名孩子已经随队离席' })], hotspots: { npc: '领主与小丑', object: '脚踝金线', exit: '侍者门' } },
+    service: { variants: [{"flags":["kitchenChildren"],"description":"铜锅还在冒着甜气，厨房却没有了忙碌的孩子。菲利普和史蒂维已经随队，提醒你们沿窄梯可以找到亚瑟守卫的酒窖。"}], title: '厨房与升降食梯', chapter: '第三章 · 故乡的味道', art: 'kitchen', x: 76, y: 51, description: '铜锅里的汤冒着不自然的甜气。菲利普端着空盘来回走，史蒂维还在切同一块面包。升降食梯旁有一条向下的窄梯，下面传来酒瓶相碰的声音。', exits: ['bluehouse', 'banquet', 'cellar'], entities: [npc('菲利普与史蒂维', '困在不断重复的差事中', { flag: 'kitchenChildren', after: '已经随队，可以听懂你们的话' }), npc('升降食梯', '连接宴会与地下厨房')], hotspots: { npc: '厨房的孩子', object: '脚踝金线', exit: '地下窄梯' } },
+    cellar: { variants: [{"flags":["arthur"],"description":"过大的铠甲躺在地上。亚瑟握着你的衣角，已经不再听从守酒的命令。宝库门后的镜光仍然亮着，返回厨房的窄梯也还在那里。"}], title: '亚瑟守卫的酒窖', chapter: '第三章 · 最后一个孩子', art: 'cellar', x: 91, y: 76, description: '酒瓶在暗处排列得像一座小城。真正的亚瑟穿着过大的铠甲守在门口，手握短剑，声音却在发抖：“我得看好这些酒。”另一扇厚门后，隐约反射出林外的日光。', exits: ['service', 'treasury'], entities: [npc('真正的亚瑟', '左脚踝的金线让他无法离开岗位', { flag: 'arthur', after: '终于记起母亲，加入获救队伍' }), npc('宝库门', '门后似乎有另一面镜子')], hotspots: { npc: '亚瑟', object: '脚踝金线', exit: '宝库门' } },
+    treasury: { variants: [{"flags":["mirrorOpen"],"description":"出口镜已经打开，村外的草叶在镜中摇动。你们随时可以离开，也可以返回宫廷，把尚未找到的孩子带到这里。"}], title: '出口镜前', chapter: '终章 · 镜外的风', art: 'treasury', x: 92, y: 26, description: '宝库里的镜子映着村外摇动的草。身后的乐声越来越近，镜框上爬满细密符记。你们可以回去寻找遗漏的孩子，也可以试着打开回家的路。', exits: ['cellar'], entities: [npc('出口镜', '需要解除镜框上的束缚', { flag: 'mirrorOpen', after: '已经打开，可以带队离开' })], hotspots: { object: '出口镜', exit: '返回寻找孩子' } },
+  },
+  actions: {
+    appleVillage: [
+      { id: 'scout:children', label: '观察孩子的举止', ability: 'wis', skill: 'insight', dc: 11, clue: 'impostors', success: '泥地里的足迹像小小的羊蹄。你们看到一个“孩子”的影子露出了角：村里留下的是替身。', failure: '孩子钻进人群，只留下不合尺寸的鞋印。疗养院里的亚瑟或许能解释。', focus: 'object' },
+      move('manor', '去菲格沃特庄园', 'manor'), move('sanitarium', '拜访疗养院', 'sanitarium'), move('tavern', '寻找林中酒馆', 'tavern'),
+    ],
+    sanitarium: [
+      { id: 'talk:doctor', label: '请医生讲述妖精传说', clue: 'impostors', success: '医生观察“亚瑟”脱下的鞋，终于承认那是羊足妖精的足迹。他请你们去庄园检查孩子失踪前玩过的镜子。', focus: 'npc' },
+      { id: 'investigate:stone', label: '借有孔石观察男孩', ability: 'int', skill: 'arcana', dc: 11, clue: 'illusion', success: '穿过石孔，华丽衣饰显出粗糙内里。你学会留意幻象与真实之间的细小错位。', failure: '男孩躲开视线。医生提醒你，妖精最擅长让人看到愿意相信的东西。', focus: 'object' }, move('village', '返回黑苹果村', 'appleVillage'),
+    ],
+    manor: [{ id: 'study:rhyme', label: '读出亚瑟的歌谣', clue: 'rhyme', success: '夫人补全了被水浸掉的字。你念完歌谣，镜中一位绿衣领主转身击掌；镜面慢慢显出陌生的衣帽间。', focus: 'object' }, move('mirror', '穿过庄园高镜', 'cloakroom', { requires: 'rhyme' }), move('village', '先回村里调查', 'appleVillage')],
+    tavern: [{ id: 'talk:keeper', label: '向店员打听镜子', ability: 'cha', skill: 'persuasion', dc: 10, clue: 'exitMirror', success: '店员压低声音：“进去容易。出来，要找最深处宝库里的镜子。”', failure: '店员不肯谈镜子的主人，只说进门以前应该想好如何回来。', focus: 'npc' }, move('mirror', '触碰已亮起的墙镜', 'cloakroom'), move('village', '返回黑苹果村', 'appleVillage')],
+    cloakroom: [{ id: 'investigate:illusion', label: '触摸华丽的墙面', ability: 'int', skill: 'investigation', dc: 11, clue: 'illusion', success: '指尖摸到潮湿泥灰。金碧辉煌只是幻象，脚下实际上是一座阴冷地穴。', failure: '触感与眼前的颜色并不相符，但你还辨不清全貌。', focus: 'object' }, { id: 'talk:attendant', label: '询问离席的路', clue: 'exitMirror', success: '侍者咧嘴笑：“回程的镜子在宝库。衣帽间只迎接客人，不送客。”', focus: 'npc' }, move('garden', '循泥土气味去温室', 'bluehouse'), move('hall', '沿舞曲进入宴会', 'banquet')],
+    bluehouse: [{ id: 'study:sleeve', label: '检查脚踝上的金线', clue: 'charm', success: '细小金线缠在左脚踝，维持着魅惑。解开金线，孩子就能重新想起自己。你把方法告诉了同伴。', focus: 'object' }, { id: 'help:giles', label: '替吉尔斯解开金线', requires: 'charm', flags: ['gardenChild'], excludesFlags: ['gardenChild'], success: '吉尔斯停下水壶，想起了家里的猪圈。他抓住你的手，答应跟紧队伍。', focus: 'npc' }, move('service', '进入侍者通道', 'service'), move('entry', '回到衣帽间', 'cloakroom')],
+    banquet: [
+      { id: 'talk:lord', label: '用故事吸引领主', ability: 'cha', skill: 'persuasion', dc: 12, advantageClue: 'illusion', flags: ['favour'], failureFlags: ['alarm'], success: '领主忙着纠正故事的细节，允许你们带侍者去准备下一场表演。', failure: '水中蛾识破你在拖延，招手让卫兵盯紧你们。侍者门仍然开着。', focus: 'npc' },
+      { id: 'study:clothes', label: '观察孩子脚踝的金线', clue: 'charm', success: '左脚踝的金线随着领主的命令发亮。解除金线就有机会唤回孩子。', focus: 'object' },
+      { id: 'help:guests', label: '以准备表演为由带走孩子', requiresFlags: ['favour'], flags: ['hallChildren'], excludesFlags: ['hallChildren'], success: '你带走敲鼓的厄休拉与端盘的阿米莉亚、伯纳德，在门外替他们解开脚踝金线。', focus: 'npc' },
+      { id: 'sneak:children', label: '趁乐声带走三名孩子', requires: 'charm', ability: 'dex', skill: 'stealth', dc: 12, flags: ['hallChildren'], excludesFlags: ['hallChildren'], failureFlags: ['alarm'], encounter: 'hallGuard', success: '鼓点盖过脚步。三名孩子解开金线，悄悄跟你们走进侍者通道。', failure: '孩子们已经解开金线，却惊动了门口的羊足卫兵。必须挡住它才能带他们离开。', focus: 'npc' },
+      { id: 'fight:guard', label: '掩护三名孩子离席', encounter: 'hallGuard', excludesFlags: ['hallChildren'], focus: 'npc' }, move('service', '走进侍者通道', 'service'), move('entry', '返回衣帽间', 'cloakroom'),
+    ],
+    service: [{ id: 'study:aprons', label: '检查脚踝金线', clue: 'charm', success: '两个孩子左脚踝都缠着金线。你找到安全解开它们的办法。', focus: 'object' }, { id: 'help:kitchen', label: '带厨房的两个孩子离开', requires: 'charm', flags: ['kitchenChildren'], excludesFlags: ['kitchenChildren'], success: '解开金线后，菲利普和史蒂维终于停止忙碌。他们告诉你：亚瑟还在楼下守着酒。', clue: 'passage', focus: 'npc' }, move('cellar', '下楼寻找酒窖', 'cellar'), move('garden', '去温室找孩子', 'bluehouse'), move('hall', '回到宴会厅', 'banquet')],
+    cellar: [{ id: 'talk:arthur', label: '告诉亚瑟母亲在等他', requires: 'charm', flags: ['arthur'], excludesFlags: ['arthur'], success: '你扶住他的短剑，替他解开脚踝金线。亚瑟记起了母亲，也记起那首把大家带进来的歌。', focus: 'npc' }, { id: 'study:armour', label: '检查脚踝金线', clue: 'charm', success: '左脚踝的金线维持着同样的魅惑。只要解开它，就能解除岗位的束缚。', focus: 'object' }, move('treasury', '进入宝库', 'treasury'), move('kitchen', '回到厨房', 'service')],
+    treasury: [{ id: 'study:mirror', label: '解读出口镜的符记', ability: 'int', skill: 'arcana', dc: 12, dcFlag: 'alarm', raisedDC: 14, advantageClue: 'rhyme', flags: ['mirrorOpen'], failureFlags: ['alarm'], encounter: 'mirrorGuard', excludesFlags: ['mirrorOpen'], success: '镜框上的束缚松开，林外清冷的风吹进来。', failure: '符记灼亮，追来的卫兵挡住镜前。它腰间挂着能开镜的钥匙。', focus: 'object' }, { id: 'fight:key', label: '拦住追兵，夺取镜钥', encounter: 'mirrorGuard', excludesFlags: ['mirrorOpen'], focus: 'object' }, { id: 'escape:all', label: '带七名孩子穿过出口镜', requiresFlags: ['mirrorOpen', 'gardenChild', 'hallChildren', 'kitchenChildren', 'arthur'], win: true, ending: 'all', success: '七名孩子一个接一个跨过镜面。村口的家长认出了他们真正的声音，妖精的舞曲终于消失。', focus: 'exit' }, { id: 'escape:partial', label: '带已找到的孩子先撤离', requiresFlags: ['mirrorOpen'], unlessAllFlags: ['gardenChild', 'hallChildren', 'kitchenChildren', 'arthur'], win: true, ending: 'partial', success: '你们带着已经找到的孩子回到村里。仍有人留在妖丘，家长们决定组织下一次营救。', focus: 'exit' }, move('return', '回去寻找遗漏的孩子', 'cellar')],
+  },
+  encounters: {
+    hallGuard: { name: '羊足卫兵', hp: 9, ac: 11, attack: 2, die: 4, bonus: 0, dex: 1, next: 'service', flags: ['hallChildren'], success: '卫兵被挡在门内，三名孩子解开脚踝金线，跟着队伍进入侍者通道。' },
+    mirrorGuard: { name: '镜前追兵', hp: 12, ac: 12, attack: 3, die: 4, bonus: 1, dex: 1, next: 'treasury', flags: ['mirrorOpen'], success: '追兵失去战斗能力。你们取下镜钥，打开了出口。' },
+  },
+};

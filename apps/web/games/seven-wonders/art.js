@@ -8,12 +8,18 @@ export const artSheets = {
  purple:{columns:4,rows:4,kinds:['workers','craftsmen','magistrates','traders','spies','philosophers','builders','decorators','scientists','shipowners']},
 };
 export const wonderScenes=['alexandria','babylon','ephesus','giza','halicarnassus','olympia','rhodes','cover'];
+const expansionWonderArt={
+ roma:'/assets/seven-wonders/wonders/roma-v1.webp',
+ 'abu-simbel':'/assets/seven-wonders/wonders/abu-simbel-v1.webp',
+ siracusa:'/assets/seven-wonders/wonders/siracusa-v1.webp',
+};
 export const cardIllustrations=Object.fromEntries(Object.entries(artSheets).flatMap(([sheet,{kinds}])=>kinds.map((kind,index)=>[kind,{sheet,index}])));
 export function cardIllustration(card){
  const art=cardIllustrations[card.kind];
  return `<span class="sw-illustration ${art?`sw-art-${art.sheet} sw-paint-${card.kind}`:'sw-art-fallback'}" aria-hidden="true"></span>`;
 }
 export function cityArt(wonder='giza',side='day'){
+ if(Object.hasOwn(expansionWonderArt,wonder))return `<svg class="sw-city-art sw-scene-${wonder} ${side==='night'?'sw-scene-night':''}" viewBox="0 0 2172 724" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><image href="${expansionWonderArt[wonder]}" width="2172" height="724"/></svg>`;
  const scene=wonderScenes.includes(wonder)?wonder:'cover';
  const index=wonderScenes.indexOf(scene);
  return `<svg class="sw-city-art sw-scene-${scene} ${side==='night'?'sw-scene-night':''}" viewBox="${index%2*768} ${Math.floor(index/2)*256} 768 256" preserveAspectRatio="xMidYMid slice" aria-hidden="true"><image href="/assets/seven-wonders/wonders-v1.webp" width="1536" height="1024"/></svg>`;

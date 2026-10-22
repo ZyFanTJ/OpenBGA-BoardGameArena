@@ -1,0 +1,67 @@
+/* Original raster assets are presentation; all state and labels come from views. */
+.dnd-scene-image{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 58%;image-rendering:pixelated;pointer-events:none}
+.dnd-stage.has-raster{height:clamp(300px,39vh,440px)}
+.dnd-stage.has-raster .dnd-stage-heading{z-index:2;max-width:60%;text-shadow:0 2px 8px #000,0 0 25px #000}
+.dnd-stage.has-raster .dnd-stage-vignette{z-index:1;background:linear-gradient(90deg,#06111b55,transparent 48%),linear-gradient(#07121c55,transparent 45%);box-shadow:inset 0 -24px 35px #0c1920}
+.dnd-stage.has-raster .dnd-minimap{z-index:4}
+.dnd-stage.has-raster .dnd-hotspot{z-index:5}
+.dnd-stage.has-raster .dnd-hotspot[data-id="npc"]{--x:71%;--y:83%}
+.dnd-stage.has-raster .dnd-hotspot[data-id="object"]{--x:49%;--y:65%}
+.dnd-stage.has-raster .dnd-hotspot[data-id="exit"]{--x:82%;--y:35%}
+.dnd-stage.has-raster[data-scene="village"] .dnd-hotspot[data-id="object"]{--x:22%;--y:61%}
+.dnd-stage.has-raster[data-scene="gate"] .dnd-hotspot[data-id="object"]{--x:83%;--y:63%}
+.dnd-stage.has-raster[data-scene="mirror"] .dnd-hotspot[data-id="object"]{--x:78%;--y:44%}
+.dnd-stage.has-raster[data-scene="treasury"] .dnd-hotspot[data-id="object"]{--x:55%;--y:45%}
+.dnd-pixel-actor,.dnd-foe-art,.dnd-prop-art{image-rendering:pixelated;object-fit:contain;user-select:none;pointer-events:none}
+.dnd-scene-cast,.dnd-world-party{position:absolute;inset:0;pointer-events:none;z-index:3}
+.dnd-cast-figure{position:absolute;bottom:13%;left:70%;transform:translateX(-50%);width:150px;height:182px;filter:drop-shadow(0 5px 3px #06101699)}
+.dnd-cast-figure.cast-1{left:83%;height:166px;bottom:15%}.dnd-cast-figure.cast-2{left:58%;height:150px;bottom:13%}
+.dnd-cast-figure .dnd-pixel-actor,.dnd-party-figure .dnd-pixel-actor{width:100%;height:100%;object-position:center bottom}
+.dnd-cast-figure[data-actor="boy"],.dnd-cast-figure[data-actor="girl"]{height:155px;width:120px}
+.dnd-party-figure{position:absolute;bottom:2%;height:143px;width:125px;transform:translateX(-50%);filter:drop-shadow(0 5px 3px #06101699)}
+.dnd-party-figure.party-0{left:11%}.dnd-party-figure.party-1{left:20%;bottom:4%}.dnd-party-figure.party-2{left:29%;bottom:1%}.dnd-party-figure.party-3{left:38%;bottom:3%}
+.dnd-party-figure i{position:absolute;left:28%;right:28%;height:8px;bottom:2px;border-radius:50%;border:1px solid #a3bc9a55;background:#7caa9020;box-shadow:0 0 8px #83b99c33}
+.dnd-party-figure.is-current i{border-color:#d1b371aa;background:#c9ad6833;box-shadow:0 0 10px #d9b97555}
+.dnd-party-figure.is-down{filter:grayscale(1) brightness(.55)}
+.dnd-stage.has-raster .dnd-encounter-tokens{inset:27% 8% 5% 43%;gap:70px;align-items:flex-end;z-index:4}
+.dnd-stage.has-raster .dnd-enemy-token{width:145px;min-height:188px}
+.dnd-stage.has-raster .dnd-enemy-portrait{width:135px;height:148px;border:0;background:none;box-shadow:none;border-radius:40%}
+.dnd-stage.has-raster .dnd-enemy-portrait .dnd-foe-art{width:145px;height:155px;max-width:none;filter:drop-shadow(0 5px 5px #050c1399)}
+.dnd-stage.has-raster .dnd-enemy-token.is-selected .dnd-enemy-portrait{outline:1px solid #d0b78388;outline-offset:0;background:radial-gradient(ellipse at bottom,#b6a06e22,transparent 65%)}
+.dnd-stage.has-raster .dnd-enemy-token b{margin-top:3px;background:#10222acc;padding:3px 8px;border-radius:4px}
+.dnd-hotspot>.dnd-prop-art{width:44px;height:44px;filter:drop-shadow(0 2px 7px #000);background:#10232b99;border:1px solid #c2ad7377;border-radius:7px}
+.dnd-hotspot:hover>.dnd-prop-art,.dnd-hotspot.is-selected>.dnd-prop-art{border-color:#e2cd9b;filter:drop-shadow(0 0 8px #d2b06a77)}
+.dnd-class-portrait{overflow:hidden}
+.dnd-class-portrait>.dnd-pixel-actor{width:46px;height:49px;object-fit:cover;align-self:end;filter:drop-shadow(0 2px 2px #09151c)}
+.dnd-game .dnd-class-icon{display:flex;align-items:flex-end;justify-content:center;height:128px;margin:-5px 0 8px;background:radial-gradient(ellipse at bottom,#9c976b15,transparent 70%)}
+.dnd-class-icon>.dnd-pixel-actor{height:144px;width:126px;max-width:none;filter:drop-shadow(0 5px 5px #05101777)}
+.dnd-archetype.is-selected .dnd-class-icon{background:radial-gradient(ellipse at bottom,#bba96a28,transparent 70%)}
+.dnd-sheet-art{float:right;width:110px;height:140px;filter:drop-shadow(0 5px 5px #050e15)}
+.dnd-sheet-art .dnd-pixel-actor{width:100%;height:100%}
+.dnd-character-panel>.dnd-abilities{clear:both}
+.dnd-inventory .dnd-prop-art{width:30px;height:30px;vertical-align:middle}
+.dnd-pack-items{display:flex;gap:12px;margin-bottom:20px}
+.dnd-pack-items>div{display:flex;align-items:center;gap:10px;border:1px solid #6a735155;border-radius:9px;background:#1b3035;padding:9px 17px}
+.dnd-pack-items .dnd-prop-art{width:54px;height:54px}.dnd-pack-items span{font-size:12px;color:#c0c7ae}.dnd-pack-items strong{display:block;font:20px Georgia,serif;color:#ded0a4;margin-top:5px}
+.dnd-clue-item{display:flex;align-items:center;gap:7px;padding:5px 10px 5px 5px;background:#253b3e99;border:1px solid #77806a33;border-radius:6px;max-width:100%}
+.dnd-clue-item .dnd-prop-art{width:32px;height:32px;flex-shrink:0}
+.dnd-adventure-cover>img{width:100%;height:100%;object-fit:cover;display:block;image-rendering:pixelated}
+.cover-dnd{position:relative;overflow:hidden}.dnd-catalog-art{width:100%;height:100%;object-fit:cover;image-rendering:pixelated}
+.dnd-cover.dnd-cover-overlay{position:absolute;inset:0;background:linear-gradient(transparent,#071520da);justify-content:flex-end;padding-bottom:22px;text-shadow:0 2px 10px #000}
+.dnd-cover-overlay>span{font-size:20px;margin-bottom:7px}.dnd-cover-overlay>strong{font-size:27px}
+@media(max-width:720px){
+  .dnd-stage.has-raster{height:310px}.dnd-scene-image{object-position:55% 55%}
+  .dnd-stage.has-raster .dnd-stage-heading{max-width:77%}.dnd-stage.has-raster .dnd-stage-heading h1{font-size:22px;letter-spacing:2px}
+  .dnd-cast-figure{height:159px;width:125px;left:68%;bottom:13%}.dnd-cast-figure.cast-1{left:85%;height:145px}.dnd-cast-figure.cast-2{left:51%;height:128px}
+  .dnd-cast-figure[data-actor="boy"],.dnd-cast-figure[data-actor="girl"]{height:138px;width:110px}
+  .dnd-party-figure{height:112px;width:98px}.dnd-party-figure.party-0{left:13%}.dnd-party-figure.party-1{left:23%}.dnd-party-figure.party-2{left:33%}.dnd-party-figure.party-3{left:43%}
+  .dnd-stage.has-raster .dnd-hotspot[data-id="npc"]{--y:82%}.dnd-stage.has-raster .dnd-hotspot[data-id="object"]{--x:49%;--y:57%}.dnd-stage.has-raster .dnd-hotspot[data-id="exit"]{--x:86%;--y:40%}
+  .dnd-stage.has-raster .dnd-encounter-tokens{inset:29% 1% 9% 40%;gap:12px}.dnd-stage.has-raster .dnd-enemy-token{width:104px;min-height:174px}.dnd-stage.has-raster .dnd-enemy-portrait{width:100px;height:130px}.dnd-stage.has-raster .dnd-enemy-portrait .dnd-foe-art{width:120px;height:130px}
+  .dnd-stage:has(.dnd-encounter-tokens) .dnd-party-figure{height:98px;width:86px}
+  .dnd-game .dnd-class-icon{height:105px}.dnd-class-icon>.dnd-pixel-actor{height:122px;width:108px}.dnd-sheet-art{width:88px;height:118px}
+  .dnd-class-portrait>.dnd-pixel-actor{width:37px;height:43px}.dnd-hotspot>.dnd-prop-art{width:36px;height:36px}
+}
+@media(prefers-reduced-motion:no-preference){
+  .dnd-cast-figure .dnd-pixel-actor{animation:dnd-idle-breath 4.2s ease-in-out infinite}.dnd-cast-figure.cast-1 .dnd-pixel-actor{animation-delay:-1.4s}
+  @keyframes dnd-idle-breath{50%{transform:translateY(-2px)}}
+}

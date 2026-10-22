@@ -17,13 +17,13 @@ import {cosmetics} from '../packages/platform/economy.js';
 function fixture(){const store=new JsonStore(),sessions=new SessionService(store),rooms=new RoomService(store,games),social=new SocialService(store,rooms,games),pages=new ProfilePageService(store,games,social),a=sessions.create('月见').user,b=sessions.create('观星人').user,c=sessions.create('陌生人').user;social.request(a,{playerId:b.id});social.respond(b,{requestId:social.list(b).requests[0].id,action:'accept'});return {store,sessions,social,pages,a,b,c};}
 const draft=p=>({revision:p.revision,name:p.name,bio:'月下同桌，下一局见。',favoriteGame:'seven-wonders',visibility:'friends',showcase:[...p.details.showcase],appearance:{...p.appearance}});
 
-test('v2 profiles migrate through v3 to v6 with original backups and unchanged games, balances, sessions and collections',()=>{
+test('v2 profiles migrate through v3 to v7 with original backups and unchanged games, balances, sessions and collections',()=>{
  const dir=mkdtempSync(join(tmpdir(),'moon-profile-'));
  try{const current=fixture().store.data;current.version=2;for(const p of Object.values(current.profiles))delete p.details;current.rooms.PRESERVE={stateVersion:9,revision:6,game:{hands:['secret']}};
  const original=structuredClone(current),file=join(dir,'platform.json');writeFileSync(file,JSON.stringify(current));const migrated=new JsonStore(file);
- assert.equal(migrated.data.version,6);assert.deepEqual(migrated.data.rooms,original.rooms);assert.deepEqual(migrated.data.sessions,original.sessions);
+ assert.equal(migrated.data.version,9);assert.deepEqual(migrated.data.rooms,{PRESERVE:{...original.rooms.PRESERVE,revision:7,turnSeconds:0,turnClock:null,lastTimeout:null}});assert.deepEqual(migrated.data.sessions,original.sessions);
  for(const id of Object.keys(original.profiles)){const {details,...p}=migrated.data.profiles[id];assert.deepEqual(p,original.profiles[id]);assert.equal(details.visibility,'friends');assert.deepEqual(details.showcase,Object.values(p.equipped));}
- assert.deepEqual(JSON.parse(readFileSync(file+'.v2.bak','utf8')),original);new JsonStore(file);assert.deepEqual(JSON.parse(readFileSync(file+'.v2.bak','utf8')),original);assert.deepEqual(current,original);assert.equal(migrateStorage(migrated.data).version,6);
+ assert.deepEqual(JSON.parse(readFileSync(file+'.v2.bak','utf8')),original);new JsonStore(file);assert.deepEqual(JSON.parse(readFileSync(file+'.v2.bak','utf8')),original);assert.deepEqual(current,original);assert.equal(migrateStorage(migrated.data).version,9);
  }finally{rmSync(dir,{recursive:true,force:true});}
 });
 test('profile update atomically saves identity, owned appearance and showcase without changing money or matches',()=>{

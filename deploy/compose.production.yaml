@@ -4,6 +4,10 @@ services:
     image: ${IMAGE_REF:?Set IMAGE_REF to your uploaded image and tag}
     environment:
       SECURE_COOKIES: "1"
+      TRUSTED_PROXY_HOPS: "1"
+      AI_DM_API_KEY: "${AI_DM_API_KEY:-}"
+      AI_DM_BASE_URL: "${AI_DM_BASE_URL:-https://api.openai.com/v1}"
+      AI_DM_MODEL: "${AI_DM_MODEL:-}"
     volumes:
       - moon-data:/data
     restart: unless-stopped

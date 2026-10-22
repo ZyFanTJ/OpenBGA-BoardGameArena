@@ -1,3 +1,4 @@
+import {playerName} from '../../player-identity.js';
 import { escapeHtml as e, button as b } from '../../ui.js';
 import { borderArt, colorNames, pawnArt, rugArt } from './art.js';
 
@@ -38,13 +39,13 @@ export function createMarrakechRenderer(send, rerender) {
     }
     if (s.phase === 'finished') {
       help = `${s.winners.map(name).join('、')} 获胜`;
-      controls = snapshot.hostId === me.id ? b('再来一局', 'rematch', false, 'class="gold-button"') : '<span>等待房主再开一局</span>';
+      controls = '';
     }
     const last = s.lastEvent, payment = last?.payment;
     const eventText = !last ? '市集开张' : last.type === 'place' ? `${name(last.actorId)} 铺下${colorNames[last.color]}地毯` : payment ? `${name(payment.fromId)} → ${name(payment.toId)} · ${payment.paid} 钱币${payment.eliminated ? ' · 破产' : ''}` : `${name(last.actorId)} 前进 ${last.die} 格 · 无需付款`;
     return `<div class="mk-layout mk-phase-${s.phase}"><section class="mk-table" aria-label="魔毯商人棋盘"><div class="mk-heading"><div><span class="mk-kicker">MARRAKECH</span><h1>魔毯商人</h1></div><span class="mk-round">第 ${s.turnNumber} 回合</span>${b('?', 'game:guide-open', false, 'class="mk-guide-open" aria-label="玩法手卡"')}</div><div class="mk-seats mk-seats-${s.players.length}">${s.players.map(p => {
       const score = s.scores.find(r => r.id === p.id);
-      return `<article class="mk-seat ${p.id === s.turnId && s.phase !== 'finished' ? 'mk-active' : ''} ${p.eliminated ? 'mk-out' : ''}"><div class="mk-seat-name"><span class="mk-seat-colors" aria-label="${e(name(p.id))} 的地毯颜色">${p.colors.map(c => `<span class="mk-swatch mk-color-${c}">${['◆','✦','❖','✧'][c]}</span>`).join('')}</span><b>${e(name(p.id))}${p.id === me.id ? ' · 你' : ''}</b></div><div class="mk-seat-stats"><span title="钱币">◉ <strong>${p.coins}</strong></span><span title="可见地毯格数">▦ ${score.area}</span><span>${p.eliminated ? '已破产' : `余 ${p.remaining} 毯`}</span></div></article>`;
+      return `<article class="mk-seat ${p.id === s.turnId && s.phase !== 'finished' ? 'mk-active' : ''} ${p.eliminated ? 'mk-out' : ''}"><div class="mk-seat-name"><span class="mk-seat-colors" aria-label="${e(name(p.id))} 的地毯颜色">${p.colors.map(c => `<span class="mk-swatch mk-color-${c}">${['◆','✦','❖','✧'][c]}</span>`).join('')}</span><b>${playerName(current,p.id)}${p.id === me.id ? ' · 你' : ''}</b></div><div class="mk-seat-stats"><span title="钱币">◉ <strong>${p.coins}</strong></span><span title="可见地毯格数">▦ ${score.area}</span><span>${p.eliminated ? '已破产' : `余 ${p.remaining} 毯`}</span></div></article>`;
     }).join('')}</div><div class="mk-play-area"><div class="mk-board-wrap"><div class="mk-board">${borderArt()}<div class="mk-grid">${cells}</div><svg class="mk-pawn-layer" viewBox="0 0 800 800" aria-hidden="true"><g class="mk-pawn" transform="translate(${100 + s.pawn.x * 100} ${100 + s.pawn.y * 100}) rotate(${(mine && s.phase === 'orient' ? direction : s.pawn.direction) * 90})">${pawnArt}</g></svg></div></div><aside class="mk-operation-panel" aria-label="回合操作"><div class="mk-event" aria-live="polite"><span class="mk-die" aria-label="${last?.die ? `骰子 ${last.die}` : '骰子'}">${last?.die ?? '✦'}</span><span>${e(eventText)}</span>${s.phase !== 'finished' ? `<span class="mk-next-rug" title="本回合地毯 ${colorNames[s.nextColor]}">${rugArt(s.nextColor)}</span>` : ''}</div><div class="mk-controls"><p aria-live="polite">${e(help)}</p><div class="mk-actions">${controls}</div></div></aside></div>${s.phase === 'finished' ? `<div class="mk-results"><h2>市集收摊</h2><table><thead><tr><th>玩家</th><th>钱币</th><th>地毯格</th><th>总分</th></tr></thead><tbody>${[...s.scores].sort((a,b) => Number(a.eliminated)-Number(b.eliminated) || b.total-a.total || b.coins-a.coins).map(p=>`<tr><td>${s.winners.includes(p.id)?'♛ ':''}${e(name(p.id))}</td><td>${p.coins}</td><td>${p.area}</td><td>${p.eliminated?'已破产':p.total}</td></tr>`).join('')}</tbody></table></div>` : ''}</section><aside class="mk-guide">${guide()}</aside><dialog class="mk-guide-dialog"><button class="dialog-close" data-action="game:guide-close" aria-label="关闭玩法手卡">×</button>${guide()}</dialog></div>`;
   }
   async function animate(element, frames, duration) {

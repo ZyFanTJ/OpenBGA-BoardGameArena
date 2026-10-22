@@ -2,6 +2,7 @@ import { existsSync, mkdirSync, readFileSync, renameSync, writeFileSync } from '
 import { dirname } from 'node:path';
 import {ensureProfile,profileDetails} from './profiles.js';
 import {defaultSettings} from './system.js';
+import {defaultTextProvider} from './integrations.js';
 
 export function migrateStorage(input){
   const data=structuredClone(input);
@@ -34,7 +35,9 @@ export function migrateStorage(input){
     for(const room of Object.values(data.rooms)){room.turnSeconds=0;room.turnClock=null;room.lastTimeout=null;room.revision++;}
     data.version=7;
   }
-  if(data.version!==7)throw new Error('Unsupported storage version; migrate before starting.');
+  if(data.version===7){data.integrations={revision:0,textProvider:defaultTextProvider()};data.version=8;}
+  if(data.version===8){data.integrations.textProvider={...defaultTextProvider(),...data.integrations.textProvider};data.version=9;}
+  if(data.version!==9)throw new Error('Unsupported storage version; migrate before starting.');
   return data;
 }
 
