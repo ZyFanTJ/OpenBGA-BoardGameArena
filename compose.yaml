@@ -1,7 +1,7 @@
 name: moon-table
 services:
   app:
-    image: ${IMAGE_REF:-happy-online:0.8.4}
+    image: ${IMAGE_REF:-happy-online:0.8.11}
     build:
       context: .
       target: runtime

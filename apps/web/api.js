@@ -1,4 +1,19 @@
-export async function api(path, data, { timeoutMs = 12000 } = {}) {
+const pendingReads = new Map();
+
+/** Coalesce concurrent reads only. Writes invalidate the set; no account data is cached. */
+export function api(path, data, {timeoutMs = 12000} = {}) {
+  if (data !== undefined) { pendingReads.clear(); return request(path, data, {timeoutMs}); }
+  const key = `${timeoutMs}:${path}`;
+  if (!pendingReads.has(key)) {
+    const pending = request(path, undefined, {timeoutMs}).finally(() => {
+      if (pendingReads.get(key) === pending) pendingReads.delete(key);
+    });
+    pendingReads.set(key, pending);
+  }
+  return pendingReads.get(key);
+}
+
+async function request(path, data, { timeoutMs = 12000 } = {}) {
   const writing = data !== undefined;
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), timeoutMs);
@@ -16,7 +31,7 @@ export async function api(path, data, { timeoutMs = 12000 } = {}) {
   let result;
   try { result = JSON.parse(text); if (!result || typeof result !== 'object') throw new Error(); }
   catch { throw requestError(response.ok ? '服务器响应不完整，请稍后重试' : '服务暂时不可用，请稍后重试', response.status, writing && (response.ok || response.status >= 500)); }
-  if (!response.ok) throw requestError(typeof result.error === 'string' ? result.error : '服务器暂时无法完成请求', response.status, writing && response.status >= 500);
+  if (!response.ok) throw Object.assign(requestError(typeof result.error === 'string' ? result.error : '服务器暂时无法完成请求', response.status, writing && response.status >= 500), {code:result.code});
   return result;
 }
 

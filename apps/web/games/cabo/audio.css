@@ -1,0 +1,16 @@
+.cabo-audio{position:absolute;top:10px;right:286px;z-index:9;color:#edf0ce;font-size:12px}
+.cabo-audio>summary{display:flex;align-items:center;justify-content:center;cursor:pointer;list-style:none;min-height:36px;padding:5px 12px;border:1px solid #88b7a577;border-radius:20px;background:#06454d}
+.cabo-audio>summary::-webkit-details-marker{display:none}
+.cabo-audio-panel{position:absolute;right:0;top:calc(100% + 7px);width:min(270px,calc(100vw - 24px));padding:16px;background:#123d3b;border:1px solid #8bb6a8;border-radius:16px;box-shadow:0 12px 35px #001c2d80;max-height:70dvh;overflow:auto}
+.cabo-audio-panel label{display:flex;align-items:center;gap:10px;min-height:40px;margin:0;font-size:13px;color:#edf0ce}
+.cabo-audio-panel input[type=checkbox]{width:18px;height:18px;accent-color:#b5dba9}
+.cabo-audio-panel input[type=range]{min-width:0;flex:1;accent-color:#b5dba9}
+.cabo-audio-panel small{display:block;margin:10px 0;color:#bdd4c8}
+.cabo-audio-credits{font-size:11px;line-height:1.6;border-top:1px solid #8bb6a844;padding-top:8px}
+.cabo-audio-credits summary{cursor:pointer;min-height:28px}.cabo-audio-credits p{margin:7px 0}.cabo-audio-credits a{color:#e4e9b5}
+@media(min-width:761px) and (max-width:1100px){.cabo-audio{right:250px}}
+@media(max-width:760px), (max-height:500px) and (max-width:1000px){
+ .in-room .cabo-audio{right:92px;top:3px;font-size:11px}
+ .in-room .cabo-audio>summary{min-height:28px;padding:3px 9px}
+ .in-room .cabo-audio-panel{right:-80px}
+}

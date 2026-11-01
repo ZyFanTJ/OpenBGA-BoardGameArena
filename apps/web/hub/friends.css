@@ -1,0 +1,57 @@
+/* Compact identities keep the same title artwork, at roster scale. */
+.hub-friend-row{display:grid;grid-template-columns:46px minmax(0,1fr);gap:7px 12px;padding:14px 8px}
+.hub-friend-row>.hub-avatar-button{grid-row:1 / 3;align-self:start;margin-top:3px}
+.hub-friend-row .hub-avatar{width:44px;height:44px}
+.hub-friend-heading{display:flex;align-items:center;gap:8px;min-width:0}
+.hub-friend-heading>b{font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0}
+.hub-friend-heading .title-badge{flex-shrink:0;padding:1px 6px 1px 2px;font-size:10px;letter-spacing:0;max-width:145px}
+.hub-friend-heading .title-crest{width:20px;height:20px}
+.hub-friend-heading .title-lettering{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hub-friend-heading .hub-friend-presence{font-size:11px;white-space:nowrap;min-width:0;margin:0 0 0 auto;text-align:right;flex-shrink:0}
+.hub-friend-actions{grid-column:2;padding:0;margin:0;justify-content:flex-start;gap:6px;width:auto}
+.hub-friend-actions .hub-secondary{font-size:12px;min-height:36px;padding:6px 10px;white-space:nowrap}
+.hub-friend-actions .ui-icon{width:14px;height:14px;margin-right:5px}
+.hub-friend-actions .hub-more{margin-left:auto;min-width:36px;min-height:36px!important}
+.hub-friend-preview{display:block!important;text-align:left;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;border:0;background:none;padding:3px 0!important;margin:2px 0 0;color:#9fb2c0;font-size:12px!important;min-height:0!important}
+.friend-unread{display:inline-block;background:#c95851;color:#fff;font-size:10px;line-height:16px;min-width:16px;padding:0 4px;border-radius:12px;margin-left:5px}
+.friend-empty-note{font-size:13px;color:#93a9ba;padding:16px 4px;margin:0}
+.friend-appointment{border:1px solid #7f98a740;background:#102330;border-radius:7px;padding:14px;margin:12px 0}
+.friend-appointment-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;margin-bottom:6px}
+.friend-appointment-heading b{font-size:15px;color:#f3e4bf}.friend-appointment-heading>span{font-size:11px;color:#a6b4c0;white-space:nowrap}
+.friend-appointment.accepted .friend-appointment-heading>span{color:#8ae0bc}.friend-appointment.pending .friend-appointment-heading>span{color:#eed096}
+.friend-appointment time{font-size:13px;color:#e1e9ed}.friend-appointment p{font-size:12px;color:#9eb2bf;line-height:1.6;margin:6px 0 0}
+.friend-appointment-note{white-space:pre-wrap;overflow-wrap:anywhere}.friend-appointment small{display:block;font-size:11px;color:#95aabd;margin-top:8px}
+.friend-appointment-actions{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}
+.friend-appointment-actions:empty{display:none}.friend-appointment-actions button{min-height:36px!important;padding:6px 12px!important;font-size:12px!important}
+.friend-chat-dialog{width:620px;height:min(760px,calc(100dvh - 40px));overflow:hidden;flex-direction:column}
+.friend-chat-dialog[open]{display:flex}.friend-chat-header{display:flex;align-items:center;gap:12px;padding:20px 58px 14px 20px;flex-shrink:0}
+.friend-chat-header .hub-avatar{width:40px;height:40px;flex-shrink:0}.friend-chat-header>div{min-width:0}
+.friend-chat-header h2{font-size:20px;margin:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.friend-chat-header span{font-size:11px;color:#93a9b8}
+.friend-chat-tools{display:flex;gap:8px;padding:0 20px 12px;flex-shrink:0}.friend-chat-tools button{min-height:36px!important;padding:6px 12px!important;font-size:12px!important}
+#friend-appointment-form{overflow:auto;flex-shrink:1;min-height:0}
+.friend-appointment-form{padding:0 20px 14px;display:grid;grid-template-columns:110px minmax(0,1fr);gap:8px;align-items:center}
+.friend-appointment-form[hidden]{display:none}.friend-appointment-form label{margin:0}.friend-appointment-form :is(input,select){width:100%;min-width:0;min-height:38px;padding:7px 10px}
+.friend-appointment-form>div{grid-column:1 / -1;display:flex;align-items:center;justify-content:space-between;gap:10px}.friend-appointment-form small{font-size:11px;color:#95aabd;line-height:1.5}.friend-appointment-form button{white-space:nowrap}
+.friend-chat-reservations{padding:10px 20px;background:#091724;max-height:30%;overflow:auto;flex-shrink:0;border-block:1px solid #9cb1c626}
+.friend-chat-reservations summary{font-size:12px;color:#cabb96;cursor:pointer}.friend-chat-reservations .friend-appointment{margin:10px 0 0}.friend-chat-reservations .friend-empty-note{padding-block:8px}
+#friend-message-list{flex:1;min-height:80px;overflow:auto;overscroll-behavior:contain;padding:16px 20px;scrollbar-width:thin}
+.friend-message{display:flex;flex-direction:column;align-items:flex-start;margin-bottom:13px}.friend-message.own{align-items:flex-end}
+.friend-message>div{max-width:85%;white-space:pre-wrap;overflow-wrap:anywhere;background:#203442;color:#e8eff3;font-size:14px;line-height:1.65;border-radius:3px 12px 12px;padding:9px 12px}
+.friend-message.own>div{background:#32463e;border:1px solid #91bb8b33;border-radius:12px 3px 12px 12px;color:#eef3dc}
+.friend-message time{font-size:10px;color:#8097a8;margin-top:4px}.friend-chat-older,.friend-chat-new{flex-shrink:0;font-size:11px!important;min-height:28px!important;padding:4px 10px!important;align-self:center}
+.friend-chat-error{color:#f4ab9e;font-size:12px;margin:0 20px;flex-shrink:0}.friend-chat-error:empty{display:none}
+.friend-message-form{display:flex;gap:9px;align-items:flex-end;padding:12px 20px 18px;border-top:1px solid #9cb1c626;flex-shrink:0}
+.friend-message-form textarea{font:inherit;font-size:14px;resize:none;background:#080f18;border:1px solid #71818e66;border-radius:4px;color:#f6f4eb;padding:10px;min-height:64px;max-height:120px;min-width:0;flex:1}
+.friend-message-form button{min-width:64px;padding:10px 12px!important}
+@media(max-width:600px){
+ .hub-friends .hub-hero{min-height:170px}.hub-friends .hub-hero-copy{padding:18px}.hub-friends .hub-hero-copy>p:not(.hub-eyebrow){min-height:0;margin-top:5px}.hub-friends .hub-hero-footer{min-height:38px;margin-top:14px}.hub-friends .hub-hero-actions button{min-height:36px;padding:7px 10px}.hub-friends .hub-hero h1{font-size:25px}
+ .hub-friends .hub-content-grid{padding-top:6px}.hub-friends .hub-tabs{gap:15px}.hub-friends .hub-tabs button{min-height:45px;padding:8px 1px}.hub-friends .hub-section-toolbar{min-height:45px}
+ .hub-friend-row{grid-template-columns:36px minmax(0,1fr);gap:5px 9px;padding:12px 0}.hub-friend-row .hub-avatar{width:36px;height:36px}.hub-friend-heading{gap:5px;min-height:24px}
+ .hub-friend-heading>b{font-size:13px}.hub-friend-heading .title-badge{font-size:9px;max-width:112px;padding:1px 5px 1px 2px}.hub-friend-heading .title-crest{width:17px;height:17px}.hub-friend-heading .hub-friend-presence{font-size:10px}
+ .hub-friend-actions{gap:5px}.hub-friend-actions .hub-secondary{min-height:34px;padding:5px 8px;font-size:11px}.hub-friend-actions .ui-icon{width:12px;height:12px;margin-right:4px}.hub-friend-actions .hub-more{min-width:28px;padding:4px 6px!important;min-height:34px!important}.hub-friend-preview{font-size:11px!important}
+ .hub-friend-dialog .hub-nameplate-large{min-height:145px;padding:24px 18px}.hub-friend-card-actions{padding:14px 18px}.hub-friend-card-actions>div{margin-top:12px;justify-content:flex-start;flex-wrap:wrap;gap:5px}.hub-friend-card-actions button{padding:6px 10px;min-height:34px;font-size:11px}
+ .friend-chat-dialog{width:calc(100vw - 12px);height:calc(100dvh - 12px);max-height:calc(100dvh - 12px);border-radius:8px}.friend-chat-header{padding:14px 52px 12px 14px}.friend-chat-header h2{font-size:17px}.friend-chat-tools{padding:0 14px 10px}
+ .friend-appointment-form{padding:0 14px 12px;grid-template-columns:86px minmax(0,1fr);gap:7px}.friend-appointment-form label{font-size:11px}.friend-appointment-form button{padding:8px 10px!important;min-height:36px!important;font-size:12px!important}
+ .friend-chat-reservations{padding:9px 14px}#friend-message-list{padding:12px 14px}.friend-message-form{padding:10px 12px max(12px,env(safe-area-inset-bottom))}.friend-chat-error{margin-inline:14px}
+}
+@media(max-width:360px){.hub-friend-actions .ui-icon{display:none}.hub-friend-heading .title-badge{max-width:98px}.hub-friends .hub-tabs{gap:11px}}

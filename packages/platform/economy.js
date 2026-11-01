@@ -1,16 +1,11 @@
+import {indexedRecords} from './record-index.js';
 import {ensure} from './errors.js';
 import {ownProfile} from './profiles.js';
 import {systemSettings} from './system.js';
 
-export const cosmetics=[
- {id:'avatar-traveler',name:'月下旅人',type:'avatar',rarity:'classic',price:0,art:'initial',description:'每段旅程，都从一次入座开始。'},
- ...[['wolf','霜月银狼',120],['owl','星夜雪鸮',120],['fox','赤焰灵狐',160],['dragon','苍穹古龙',240],['guardian','曙光守卫',180],['scholar','观星贤者',180]].map(([key,name,price],index)=>({id:`avatar-${key}`,name,type:'avatar',rarity:price>=200?'legendary':'rare',price,portrait:index,description:'用独特的头像，留下你的牌桌印记。'})),
- {id:'banner-night',name:'月夜启程',type:'banner',rarity:'classic',price:0,art:'night',description:'初始个人名片背景。'},
- ...[['observatory','群星议会','social',260],['laurels','荣耀回廊','archive',280],['treasury','月辉秘藏','shop',300]].map(([key,name,art,price])=>({id:`banner-${key}`,name,type:'banner',rarity:'epic',price,art,description:'全幅个人名片背景，装备后展示给好友。'})),
- {id:'title-wanderer',name:'初来乍到',type:'title',rarity:'classic',price:0,description:'新的同桌，新的故事。'},
- {id:'title-strategist',name:'运筹帷幄',type:'title',rarity:'rare',price:80,description:'把每一次选择，都变成自己的节奏。'},
- {id:'title-starlord',name:'群星执掌者',type:'title',rarity:'legendary',price:200,description:'以智慧点亮属于你的星图。'},
-];
+import {cosmetics} from './cosmetic-catalog.js';
+export {cosmetics} from './cosmetic-catalog.js';
+
 export function rewardMatch(data,userId,matchId,win,practice){
  const p=data.profiles[userId],id=`reward:${matchId}:${userId}`;if(!p)return 0;if(data.transactions[id])return data.transactions[id].amount;
  const settings=systemSettings(data),amount=practice?(win?settings.practiceWinCredits:settings.practiceLossCredits):(win?settings.multiplayerWinCredits:settings.multiplayerLossCredits);p.credits+=amount;p.revision++;
@@ -35,8 +30,8 @@ export class EconomyService{
  }
  equip(user,input){
   const item=cosmetics.find(x=>x.id===input.itemId);ensure(item,'藏品不存在',404);
-  this.store.transaction(data=>{const p=data.profiles[user.id];ensure(p.revision===input.revision,'装备已更新，请重试',409);ensure(p.inventory.includes(item.id),'尚未拥有此藏品',403);p.equipped[item.type]=item.id;p.revision++;});
+  this.store.transaction(data=>{const p=data.profiles[user.id];ensure(p.revision===input.revision,'装备已更新，请重试',409);ensure(p.inventory.includes(item.id),'尚未拥有此藏品',403);if(input.clear===true){ensure(item.type==='frame'||item.type==='accessory','此藏品不可卸下');if(p.equipped[item.slot??item.type]===item.id)delete p.equipped[item.slot??item.type];}else p.equipped[item.slot??item.type]=item.id;p.revision++;});
   return this.catalog(user);
  }
- ledger(user){return Object.values(this.store.data.transactions).filter(t=>t.userId===user.id).sort((a,b)=>b.at-a.at).slice(0,30);}
+ ledger(user){return indexedRecords(this.store,'transactions','owner',t=>[t.userId],user.id).sort((a,b)=>b.at-a.at).slice(0,30);}
 }

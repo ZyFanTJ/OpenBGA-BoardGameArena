@@ -32,3 +32,14 @@ test('every card has vector art and a readable accessible name',()=>{
   for(const c of makeDeck()){assert.match(cardArt(c),/^<svg/);assert.ok(cardLabel(c).length);}
   assert.match(cardArt(null),/UNO/);assert.match(cardArt({color:'red',value:6}),/underline/);
 });
+test('match details and guide can be opened independently without sending game commands',async()=>{
+  const commands=[],ui=createUnoRenderer(c=>commands.push(c),()=>{}),snapshot={...room(fixture()),title:'朋友的周末牌桌'};
+  ui.render(snapshot,{id:'a'});
+  await ui.handle('info',{});
+  let html=ui.render(snapshot,{id:'a'});
+  assert.match(html,/aria-label="牌局信息"/);assert.match(html,/朋友的周末牌桌/);assert.match(html,/uno-standings/);
+  await ui.handle('guide',{});html=ui.render(snapshot,{id:'a'});
+  assert.match(html,/UNO 玩法手卡/);assert.doesNotMatch(html,/uno-standings/);
+  await ui.handle('guide',{});html=ui.render(snapshot,{id:'a'});
+  assert.doesNotMatch(html,/uno-overlay/);assert.deepEqual(commands,[]);
+});

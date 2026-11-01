@@ -1,6 +1,7 @@
 import {randomBytes} from 'node:crypto';
 import {systemSettings} from './system.js';
 import {userAccess} from './access.js';
+import {cosmetics} from './cosmetic-catalog.js';
 
 export const defaultInventory=['avatar-traveler','banner-night','title-wanderer'];
 export function profileDetails(profile){return profile.details??{bio:'',favoriteGame:'',visibility:'friends',showcase:Object.values(profile.equipped??{}).filter(id=>profile.inventory.includes(id)).slice(0,4)};}
@@ -13,5 +14,8 @@ export function ensureProfile(data,user){
   const id=`welcome:${user.id}`;data.transactions[id]={id,userId:user.id,kind:'welcome',amount:credits,balance:credits,at:Date.now()};
   return profile;
 }
-export function publicProfile(p){return {id:p.id,name:p.name,createdAt:p.createdAt,friendCode:p.friendCode,appearance:{...p.equipped}};}
+export function publicProfile(p){
+  const title=cosmetics.find(item=>item.type==='title'&&item.id===p.equipped?.title);
+  return {id:p.id,name:p.name,createdAt:p.createdAt,friendCode:p.friendCode,appearance:{...p.equipped},title:title?{id:title.id,name:title.name,rarity:title.rarity}:null};
+}
 export function ownProfile(data,id){const p=data.profiles[id],access=userAccess(data,id);return {...publicProfile(p),details:structuredClone(profileDetails(p)),credits:p.credits,inventory:[...p.inventory],revision:p.revision,registered:!!data.accounts[id],handle:data.accounts[id]?.handle??null,admin:!!data.accounts[id]&&access.role==='admin'&&!access.disabled};}

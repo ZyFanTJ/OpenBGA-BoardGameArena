@@ -2,6 +2,7 @@ import {randomUUID} from 'node:crypto';
 import {ensure} from './errors.js';
 import {boundedText} from './validation.js';
 import {systemSettings} from './system.js';
+import {cosmetics} from './economy.js';
 
 export const forumCategories = ['suggestion', 'game', 'chat'];
 const pageSize = 20;
@@ -21,7 +22,9 @@ export class ForumService {
   constructor(store, {now = () => Date.now()} = {}) { this.store = store; this.now = now; }
   author(id) {
     const profile = this.store.data.profiles[id];
-    return {id, name: profile?.name ?? '月下旅人', appearance: {avatar: profile?.equipped?.avatar ?? 'avatar-traveler'}};
+    const equipped=profile?.equipped??{},title=cosmetics.find(item=>item.type==='title'&&item.id===(equipped.title??'title-wanderer'));
+    return {id,name:profile?.name??'月下旅人',appearance:{avatar:equipped.avatar??'avatar-traveler',frame:equipped.frame??null,title:title?.id??null},
+      title:title?{id:title.id,name:title.name,rarity:title.rarity}:null};
   }
   summary(topic, user) {
     return {id: topic.id, number: topic.number, title: topic.title, category: topic.category, status: topic.status,

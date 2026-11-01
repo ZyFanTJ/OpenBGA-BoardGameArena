@@ -1,0 +1,47 @@
+body:has(#rules-library-dialog[open]){overflow:hidden}
+#rules-library-dialog{position:fixed;inset:auto;top:50%;left:50%;transform:translate(-50%,-50%);margin:0;width:min(1120px,calc(100vw - 40px));height:auto;max-width:none;max-height:min(820px,calc(100dvh - 48px));padding:0;border:1px solid #8b957c66;border-radius:18px;background:#101e2a;color:#e8edde;box-shadow:0 28px 100px #0009;overflow:hidden}
+#rules-library-dialog::backdrop{background:#030c16c7;backdrop-filter:blur(6px)}
+#rules-library-dialog[open]{display:flex;flex-direction:column}
+#rules-library-dialog .rules-library-heading{height:auto;min-height:72px;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;flex:none;background:#142733;border-bottom:1px solid #b6c5aa22}
+.rules-library-heading>div{display:flex;align-items:center;gap:12px;min-width:0}.rules-library-heading h2{font-size:20px;color:#f2dfad}
+#rules-library-dialog .rules-library-close{display:grid;place-items:center;flex:none;width:40px;height:40px;padding:8px;background:#ffffff05;border:1px solid #b5c4bc38;border-radius:9px}
+.rules-library-layout{display:grid;grid-template-columns:232px minmax(0,1fr);grid-template-rows:minmax(0,1fr);min-height:0;max-height:min(746px,calc(100dvh - 122px));flex:0 1 auto}
+.rules-library-games{display:grid;grid-auto-rows:minmax(58px,1fr);min-height:0;gap:6px;padding:14px 10px;overflow:auto;border-right:1px solid #adc0b624;background:#0b1925}
+#rules-library-dialog .rules-library-game{display:flex;align-items:center;gap:10px;flex:none;min-width:0;width:100%;padding:8px;text-align:left;color:#d7e0dd;background:#142936;border:1px solid transparent;border-radius:10px;font-weight:400}
+#rules-library-dialog .rules-library-game:hover{background:#203a44;border-color:#849f9866}
+#rules-library-dialog .rules-library-game[aria-pressed=true]{background:#2c3b36;border-color:#dcc087;box-shadow:inset 3px 0 #e2c58a;color:#f3dfad}
+.rules-library-game>.game-cover{display:block;width:52px;height:42px;flex:none;border-radius:6px;overflow:hidden;position:relative}
+.rules-library-game .game-cover img{width:100%;height:100%;object-fit:cover}.rules-library-game>.game-cover:after{display:none}
+.rules-library-game>.game-cover .sw-cover-title,.rules-library-game>.game-cover .nn-cover-title,.rules-library-game>.game-cover .dnd-cover{display:none}
+.rules-library-game>span:last-child{min-width:0}.rules-library-game b{display:block;font-size:13px;line-height:1.45}.rules-library-game small{display:block;font-size:10px;color:#9db3bd;margin-top:5px;white-space:nowrap}
+.rules-library-reader{min-width:0;min-height:0;overflow:auto;overscroll-behavior:contain;padding:20px 24px;scrollbar-gutter:stable;overflow-wrap:anywhere;container-type:inline-size}
+.rules-library-game-heading{border-bottom:1px solid #d3c18b33;padding-bottom:14px;margin-bottom:16px}.rules-library-game-heading h3{font-size:26px;color:#f1e6cd}
+#rules-library-dialog .rules-library-content{padding:0;color:#d4dfd8;min-height:120px}
+.rules-library-content>.cabo-reference{color:inherit!important}.rules-library-content .cabo-reference .rules-visual{--rg-line:#97ab983b;--rg-panel:#789f9014}
+.rules-library-content .cabo-reference p,.rules-library-content .cabo-reference footer{color:#bdd0c6}
+.rules-library-content .reference-goal span,.rules-library-content .reference-power p{color:#aec2bc}
+.rules-library-content .reference-power h3,.rules-library-content .reference-power h3 b{color:#e6d1a2}
+.rules-library-content .reference-call{background:#d0b77c12;border-color:#d0b77c44}.rules-library-content .reference-call h3{color:#e6d1a2}
+.rules-library-content .reference-special p{background:#aec6b414;border-color:#aec6b433}.rules-library-content .reference-special b{color:#e6d1a2}.rules-library-content .reference-special span{color:#aec2bc}
+#rules-library-dialog .cabo-reference{display:grid;grid-template-columns:1fr 1fr;column-gap:12px;min-height:0}
+#rules-library-dialog .cabo-reference>.reference-goal,#rules-library-dialog .cabo-reference>.reference-powers,#rules-library-dialog .cabo-reference>.rules-visual,#rules-library-dialog .cabo-reference>footer{grid-column:1/-1}
+#rules-library-dialog .reference-goal{padding:0 0 12px}.rules-library-content .reference-goal b{font-size:15px}.rules-library-content .reference-goal span{font-size:12px;margin-top:5px}
+#rules-library-dialog .reference-powers{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:0 0 14px}
+#rules-library-dialog .reference-power{gap:10px;min-width:0;padding:12px 10px;border:1px solid #b4c2a82b;border-radius:10px;background:#789f9014}
+#rules-library-dialog .reference-power .reference-mini{width:40px;height:60px}.rules-library-content .reference-power p{font-size:12px;line-height:1.7}
+#rules-library-dialog .reference-call{margin:0;padding:12px;border:1px solid #d0b77c44;border-radius:9px}
+#rules-library-dialog .reference-special{padding:12px;border:1px solid #aec6b433;border-radius:9px;gap:8px;background:#aec6b40b}.rules-library-content .reference-special p{background:none;border:0}
+#rules-library-dialog .cabo-reference>footer{margin-top:12px;color:#a9bfb6}
+@container(max-width:570px){#rules-library-dialog .reference-powers{grid-template-columns:1fr}#rules-library-dialog .reference-power{padding:10px 12px}#rules-library-dialog .cabo-reference{grid-template-columns:1fr}#rules-library-dialog .reference-call,#rules-library-dialog .reference-special{grid-column:1;margin-top:10px}}
+.rules-library-content>.nn-reference{max-height:none;overflow:visible;padding:0}.rules-library-content .th-card{vertical-align:middle}
+.rules-library-pair{display:grid;grid-template-columns:1fr 1fr;gap:16px}.rules-library-pair .rg-grid{grid-template-columns:1fr}.rules-library-pair .rg-example{min-height:168px}.rules-library-pair .rg-section{margin-top:12px}
+@container(max-width:570px){.rules-library-pair{grid-template-columns:1fr;gap:0}}
+#rules-library-dialog :is(button,a,summary):focus-visible{outline:2px solid #f1d594;outline-offset:3px}
+@media(max-width:700px){
+ #rules-library-dialog{width:calc(100vw - 16px);height:calc(100dvh - 24px);border-radius:12px}
+ #rules-library-dialog .rules-library-heading{min-height:64px;padding:12px 14px;gap:8px}.rules-library-heading h2{font-size:18px}.rules-library-heading>div{gap:8px}
+ .rules-library-layout{grid-template-columns:1fr;grid-template-rows:auto minmax(0,1fr);max-height:none;flex:1}
+ .rules-library-games{display:flex;flex-direction:row;padding:12px;gap:8px;border-right:0;border-bottom:1px solid #adc0b624}
+ #rules-library-dialog .rules-library-game{width:164px;padding:8px;gap:8px}.rules-library-game>.game-cover{width:40px;height:43px}.rules-library-game b{font-size:12px}.rules-library-game small{font-size:9px}
+ .rules-library-reader{padding:18px 15px}.rules-library-game-heading h3{font-size:23px}
+}

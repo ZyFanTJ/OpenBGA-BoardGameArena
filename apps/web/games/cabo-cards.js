@@ -1,5 +1,7 @@
+import {cardBack} from '../game-cosmetics.js';
 /** Sprite indexes follow assets/cabo/reference-style/manifest.json (4 × 4). */
-export function cardArt(value) {
+export function cardArt(value,owner) {
+  if(value===null){const back=cardBack(owner,'cabo');if(back)return back;}
   const index = value === null ? 14 : value;
   const underline = value === 6 || value === 9 ? 'underlined' : '';
   const ability = value >= 7 && value <= 8 ? 'PEEK' : value >= 9 && value <= 10 ? 'SPY' : value >= 11 && value <= 12 ? 'SWAP' : '';

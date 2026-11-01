@@ -3,6 +3,7 @@ import { existsSync, mkdirSync, readFileSync, chmodSync } from 'node:fs';
 import { dirname } from 'node:path';
 import { migrateStorage } from './store.js';
 import { recordCollections, transactionDraft, applyChanges, storageRecords } from './transaction-draft.js';
+import { RecordIndexes } from './record-index.js';
 
 /** Single-process store: synchronous domain transactions, record-sized WAL commits.
  * The existing JSON file is imported once and left intact for rollback/backup.
@@ -11,6 +12,7 @@ import { recordCollections, transactionDraft, applyChanges, storageRecords } fro
  */
 export class SqliteStore {
   constructor(file = ':memory:', { legacyFile } = {}) {
+    this.indexes = new RecordIndexes();
     this.file = file === ':memory:' ? undefined : file;
     this.secretsFile = legacyFile ? `${legacyFile}.secrets.key` : this.file ? `${this.file}.secrets.key` : undefined;
     if (file !== ':memory:') mkdirSync(dirname(file), { recursive: true });
@@ -24,13 +26,21 @@ export class SqliteStore {
       const rows = this.db.prepare('SELECT collection, id, json FROM records').all();
       if (rows.length) {
         const input = Object.fromEntries(recordCollections.map(name => [name, {}]));
+        input.forum = {topics:{}};
+        let legacyForum = false;
         for (const row of rows) {
-          const target = row.collection ? input[row.collection] : input;
+          const target = row.collection === 'forumTopics' ? input.forum.topics : row.collection ? input[row.collection] : input;
           if (!target) throw new Error('Unknown storage collection');
-          Object.defineProperty(target, row.id, { value: JSON.parse(row.json), writable: true, enumerable: true, configurable: true });
+          let value = JSON.parse(row.json);
+          if (!row.collection && row.id === 'forum') {
+            legacyForum = Object.hasOwn(value, 'topics');
+            value = {...value, topics:value.topics ?? input.forum.topics};
+          }
+          Object.defineProperty(target, row.id, { value, writable: true, enumerable: true, configurable: true });
         }
         this.data = migrateStorage(input);
-        if (input.version !== this.data.version) this.persist(storageRecords(this.data));
+        // One atomic rewrite migrates old singleton forums. Domain and game versions do not change.
+        if (legacyForum || input.version !== this.data.version) this.persist(storageRecords(this.data));
       } else {
         const input = legacyFile && existsSync(legacyFile) ? JSON.parse(readFileSync(legacyFile, 'utf8')) : { version: 1, sessions: {}, rooms: {} };
         this.data = migrateStorage(input);
@@ -57,9 +67,11 @@ export class SqliteStore {
       if (result && typeof result.then === 'function') throw new Error('Storage transactions must be synchronous');
       const changed = changes();
       this.persist(changed);
+      this.indexes.committed(this.data, changed);
       applyChanges(this.data, changed);
       return result;
     } finally { this.updating = false; }
   }
   close() { this.db.close(); }
+  selectRecords(collection, name, keys, key) { return this.indexes.select(this.data, collection, name, keys, key); }
 }

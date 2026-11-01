@@ -1,9 +1,11 @@
-// Collections hold independent JSON records. Singletons (settings, forum, etc.)
+import {flatStorage, domainDraft} from './storage-layout.js';
+// Collections hold independent JSON records. Singletons (settings, etc.)
 // remain one record each. A transaction clones only the records it actually reads.
-export const recordCollections = Object.freeze(['sessions', 'rooms', 'accounts', 'profiles', 'friendships', 'invitations', 'matches', 'transactions']);
-const collections = new Set(recordCollections);
+export const recordCollections = Object.freeze(['sessions', 'rooms', 'accounts', 'profiles', 'friendships', 'invitations', 'matches', 'transactions', 'friendConversations', 'gameAppointments']);
+const collections = new Set([...recordCollections, 'forumTopics']);
 
-export function transactionDraft(base) {
+export function transactionDraft(input) {
+  const base = flatStorage(input);
   const roots = new Map(), tables = new Map();
   function table(name) {
     const source = base[name], reads = new Map(), removed = new Set();
@@ -54,19 +56,19 @@ export function transactionDraft(base) {
     }
     return changed;
   }
-  return { draft, changes };
+  return { draft: domainDraft(draft), changes };
 }
 
 export function applyChanges(data, changes) {
   for (const { collection, key, value } of changes) {
-    const target = collection ? data[collection] : data;
+    const target = collection === 'forumTopics' ? data.forum.topics : collection ? data[collection] : data;
     if (value === undefined) delete target[key];
-    else Object.defineProperty(target, key, { value, writable: true, enumerable: true, configurable: true });
+    else Object.defineProperty(target, key, { value: !collection && key === 'forum' ? {...value, topics:data.forum.topics} : value, writable: true, enumerable: true, configurable: true });
   }
 }
 
 export function storageRecords(data) {
-  return Object.entries(data).flatMap(([name, value]) => collections.has(name)
+  return Object.entries(flatStorage(data)).flatMap(([name, value]) => collections.has(name)
     ? Object.entries(value).map(([key, record]) => ({ collection: name, key, value: record, json: JSON.stringify(record) }))
     : [{ collection: '', key: name, value, json: JSON.stringify(value) }]);
 }

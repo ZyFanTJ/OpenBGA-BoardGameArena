@@ -21,8 +21,8 @@ async function fixture(store=new JsonStore()){
 
 test('v7 integration migration preserves every prior field and writes an exact backup without changing room revisions',()=>{
  const input={version:7,rooms:{R:{revision:9,stateVersion:2,game:{hands:['private'],pending:{a:'card'}}}},profiles:{a:{credits:230}},accounts:{a:{id:'a'}},sessions:{keep:{id:'a'}},administration:{users:{a:{role:'admin'}},audit:[]}};
- const before=structuredClone(input),expected=migrateStorage(input);assert.deepEqual(input,before);assert.equal(expected.version,9);
- const {integrations,version,...rest}=expected,{version:oldVersion,...oldRest}=before;assert.deepEqual(rest,oldRest);
+ const before=structuredClone(input),expected=migrateStorage(input);assert.deepEqual(input,before);assert.equal(expected.version,10);
+ const {integrations,version,friendConversations,gameAppointments,...rest}=expected,{version:oldVersion,...oldRest}=before;assert.deepEqual(rest,oldRest);assert.deepEqual(friendConversations,{});assert.deepEqual(gameAppointments,{});
  assert.deepEqual(integrations,{revision:0,textProvider:defaultTextProvider()});
  fs.mkdirSync('work',{recursive:true});const dir=fs.mkdtempSync(resolve('work/admin-ai-migrate-'));
  try{const file=join(dir,'platform.json'),raw=JSON.stringify(before);fs.writeFileSync(file,raw);assert.deepEqual(new JsonStore(file).data,expected);assert.equal(fs.readFileSync(file+'.v7.bak','utf8'),raw);}finally{fs.rmSync(dir,{recursive:true,force:true});}
@@ -75,7 +75,7 @@ test('v8 settings migration adds 100k context and a separate style without alter
  const input=new JsonStore().data;input.version=8;
  input.integrations={revision:7,textProvider:{enabled:true,baseUrl:'https://provider.example/v1',model:'keep-model',encryptedKey:{data:'encrypted-placeholder'}}};
  const before=structuredClone(input),next=migrateStorage(input);
- assert.deepEqual(input,before);assert.equal(next.version,9);assert.equal(next.integrations.revision,7);
+ assert.deepEqual(input,before);assert.equal(next.version,10);assert.equal(next.integrations.revision,7);
  assert.equal(next.integrations.textProvider.contextTokens,100000);assert.equal(next.integrations.textProvider.temperature,1);
  assert.ok(next.integrations.textProvider.dmStylePrompt.length>0);assert.deepEqual(next.integrations.textProvider.encryptedKey,before.integrations.textProvider.encryptedKey);
  assert.deepEqual(next.rooms,before.rooms);assert.deepEqual(next.sessions,before.sessions);

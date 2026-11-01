@@ -7,6 +7,7 @@ import {ForumService} from '../packages/platform/forum.js';
 import {SessionService} from '../packages/platform/sessions.js';
 import {createApp} from '../apps/server/http.js';
 import {games} from '../packages/games/registry.js';
+import {cosmetics} from '../packages/platform/economy.js';
 import {forumPage, topicComposer, topicDetail, topicList} from '../apps/web/forum/views.js';
 
 function fixture() {
@@ -21,7 +22,7 @@ test('v4 storage migrates to an empty forum, preserves unrelated data and backs 
   const f = fixture(), input = structuredClone(f.store.data); input.version = 4; delete input.forum;
   input.rooms.preserve = {stateVersion: 9, revision: 2, game: {secret: ['unchanged']}};
   const original = structuredClone(input), migrated = migrateStorage(input);
-  assert.equal(migrated.version, 9); assert.deepEqual(migrated.forum, {nextNumber: 1, topics: {}});
+  assert.equal(migrated.version, 10); assert.deepEqual(migrated.forum, {nextNumber: 1, topics: {}});
   for (const key of Object.keys(original).filter(k => !['version','rooms'].includes(k))) assert.deepEqual(migrated[key], original[key]);
   assert.deepEqual(migrated.rooms.preserve,{...original.rooms.preserve,revision:3,turnSeconds:0,turnClock:null,lastTimeout:null});
   assert.deepEqual(input, original); assert.deepEqual(migrateStorage(migrated), migrated);
@@ -29,7 +30,7 @@ test('v4 storage migrates to an empty forum, preserves unrelated data and backs 
   const dir = mkdtempSync(join(base, 'forum-migrate-'));
   try {
     const file = join(dir, 'platform.json'), source = JSON.stringify(input); writeFileSync(file, source);
-    const store = new JsonStore(file); assert.equal(store.data.version, 9);
+    const store = new JsonStore(file); assert.equal(store.data.version, 10);
     assert.equal(readFileSync(file + '.v4.bak', 'utf8'), source);
     new JsonStore(file); assert.equal(readFileSync(file + '.v4.bak', 'utf8'), source);
   } finally { rmSync(dir, {recursive: true, force: true}); }
@@ -51,6 +52,23 @@ test('topics and replies retain optional contacts; public projections omit priva
   anon.replies[0].body = 'forged'; anon.author.appearance.avatar = 'forged';
   assert.equal(store.data.forum.topics[topic.id].replies[0].body, '我也想玩！');
   assert.equal(forum.detail(a, topic.id).author.appearance.avatar, 'avatar-traveler');
+});
+
+test('forum authors expose current equipped avatar, frame and title in lists and replies without exposing possessions',()=>{
+ const {store,forum,a,b}=fixture();
+ store.transaction(data=>{data.profiles[a.id].equipped={avatar:'avatar-frieren',frame:'frame-prism',title:'title-starlord',banner:'banner-moon',caboCardBack:'cabo-back-jade'};data.profiles[b.id].equipped={avatar:'avatar-wolf',frame:'frame-gilded',title:'title-strategist'};});
+ const topic=forum.create(a,draft());forum.reply(b,topic.id,{body:'一起聊聊'});const persisted=structuredClone(store.data.forum);
+ const detail=forum.detail(undefined,topic.id),list=forum.list();
+ assert.deepEqual(detail.author.appearance,{avatar:'avatar-frieren',frame:'frame-prism',title:'title-starlord'});
+ assert.deepEqual(detail.author.title,{id:'title-starlord',name:'群星执掌者',rarity:'legendary'});
+ assert.deepEqual(list.items[0].author,detail.author);assert.equal(detail.replies[0].author.appearance.frame,'frame-gilded');assert.equal(detail.replies[0].author.title.name,'运筹帷幄');
+ assert.deepEqual(Object.keys(detail.author).sort(),['appearance','id','name','title']);assert.deepEqual(Object.keys(detail.author.title).sort(),['id','name','rarity']);
+ for(const html of [topicList(list),topicDetail(detail,a)]){assert.match(html,/hub-avatar-frieren/);assert.match(html,/frame-prism/);assert.match(html,/forum-author-title/);assert.match(html,/title-tier-legendary/);assert.match(html,/群星执掌者/);}
+ assert.match(topicDetail(detail,a),/frame-gilded/);assert.match(topicDetail(detail,a),/运筹帷幄/);
+ detail.author.title.name='forged';detail.author.appearance.frame='forged';assert.equal(cosmetics.find(x=>x.id==='title-starlord').name,'群星执掌者');
+ store.transaction(data=>{data.profiles[a.id].equipped.frame='frame-lunar';data.profiles[a.id].equipped.title='title-wanderer';});
+ const fresh=forum.detail(undefined,topic.id);assert.equal(fresh.author.appearance.frame,'frame-lunar');assert.equal(fresh.author.title.name,'初来乍到');assert.deepEqual(store.data.forum,persisted);
+ store.transaction(data=>{delete data.profiles[b.id];});assert.equal(forum.detail(undefined,topic.id).replies[0].author.name,'月下旅人');
 });
 
 test('invalid posts and replies leave storage untouched', () => {

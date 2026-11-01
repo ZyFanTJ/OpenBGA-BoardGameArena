@@ -11,21 +11,26 @@ import {TurnRunner} from '../../packages/platform/turns.js';
 import { ensure } from '../../packages/platform/errors.js';
 import {AccountService} from '../../packages/platform/accounts.js';
 import {SocialService} from '../../packages/platform/social.js';
+import {FriendChatService} from '../../packages/platform/friend-chat.js';
+import {GameAppointmentService} from '../../packages/platform/game-appointments.js';
 import {RecordService} from '../../packages/platform/records.js';
 import {EconomyService} from '../../packages/platform/economy.js';
 import {ProfilePageService} from '../../packages/platform/profile-pages.js';
 import {ForumService} from '../../packages/platform/forum.js';
 import {AdminService} from '../../packages/platform/admin.js';
-import {publicSystem} from '../../packages/platform/system.js';
+import {publicSystem,gameEnabled,gameHot} from '../../packages/platform/system.js';
 import {createProviderSecrets,configuredTextProvider} from './provider-settings.js';
 import {createStaticDelivery} from './static.js';
 import {clientAddress, createRateLimiter} from './rate-limit.js';
 import {RoomEvents} from './room-events.js';
+import {RoomReaper} from '../../packages/platform/room-reaper.js';
+import {RealtimeRunner} from '../../packages/platform/realtime.js';
+import {RoomSockets} from './room-sockets.js';
 
 const webRoot = fileURLToPath(new URL('../web/', import.meta.url));
 const applicationVersion = JSON.parse(readFileSync(new URL('../../package.json', import.meta.url), 'utf8')).version;
 const cardAtlas = fileURLToPath(new URL('../../assets/cabo/reference-style/cabo-atlas-v1.png', import.meta.url));
-const mime = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.webp': 'image/webp' };
+const mime = { '.html': 'text/html; charset=utf-8', '.js': 'text/javascript; charset=utf-8', '.css': 'text/css; charset=utf-8', '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg', '.webp': 'image/webp', '.mp3': 'audio/mpeg' };
 async function body(req) {
   let text = '';
   for await (const chunk of req) { text += chunk; ensure(Buffer.byteLength(text) <= 8192, '请求过大', 413); }
@@ -33,9 +38,14 @@ async function body(req) {
   catch { ensure(false, '请求不是有效 JSON'); }
 }
 function cookie(req) { return req.headers.cookie?.split(';').map(v => v.trim()).find(v => v.startsWith('moon_session='))?.slice(13); }
-function json(res, status, value) { res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8' }); res.end(JSON.stringify(value)); }
+function json(res, status, value) {
+  const body = JSON.stringify(value);
+  res.writeHead(status, { 'Content-Type': 'application/json; charset=utf-8',
+    'Server-Timing': `app;dur=${(performance.now() - res.requestStarted).toFixed(2)}` });
+  res.end(body);
+}
 
-export function createApp({ store, registry, random, secureCookies = false, trustedProxyHops = 0, botDelay = 800, adminBootstrapHandle, effectProviders = {}, effectTimeoutMs = 25000, textProviderEnvironment = {}, providerFetch }) {
+export function createApp({ store, registry, random, secureCookies = false, trustedProxyHops = 0, botDelay = 800, adminBootstrapHandle, effectProviders = {}, effectTimeoutMs = 25000, textProviderEnvironment = {}, providerFetch, now = () => Date.now(), roomCleanup = {} }) {
   ensure(Number.isInteger(trustedProxyHops) && trustedProxyHops >= 0 && trustedProxyHops <= 4, '代理层数配置无效');
   const providerSecrets=createProviderSecrets(store);
   const textProvider=configuredTextProvider(store,providerSecrets,{environment:textProviderEnvironment,fetchImpl:providerFetch});
@@ -47,25 +57,32 @@ export function createApp({ store, registry, random, secureCookies = false, trus
   const outdated=Object.values(store.data.rooms).filter(room=>room.stateVersion!==registry.get(room.gameId).manifest.stateVersion);
   if(outdated.length)store.transaction(data=>{for(const old of outdated){const room=data.rooms[old.id],game=registry.get(room.gameId);if(room.game){ensure(typeof game.migrate==='function','游戏存档需要迁移');room.game=game.migrate(room.game,room.stateVersion);}room.stateVersion=game.manifest.stateVersion;room.revision++;}});
   const rate = createRateLimiter();
-  let bots,turns,effects,streams;
-  const service = new RoomService(store, registry, { random, notify(id, transition, update) {
+  let bots,turns,effects,streams,reaper,realtime,sockets;
+  const service = new RoomService(store, registry, { random, now, notify(id, transition, update) {
     // Observe synchronously after commit, before the next action can change a private view.
-    if (!update) { bots?.sync(id);turns?.sync(id);effects?.sync(id); }
+    if (!update || update.type === 'closed') { bots?.sync(id, transition);turns?.sync(id);effects?.sync(id);reaper?.sync(id); }
+    realtime?.sync(id);
     streams?.publish(id, transition, update);
+    sockets?.publish(id, transition, update);
   } });
   bots = new BotRunner(service, { delay: botDelay });
   turns = new TurnRunner(service);
+  realtime = new RealtimeRunner(service);
   effects = new EffectRunner(service, { providers: effectProviders, timeoutMs: effectTimeoutMs });
   const sessions = new SessionService(store);
   streams = new RoomEvents(service, sessions);
-  const accounts=new AccountService(store,sessions),social=new SocialService(store,service,registry),records=new RecordService(store,registry),economy=new EconomyService(store);
+  const accounts=new AccountService(store,sessions),social=new SocialService(store,service,registry,{now}),records=new RecordService(store,registry),economy=new EconomyService(store);
+  const friendChat=new FriendChatService(store,social,{now}),appointments=new GameAppointmentService(store,social,registry,{now});
+  const friendsView=user=>{const data=social.list(user);return {...data,friends:data.friends.map(p=>({...p,conversation:friendChat.summary(user,p.id)})),...appointments.list(user)};};
+  reaper = new RoomReaper(service, {...roomCleanup, isOnline:id=>social.isOnline(id)});
   const profilePages=new ProfilePageService(store,registry,social);
   const forum = new ForumService(store);
-  const admin=new AdminService(store,{social,providerSecrets});admin.bootstrap(adminBootstrapHandle);
+  const admin=new AdminService(store,{social,providerSecrets,registry});admin.bootstrap(adminBootstrapHandle);
   records.backfill();
   const chat = new ChatService(store, service);
-  const issueSession=(res,session)=>{res.setHeader('Set-Cookie',`moon_session=${session.token}; Path=/; HttpOnly; SameSite=Strict; Max-Age=2592000${secureCookies?'; Secure':''}`);return json(res,200,session.user);};
+  const issueSession=(res,session)=>{social.touch(session.user);reaper.touch(session.user.id);res.setHeader('Set-Cookie',`moon_session=${session.token}; Path=/; HttpOnly; SameSite=Strict; Max-Age=2592000${secureCookies?'; Secure':''}`);return json(res,200,session.user);};
   const server = createServer(async (req, res) => {
+    res.requestStarted = performance.now();
     res.setHeader('X-Content-Type-Options', 'nosniff');
     res.setHeader('Referrer-Policy', 'same-origin');
     res.setHeader('Cache-Control', 'no-store');
@@ -88,7 +105,7 @@ export function createApp({ store, registry, random, secureCookies = false, trus
             rate.consume(actor ? `player:${actor.id}` : `anonymous:${address}`, 240);
           }
         }
-        if (path === '/api/games' && req.method === 'GET') return json(res, 200, registry.list());
+        if (path === '/api/games' && req.method === 'GET') return json(res, 200, registry.list().map(g=>({...g,enabled:gameEnabled(store.data,g.id),hot:gameHot(store.data,g.id)})));
         if (path === '/api/lobby' && req.method === 'GET') return json(res, 200, { rooms: service.directory() });
         const roomPreview=path.match(/^\/api\/room-invites\/([A-Z0-9]{8})$/);
         if(roomPreview&&req.method==='GET')return json(res,200,service.invitation(roomPreview[1]));
@@ -102,7 +119,7 @@ export function createApp({ store, registry, random, secureCookies = false, trus
         if(path==='/api/auth/register'&&req.method==='POST'){
           const input = await body(req); rate.consume(`auth-account:${rate.account(input.handle)}`, 15);
           let guest;try{guest=sessions.authenticate(cookie(req));}catch(error){if(error.status!==401)throw error;}
-          return issueSession(res,await accounts.register(input,guest));
+          return issueSession(res,await accounts.register(input,guest,{verifyGuest:()=>sessions.authenticate(cookie(req))}));
         }
         if(path==='/api/auth/login'&&req.method==='POST'){
           const input = await body(req); rate.consume(`auth-account:${rate.account(input.handle)}`, 15);
@@ -117,6 +134,8 @@ export function createApp({ store, registry, random, secureCookies = false, trus
         }
         const user = sessions.authenticate(cookie(req));
         social.touch(user);
+        reaper.touch(user.id);
+        if(path==='/api/presence'&&req.method==='GET')return json(res,200,{ok:true});
         if(path==='/api/admin/overview'&&req.method==='GET')return json(res,200,admin.overview(user));
         if(path==='/api/admin/users'&&req.method==='GET')return json(res,200,admin.users(user,Object.fromEntries(url.searchParams)));
         if(path==='/api/admin/audit'&&req.method==='GET')return json(res,200,admin.audit(user,Object.fromEntries(url.searchParams)));
@@ -124,13 +143,13 @@ export function createApp({ store, registry, random, secureCookies = false, trus
         if(path==='/api/admin/settings'&&req.method==='POST')return json(res,200,admin.updateSettings(user,await body(req)));
         if(path==='/api/admin/ai'&&req.method==='GET')return json(res,200,admin.ai(user));
         if(path==='/api/admin/ai'&&req.method==='POST')return json(res,200,admin.updateAi(user,await body(req)));
-        const adminUser=path.match(/^\/api\/admin\/users\/([a-zA-Z0-9-]{1,100})(?:\/(credits|access|profile))?$/);
+        const adminUser=path.match(/^\/api\/admin\/users\/([a-zA-Z0-9-]{1,100})(?:\/(credits|access|profile|password))?$/);
         if(adminUser){
           const [,id,action]=adminUser;
           if(!action&&req.method==='GET')return json(res,200,admin.detail(user,id));
           if(action&&req.method==='POST'){
-            const input=await body(req),result=admin[action](user,id,input);
-            if(action==='access'&&(input.action==='sessions'||input.action==='disabled'&&input.value))streams.closeUser(id);
+            const input=await body(req),result=await admin[action](user,id,input);
+            if(action==='password'||action==='access'&&(input.action==='sessions'||input.action==='disabled'&&input.value))streams.closeUser(id);
             return json(res,200,result);
           }
           ensure(false,'请求方法不支持',405);
@@ -144,14 +163,29 @@ export function createApp({ store, registry, random, secureCookies = false, trus
           ensure(false, '请求方法不支持', 405);
         }
         if (path === '/api/me' && req.method === 'GET') return json(res, 200, { user, roomId: service.currentRoom(user)?.id ?? null });
+        if (path === '/api/me/room' && req.method === 'GET') {
+          const current = service.currentRoom(user);
+          return json(res, 200, { room: current ? service.snapshot(current.id, user) : null });
+        }
         if(path==='/api/account'&&req.method==='GET')return json(res,200,accounts.profile(user));
         if(path==='/api/account'&&req.method==='POST')return json(res,200,accounts.rename(user,await body(req)));
         if(path==='/api/profile'&&req.method==='GET')return json(res,200,profilePages.get(user));
         if(path==='/api/profile'&&req.method==='POST')return json(res,200,profilePages.update(user,await body(req)));
         const profileId=path.match(/^\/api\/profiles\/([a-zA-Z0-9-]{1,100})$/);
         if(profileId&&req.method==='GET')return json(res,200,profilePages.get(user,profileId[1]));
-        if(path==='/api/hub'&&req.method==='GET'){const s=social.list(user);return json(res,200,{profile:accounts.profile(user),requests:s.requests.filter(r=>r.incoming).length,invitations:s.invitations,friends:s.friends.slice(0,5),currentRoom:s.currentRoom});}
-        if(path==='/api/friends'&&req.method==='GET')return json(res,200,social.list(user));
+        if(path==='/api/hub'&&req.method==='GET'){const s=social.list(user);return json(res,200,{profile:accounts.profile(user),requests:s.requests.filter(r=>r.incoming).length,invitations:s.invitations,friends:s.friends.slice(0,5),currentRoom:s.currentRoom,unreadMessages:s.friends.reduce((n,p)=>n+friendChat.summary(user,p.id).unread,0),appointments:appointments.summary(user)});}
+        if(path==='/api/friends'&&req.method==='GET')return json(res,200,friendsView(user));
+        const privateChat=path.match(/^\/api\/friends\/([a-zA-Z0-9-]{1,100})\/messages(?:\/(read))?$/);
+        if(privateChat){
+          const [,playerId,action]=privateChat;
+          if(!action&&req.method==='GET')return json(res,200,friendChat.list(user,playerId,Object.fromEntries(url.searchParams)));
+          if(req.method==='POST')return json(res,200,action?friendChat.read(user,playerId,await body(req)):friendChat.send(user,playerId,await body(req)));
+          ensure(false,'请求方法不支持',405);
+        }
+        if(path==='/api/appointments'&&req.method==='GET')return json(res,200,appointments.list(user,Object.fromEntries(url.searchParams)));
+        if(path==='/api/appointments'&&req.method==='POST')return json(res,201,appointments.create(user,await body(req)));
+        const appointment=path.match(/^\/api\/appointments\/([a-zA-Z0-9-]{1,100})\/respond$/);
+        if(appointment&&req.method==='POST')return json(res,200,appointments.respond(user,appointment[1],await body(req)));
         if(path==='/api/friends/search'&&req.method==='GET')return json(res,200,{players:social.search(user,url.searchParams.get('q'))});
         const friendAction=path.match(/^\/api\/friends\/(request|respond|remove|invite)$/);
         if(friendAction&&req.method==='POST')return json(res,200,social[friendAction[1]](user,await body(req)));
@@ -163,12 +197,14 @@ export function createApp({ store, registry, random, secureCookies = false, trus
         const historyId=path.match(/^\/api\/history\/([a-zA-Z0-9-]{1,100})$/);if(historyId&&req.method==='GET')return json(res,200,records.detail(user,historyId[1]));
         if(path==='/api/shop'&&req.method==='GET')return json(res,200,economy.catalog(user));
         if(path==='/api/shop/purchase'&&req.method==='POST')return json(res,200,economy.purchase(user,await body(req)));
-        if(path==='/api/shop/equip'&&req.method==='POST')return json(res,200,economy.equip(user,await body(req)));
+        if(path==='/api/shop/equip'&&req.method==='POST'){const result=economy.equip(user,await body(req));const current=service.currentRoom(user);if(current)streams.publish(current.id);return json(res,200,result);}
         if(path==='/api/wallet'&&req.method==='GET')return json(res,200,{transactions:economy.ledger(user),credits:accounts.profile(user).credits});
         if (path === '/api/rooms' && req.method === 'POST') return json(res, 201, service.createRoom(user, await body(req)));
-        const match = path.match(/^\/api\/rooms\/([A-Z0-9]{8})(?:\/(join|actions|chat|events))?$/);
+        const match = path.match(/^\/api\/rooms\/([A-Z0-9]{8})(?:\/(join|actions|chat|events|watch|watch-events))?$/);
         ensure(match, '接口不存在', 404);
         const [, id, action] = match;
+        if(action==='watch'&&req.method==='GET')return json(res,200,service.watch(id,user));
+        if(action==='watch-events'&&req.method==='GET'){streams.add(id,res,user,cookie(req),2,true);return;}
         if (!action && req.method === 'GET') return json(res, 200, service.snapshot(id, user));
         if (action === 'join' && req.method === 'POST') return json(res, 200, service.join(user, id, {revision:(await body(req)).revision}));
         if (action === 'actions' && req.method === 'POST') return json(res, 200, service.mutate(user, id, await body(req)));
@@ -191,11 +227,12 @@ export function createApp({ store, registry, random, secureCookies = false, trus
       ensure(await sendStatic(req, res, file, mime[extname(file)]), '文件不存在', 404);
     } catch (error) {
       if (!error.status) console.error(error);
-      if (!res.headersSent) json(res, error.status ?? 500, { error: error.status ? error.message : '服务器暂时无法完成请求' });
+      if (!res.headersSent) json(res, error.status ?? 500, { error: error.status ? error.message : '服务器暂时无法完成请求', ...(error.code === 'ROOM_REVISION_CONFLICT' ? {code:error.code} : {}) });
       else res.end();
     }
   });
-  server.on('listening', () => {bots.resume();turns.resume();effects.resume();});
-  server.on('close', () => {bots.stop();turns.stop();effects.stop();});
-  return { server, service, bots, turns, effects, closeStreams() { bots.stop();turns.stop();effects.stop();streams.close(); } };
+  sockets = new RoomSockets(server,service,sessions);
+  server.on('listening', () => {bots.resume();turns.resume();effects.resume();reaper.resume();realtime.resume();});
+  server.on('close', () => {bots.stop();turns.stop();effects.stop();reaper.stop();realtime.stop();sockets.close();});
+  return { server, service, bots, turns, effects, reaper, realtime, sockets, closeStreams() { bots.stop();turns.stop();effects.stop();reaper.stop();realtime.stop();streams.close();sockets.close(); } };
 }

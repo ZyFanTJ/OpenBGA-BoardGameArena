@@ -1,12 +1,18 @@
 /** Shared room settings; time limits belong to the platform, outside game options. */
-export const turnLimitField=(value=60,id='turn-seconds')=>`<label for="${id}">单轮操作时限</label><select id="${id}" name="turnSeconds">${[[0,'不限时'],[30,'30 秒'],[60,'60 秒'],[120,'120 秒'],[300,'300 秒']].map(([seconds,label])=>`<option value="${seconds}" ${seconds===value?'selected':''}>${label}</option>`).join('')}</select><p class="turn-limit-note" data-turn-limit-note ${value===0?'hidden':''}>超时自动完成本轮操作</p>`;
+export const turnLimitField=(value=60,id='turn-seconds',supported=true)=>`<label for="${id}">单轮操作时限</label><select id="${id}" name="turnSeconds">${[[0,'不限时'],[30,'30 秒'],[60,'60 秒'],[120,'120 秒'],[300,'300 秒']].map(([seconds,label])=>`<option value="${seconds}" ${!supported&&seconds!==0?'disabled':''} ${seconds===value?'selected':''}>${label}</option>`).join('')}</select><p class="turn-limit-note" data-turn-limit-note ${value===0?'hidden':''}>超时自动完成本轮操作</p>`;
 
+export function turnCountdownText(turn,elapsedMs=0){
+ const remaining=turn.remainingMs===null?null:Math.max(0,turn.remainingMs-(turn.paused?0:elapsedMs));
+ const seconds=remaining===null?null:Math.ceil(remaining/1000);
+ return seconds===null?(turn.seconds?'—':'不限时'):seconds===0?'自动行动中':`${Math.floor(seconds/60)}:${String(seconds%60).padStart(2,'0')}`;
+}
 export function createTurnFeedback(getRoom){
  let lastKey='',baseTitle=null;
  function sync(){
   const room=getRoom(),turn=room?.turn,cue=document.querySelector('#turn-cue');
   const playing=room?.status==='playing'&&!!turn&&turn.key!==null;
   const mine=playing&&turn.required&&!turn.paused;
+  document.querySelector('.room-layout')?.classList.toggle('has-active-turn',!!playing&&!turn.paused);
   document.querySelector('.room-layout')?.classList.toggle('is-my-turn',!!mine);
   if(mine&&baseTitle===null){baseTitle=document.title;document.title='● 轮到你 · '+baseTitle;}
   if(!mine&&baseTitle!==null){document.title=baseTitle;baseTitle=null;}
@@ -27,8 +33,9 @@ export function createTurnFeedback(getRoom){
   const room=getRoom(),turn=room?.turn,cue=document.querySelector('#turn-cue');if(!cue||!turn||cue.hidden)return;
   const remaining=turn.remainingMs===null?null:Math.max(0,turn.remainingMs-(turn.paused?0:performance.now()-sampledAt));
   const seconds=remaining===null?null:Math.ceil(remaining/1000);
-  const text=seconds===null?(turn.seconds?'—':'不限时'):seconds===0?'自动行动中':`${Math.floor(seconds/60)}:${String(seconds%60).padStart(2,'0')}`;
+  const text=turnCountdownText(turn,performance.now()-sampledAt);
   const counter=cue.querySelector('.turn-countdown');if(counter.textContent!==text)counter.textContent=text;
+  document.querySelectorAll('[data-turn-countdown]').forEach(el=>{if(el.textContent!==text)el.textContent=text;el.classList.toggle('is-urgent',turn.required&&!turn.paused&&seconds!==null&&seconds<=10);});
   cue.classList.toggle('is-urgent',turn.required&&!turn.paused&&seconds!==null&&seconds<=10);
   cue.style.setProperty('--turn-progress',remaining===null?0:Math.min(1,remaining/(turn.seconds*1000)));
  }

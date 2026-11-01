@@ -49,3 +49,32 @@ body:has(.forum-page) .lobby-nav nav button:hover{background:#263746;color:#f3df
 .forum-topic-heading a:focus-visible{outline:none}
 .forum-topic-heading a:focus-visible::after{outline:2px solid #e6c98a;outline-offset:2px;border-radius:4px}
 .forum-topic-row:focus-within{background:linear-gradient(90deg,#17283788,transparent)}
+
+/* Forum identities use the same equipped portraits, frames and title crests as
+ * the table. Leave breathing room for frame ornaments without clipping names. */
+.forum-author{display:flex;align-items:center;gap:13px;min-width:0;max-width:100%}
+.forum-author .forum-author-avatar{width:38px;height:38px;flex:none;font-size:15px}
+.forum-author-copy{display:flex;flex-direction:column;align-items:flex-start;gap:4px;min-width:0;max-width:100%}
+.forum-author-name-row{display:flex;align-items:center;gap:7px;min-width:0;max-width:100%}
+.forum-author .forum-author-name{font-size:12px;line-height:1.5;font-weight:600;overflow-wrap:anywhere;min-width:0}
+.forum-author-title.title-badge{font-size:9px;line-height:1.4;letter-spacing:.02em;padding:2px 7px 2px 3px}
+.forum-author-title .title-crest{width:18px;height:18px}
+.forum-author-owner{flex:none}
+.forum-post-author{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:start;gap:16px}
+.forum-post-author>.forum-author{gap:13px}
+.forum-post-author>time{margin-top:4px}
+.forum-author-compact{gap:9px;pointer-events:none}
+.forum-author-compact .forum-author-avatar{width:23px;height:23px;font-size:10px}
+.forum-author-compact .forum-author-copy{flex-direction:row;align-items:center;flex-wrap:wrap;gap:6px}
+.forum-author-compact .forum-author-name{font-size:10px;color:#bbcbd5}
+.forum-author-compact .forum-author-title{font-size:8px}
+.forum-author-compact .title-crest{width:14px;height:14px}
+@media(max-width:760px){
+ .forum-topic-meta{row-gap:12px}
+ .forum-author-compact .forum-author-copy{gap:4px}
+ .forum-author-compact .forum-author-name{font-size:9px}
+ .forum-post-author{grid-template-columns:minmax(0,1fr);gap:7px}
+ .forum-post-author>time{margin:0 0 0 47px;font-size:9px}
+ .forum-post-author .forum-author-avatar{width:34px;height:34px}
+ .forum-author .forum-author-name{font-size:11px}
+}

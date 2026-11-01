@@ -22,6 +22,7 @@ assets/dnd/*
 !assets/dnd/manifest.json
 docs
 deploy
-scripts
+scripts/*
+!scripts/build-web.mjs
 README.md
 AGENTS.md

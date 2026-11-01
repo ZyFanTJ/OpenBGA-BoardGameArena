@@ -23,6 +23,7 @@
 .lounge-table-game{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:150px;text-align:center;pointer-events:none}
 .lounge-table-game .game-cover{height:110px;background:transparent;overflow:visible}.lounge-table-game .game-cover:after{display:none}.lounge-table-game .mk-cover-art{background:transparent}.lounge-table-game>span{display:block;color:#d8d9b4;font:12px Georgia;letter-spacing:.14em;margin-top:4px}
 .lounge-table-game .display-card{width:27%;box-shadow:0 9px 12px #001d2a88}
+.lounge-table-game .cover-tidewatch{overflow:hidden;border-radius:8px}
 .lounge-seats{position:absolute;inset:16px 24px 36px;display:grid;grid-template-columns:180px 180px;grid-template-rows:1fr 1fr;justify-content:space-between;align-items:center;gap:12px;pointer-events:none}
 .lounge-seat{position:relative;min-width:0;padding:12px 12px 10px;border:1px solid #76938966;border-radius:15px;background:linear-gradient(140deg,#1a4f51ee,#0a343eee);box-shadow:0 8px 20px #031e294d;text-align:center;pointer-events:auto}
 .lounge-seat-number{position:absolute;top:9px;left:11px;font:10px Georgia;color:#74958b}
@@ -32,7 +33,7 @@
 .lounge-seat h3{font-size:13px;font-weight:550;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:#ecedda}.lounge-seat h3 small{font-size:9px;font-weight:400;margin-left:5px;padding:1px 4px;color:#e5d39c;background:#58705c77;border-radius:3px}
 .lounge-player-status{font-size:10px;color:#8ea9a6}.lounge-ready{border-color:#68a089}.lounge-ready .lounge-player-status{color:#aaddb2}.lounge-self{border-color:#cfb977;box-shadow:inset 0 0 0 1px #b8a56933,0 8px 20px #031e294d}
 .lounge-vacant{border-style:dashed;background:#0b333caa;box-shadow:none}.lounge-vacant h3{font-size:11px;color:#8ba9a3}.lounge-open{border:1px dashed #8aa18b;background:#23514755;box-shadow:none;color:#91ad9b;font:25px system-ui}
-.lounge-seat-actions{display:flex;justify-content:center;gap:6px;margin-top:6px}.lounge-seat-actions button{min-height:27px;padding:3px 7px;font-size:10px;font-weight:450;border-radius:6px;background:transparent;color:#c7d6bf;border-color:#6b89716b}.lounge-seat-actions .lounge-add-ai{background:#31584d;color:#f0dba3;border-color:#778c65}
+.lounge-seat-actions{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:6px}.lounge-seat-actions button{min-height:27px;padding:3px 7px;font-size:10px;font-weight:450;border-radius:6px;background:transparent;color:#c7d6bf;border-color:#6b89716b}.lounge-seat-actions .lounge-add-ai{background:#31584d;color:#f0dba3;border-color:#778c65}
 .lounge-remove{position:absolute;right:7px;top:5px;padding:0;width:22px;height:22px;background:transparent;color:#91aca7;border:0;font-size:17px}
 .lounge-table-caption{position:absolute;left:0;right:0;bottom:6px;display:flex;justify-content:center;gap:22px;font-size:10px;color:#9ab8ac}
 .lounge-launch{display:flex;align-items:center;justify-content:space-between;gap:15px;border-top:1px solid #54776850;background:#082e389e;padding:14px 22px}.lounge-launch>div:first-child{display:flex;align-items:center;gap:9px}.lounge-launch p{font-size:12px;color:#bbcec0}.lounge-launch-light{width:7px;height:7px;background:#708e87;border-radius:50%}.lounge-launch-light.is-ready{background:#a9d697;box-shadow:0 0 12px #a9d69766}.lounge-launch-actions{display:flex;gap:10px}.lounge-launch-actions button{min-height:42px;min-width:116px;font-size:13px}.lounge-launch .lounge-start{min-width:150px}
@@ -43,4 +44,45 @@
 @media(max-width:1100px){.lounge-seats{grid-template-columns:158px 158px;left:18px;right:18px}.lounge-seat{padding:9px}.lounge-game-facts{gap:8px;margin-left:0}.lounge-game-strip{padding:10px 15px}.lounge-launch{padding:12px 15px}.lounge-launch-actions button{min-width:100px}.lounge-launch .lounge-start{min-width:120px}.is-waiting.has-docked-chat{grid-template-columns:minmax(0,1fr) 250px;gap:14px}}
 @media(max-width:1000px){.room-layout.is-waiting{padding:0 14px 12px}.lounge-invitation{display:none}.room-lounge{height:calc(100dvh - 150px)}.lounge-seats{grid-template-columns:180px 180px}.room-empty{padding:30px;gap:28px}}
 @media(max-width:760px){.in-room .is-waiting .room-bar{height:58px}.in-room .is-waiting .room-identity h1{font-size:15px}.room-layout.is-waiting{padding:0 8px 8px}.room-lounge{height:calc(100dvh - 166px);min-height:410px;grid-template-rows:58px minmax(0,1fr) 81px;border-radius:16px}.lounge-game-mark{width:30px;height:30px}.lounge-game-strip{gap:8px;padding:9px 12px}.lounge-game-strip h2{font-size:16px}.lounge-game-strip p{font-size:9px}.lounge-game-facts{display:none}.lounge-room-status{font-size:9px}.lounge-felt{inset:12% 9% 15%;border-width:6px}.lounge-felt-inner{inset:8px}.lounge-table-brand{font-size:7px;letter-spacing:.3em}.lounge-seats{inset:10px 12px 29px;grid-template-columns:112px 112px;gap:40px 12px}.lounge-seat{padding:8px 6px 6px;border-radius:12px}.lounge-avatar{width:34px;height:34px;font-size:18px;margin-bottom:4px}.lounge-avatar .ui-icon{width:19px;height:19px}.lounge-crown{width:18px;height:18px;font-size:12px;line-height:14px;right:-6px}.lounge-seat h3{font-size:11px}.lounge-seat-number{font-size:8px;top:7px;left:7px}.lounge-player-status{font-size:9px}.lounge-seat-actions{gap:4px;margin-top:4px}.lounge-seat-actions button{font-size:9px;padding:3px 4px;min-height:27px}.lounge-table-game{width:85px;top:51%}.lounge-table-game .game-cover{height:63px}.lounge-table-game>span{font-size:9px}.lounge-table-caption{font-size:9px;gap:16px;bottom:5px}.lounge-launch{display:grid;grid-template-columns:1fr;padding:7px 12px;gap:6px}.lounge-launch>div:first-child{justify-content:center}.lounge-launch p{font-size:10px}.lounge-launch-light{width:5px;height:5px}.lounge-launch-actions{gap:8px}.lounge-launch-actions button,.lounge-launch .lounge-start{min-height:38px;font-size:12px;min-width:0;flex:1;padding:7px 10px}.room-empty{height:calc(100dvh - 128px);padding:22px 16px;display:flex;flex-direction:column;justify-content:center;gap:24px}.room-empty-copy{text-align:center}.room-empty h1{font-size:29px;margin:8px 0}.room-empty-kicker{font-size:9px}.room-empty-copy>p{font-size:13px;margin-bottom:15px}.room-empty-games{width:100%;grid-template-columns:1fr 1fr;gap:10px}.room-empty-games article>div:last-child{padding:12px}.room-empty-games h2{font-size:17px}.room-empty-games p{font-size:10px;margin:5px 0 12px}}
+/* Keep the game name and actions on one line, even on narrow phones. */
+.room-lounge .lounge-game-mark{flex:none}
+.room-lounge .lounge-game-title{flex:1;min-width:0}
+.room-lounge .lounge-game-title h2{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin:0}
+.room-lounge .lounge-game-strip>button{flex:none;white-space:nowrap;min-height:36px;padding:8px 12px;font-size:12px}
+.room-lounge .lounge-game-facts,.room-lounge .lounge-room-status{flex:none}
+.room-lounge .lounge-vacant{padding-top:21px}
+.room-lounge:not(.lounge-large-room) .lounge-seat{height:160px;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.room-lounge .lounge-seat-actions{width:100%}
+.room-lounge .lounge-seat h3{display:flex;flex-direction:column;align-items:center;gap:4px;width:100%;min-width:0;overflow:visible;white-space:normal;margin:4px 0}
+.room-lounge .lounge-seat h3>.game-player-identity{display:flex;flex-direction:column;align-items:center;gap:5px;width:100%;min-width:0}
+.room-lounge .lounge-seat .game-player-nickname{display:block;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;line-height:1.5}
+.room-lounge .lounge-seat .title-badge{max-width:100%}
+.room-lounge .lounge-seat .title-lettering{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.room-lounge .lounge-seat-invite{display:flex;flex-direction:column;align-items:center;gap:4px;width:100%;padding:0;border:0;background:transparent;color:#a9bdcc;font-size:11px;font-weight:500;white-space:nowrap}
+.room-lounge .lounge-seat-invite .lounge-avatar{margin:0;box-shadow:none;width:34px;height:34px;font:23px system-ui}
+.room-lounge .lounge-seat-invite:hover{background:transparent;color:#f0dba3}
+.room-lounge .lounge-seat-invite:hover .lounge-avatar{border-color:#e0c690;color:#f0dba3;background:#3a4c57}
+.room-lounge .lounge-seat-invite:focus-visible{outline:2px solid #e0c690;outline-offset:3px;border-radius:6px}
+.room-lounge .lounge-seat-actions{display:grid;grid-template-columns:minmax(0,1fr);gap:8px}
+.room-lounge .lounge-seat-actions>button{width:100%;white-space:nowrap;min-height:30px}
+.room-lounge .lounge-ai-controls{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:0;border:1px solid #8395a64d;border-radius:6px;overflow:hidden;background:#102331}
+.room-lounge .lounge-ai-controls select{min-width:0;width:100%;min-height:32px;padding:5px 3px 5px 7px;margin:0;border:0;border-radius:0;background:transparent;color:#c4d2dc;font-size:11px;line-height:1.3}
+.room-lounge .lounge-ai-controls .lounge-add-ai{border:0;border-left:1px solid #8395a64d;border-radius:0;min-height:32px;padding:5px 8px;white-space:nowrap;font-size:11px}
+.room-lounge .lounge-ai-controls :is(select,button):focus-visible{outline:2px solid #e6c98a;outline-offset:-2px}
+@media(max-width:1100px){.room-lounge .lounge-game-facts{display:none}}
+@media(max-width:760px){
+ .room-lounge .lounge-game-strip{gap:7px;padding:8px 10px}
+ .room-lounge .lounge-game-mark,.room-lounge .lounge-room-status{display:none}
+ .room-lounge .lounge-game-title h2{font-size:15px}
+ .room-lounge .lounge-game-strip>button{min-height:34px;padding:7px 9px;font-size:11px}
+ .room-lounge .lounge-guide-button{gap:5px}
+ .room-lounge .lounge-guide-button .setup-icon{width:16px;height:16px}
+ .room-lounge .lounge-vacant{padding:19px 7px 8px}
+ .room-lounge .lounge-seat-actions{gap:7px;margin-top:6px}
+ .room-lounge .lounge-ai-controls{grid-template-columns:minmax(0,1fr)}
+ .room-lounge .lounge-ai-controls select{min-height:30px;font-size:11px;padding:5px 6px}
+ .room-lounge .lounge-ai-controls .lounge-add-ai{border-left:0;border-top:1px solid #8395a64d;min-height:30px;font-size:10px;padding:5px}
+ .room-lounge.lounge-large-room .lounge-seat-actions button{font-size:10px;min-height:30px}
+}
 @media(prefers-reduced-motion:no-preference){.lounge-occupied{animation:lounge-arrive .28s ease-out}@keyframes lounge-arrive{from{opacity:.5;transform:translateY(5px)}to{opacity:1;transform:translateY(0)}}}
+.lounge-avatar>.hub-robot-avatar{width:100%;height:100%;border:0;box-shadow:none}

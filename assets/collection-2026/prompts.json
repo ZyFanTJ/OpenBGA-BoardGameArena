@@ -1,0 +1,45 @@
+{
+  "generator": "Built-in image_gen",
+  "assets": [
+    {
+      "id": "marrakech-market",
+      "prompt": "Wide 1536x1024 painted board game illustration of a Marrakech carpet souk, intricate terracotta arches, hanging brass lanterns, stacks of teal coral gold violet woven carpets, warm sunset, inviting artisanal storybook gouache, detailed right side carpet stall, calm dark teal shaded left side, no people, no text or logos. Used as game table atmospheric header.",
+      "output": "apps/web/assets/marrakech/market-v1.webp"
+    },
+    {
+      "id": "avatar-frieren",
+      "prompt": "Square anime avatar portrait of Frieren from Frieren Beyond Journeys End, recognizable silver twin tails, pointed elf ears, green eyes, white gold mage outfit, tranquil subtle smile, mint woodland bokeh, exquisite clean anime illustration, face centered and large with safe space for circular crop, no text border or watermark.",
+      "output": "apps/web/assets/hub/collection/avatar-frieren.webp"
+    },
+    {
+      "id": "avatar-usagi",
+      "prompt": "Square anime avatar portrait of Usagi Tsukino Sailor Moon, recognizable blonde odango twin buns long hair blue eyes crescent tiara sailor outfit, cheerful confident face, pastel pink celestial sparkles, crisp classic magical girl cel animation aesthetic, face centered large circular crop safe margin, no text border watermark.",
+      "output": "apps/web/assets/hub/collection/avatar-usagi.webp"
+    },
+    {
+      "id": "avatar-luffy",
+      "prompt": "Square anime avatar portrait of Monkey D Luffy from One Piece, straw hat red vest black hair small scar below left eye broad joyful smile, vivid blue sea and sunshine, energetic clean shonen anime illustration, centered face big circular crop safe margin, no text border watermark.",
+      "output": "apps/web/assets/hub/collection/avatar-luffy.webp"
+    },
+    {
+      "id": "avatar-neon",
+      "prompt": "Square original adult anime heroine avatar, short navy blue bob hair cyan highlights, amber eyes, futuristic black jacket holographic headphones, confident relaxed expression, violet neon city bokeh, sophisticated cel shaded cyberpunk anime, face large centered circular crop safe margins, no text border watermark.",
+      "output": "apps/web/assets/hub/collection/avatar-neon.webp"
+    },
+    {
+      "id": "banner-sakura",
+      "prompt": "Wide 1536x1024 anime background illustration for personal profile banner, dreamy cherry blossom riverside railway at sunset, pink petals gentle lavender skies gold reflections, distant train and crossing on right, left side quiet soft dark violet shaded foliage for white UI text, exquisite hand painted animation background, no people text logos.",
+      "output": "apps/web/assets/hub/collection/banner-sakura.webp"
+    },
+    {
+      "id": "banner-moon",
+      "prompt": "Wide 1536x1024 magical girl fantasy personal profile background, luminous crescent moon crystal palace clouds sparkling stars roses, elegant pastel lavender midnight blue silver gold, palace on right, left side dark blue soft empty sky for white UI text, detailed anime environment illustration, no people text logos.",
+      "output": "apps/web/assets/hub/collection/banner-moon.webp"
+    },
+    {
+      "id": "banner-voyage",
+      "prompt": "Wide 1536x1024 adventurous anime personal profile background, golden sunset ocean turquoise waves small sailing ship and dramatic clouds on right, warm playful painterly shonen adventure atmosphere, left side quiet deep blue water and shadows for white UI text, no characters text logos.",
+      "output": "apps/web/assets/hub/collection/banner-voyage.webp"
+    }
+  ]
+}

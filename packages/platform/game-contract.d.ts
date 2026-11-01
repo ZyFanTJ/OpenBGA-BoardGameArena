@@ -1,11 +1,15 @@
 /** Game modules must be synchronous, deterministic with injected randomness, and transport-free. */
 export interface GameModule<State, Command, View, Options = Record<string, unknown>, Memory = unknown> {
-  readonly manifest: { id: string; title: string; rulesVersion: string; minPlayers: number; maxPlayers: number; stateVersion: number; defaultTurnSeconds?: number };
+  readonly manifest: { id: string; title: string; rulesVersion: string; minPlayers: number; maxPlayers: number; stateVersion: number; defaultTurnSeconds?: number; realtime?: boolean };
+  /** Pure fixed-step evolution; platform owns timers, revision checks and commits. */
+  realtime?: {stepMs: number; commitMs: number; advance(state: State, steps: number): State};
   create(playerIds: string[], options: Options, random: () => number): State;
   /** Return new state; never mutate input. Throw on any illegal command. */
   apply(state: State, playerId: string, command: Command, context: { random: () => number; isHost: boolean }): State;
   /** Explicit allowlist. Never serialize authoritative state to a client. */
   view(state: State, playerId: string, transition?: { before: State | null; actorId: string; command: Command | { type: 'start' } }, presentation?: { effectProgress: unknown }): View;
+  /** Public observer allowlist. Never reuse a player hand or private notes. */
+  spectatorView?(state: State): object;
   isFinished(state: State): boolean;
   /** Opt-in independent submission window. Null for sequential/already submitted
    * actions. Include phase/round discriminators; apply() still validates legality. */

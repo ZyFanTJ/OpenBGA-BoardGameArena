@@ -94,11 +94,13 @@ export function createAdmin({root,shell,getUser,setUser,notify,onSettingsChanged
    if(type==='user'){
     const p=selected,kind=form.dataset.kind;
     const payload={requestId:operationId,reason:values.reason};
-    if(kind==='credits')Object.assign(payload,{mode:values.mode,amount:Number(values.amount),revision:p.revision});
+    if(kind==='password'){if(values.password!==values.passwordConfirm)throw new Error('两次输入的密码不一致');Object.assign(payload,{password:values.password,accessRevision:p.accessRevision});}
+    else if(kind==='credits')Object.assign(payload,{mode:values.mode,amount:Number(values.amount),revision:p.revision});
     else if(kind==='profile')Object.assign(payload,{name:values.name,bio:values.bio,revision:p.revision});
     else Object.assign(payload,{action:kind,accessRevision:p.accessRevision,...(kind==='role'?{value:p.role==='admin'?'player':'admin'}:kind==='disabled'?{value:!p.disabled}:{})});
-    const result=await api(`/admin/users/${encodeURIComponent(p.id)}/${kind==='credits'?'credits':kind==='profile'?'profile':'access'}`,payload);
+    const result=await api(`/admin/users/${encodeURIComponent(p.id)}/${['credits','profile','password'].includes(kind)?kind:'access'}`,payload);
     if(!active||run!==generation)return;
+    if(kind==='password'&&result.id===getUser()?.id){setUser(null);close();notify('密码已重置，请重新登录');await open();return;}
     if(result.id===getUser()?.id)setUser(result.profile);
     close();notify('用户信息已更新');await load();return;
    }
@@ -110,7 +112,7 @@ export function createAdmin({root,shell,getUser,setUser,notify,onSettingsChanged
    }
    if(type==='settings'){
     const settings={...data.settings};
-    for(const [key,value]of Object.entries(settings))settings[key]=typeof value==='boolean'?form.elements[key].checked:typeof value==='number'?Number(values[key]):values[key];
+    for(const [key,value]of Object.entries(settings)){if(key==='gameAvailability'||key==='gameHot'){const prefix=key==='gameHot'?'hot:':'game:';settings[key]=Object.fromEntries((data.games??[]).map(g=>[g.id,form.elements[prefix+g.id].checked]));continue;}settings[key]=typeof value==='boolean'?form.elements[key].checked:typeof value==='number'?Number(values[key]):values[key];}
     if(!form.dataset.requestId)form.dataset.requestId=requestId();
     const result=await api('/admin/settings',{settings,reason:values.reason,revision:Number(form.dataset.revision),requestId:form.dataset.requestId});
     if(!active||run!==generation)return;

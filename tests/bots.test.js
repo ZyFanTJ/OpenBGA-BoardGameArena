@@ -55,6 +55,15 @@ test('host transfers to a human and final human departure removes AI-only room',
   assert.equal(store.data.rooms[id], undefined);
 });
 
+test('difficulty is validated and persisted per seat with a backwards-compatible easy default', () => {
+  const { rooms, id, act } = fixture();
+  assert.throws(()=>act({type:'addBot',difficulty:'omniscient'}),/难度无效/);
+  act({type:'addBot'});act({type:'addBot',difficulty:'smart'});
+  const r=act({type:'addBot',difficulty:'ruthless'});
+  assert.deepEqual(r.players.filter(p=>p.isBot).map(p=>p.botDifficulty),['easy','smart','ruthless']);
+  assert.deepEqual(rooms.snapshot(id,host).botDifficulties.map(d=>d.id),['easy','smart','ruthless']);
+});
+
 test('games without an AI strategy keep human-only rooms', () => {
   const { bot, ...humanOnly } = cabo;
   const rooms = new RoomService(new JsonStore(), createRegistry([humanOnly]));

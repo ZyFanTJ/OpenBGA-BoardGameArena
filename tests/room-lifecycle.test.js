@@ -85,7 +85,7 @@ test('public directory is opt-in, omits private rooms and never includes state, 
   const {service}=fixture();
   service.createRoom(c,{gameId:'cabo',title:'Public',visibility:'public'});
   const list=service.directory(); assert.equal(list.length,1);assert.equal(list[0].title,'Public');
-  assert.deepEqual(Object.keys(list[0]).sort(),['count','gameId','host','id','maxPlayers','status','title'].sort());
+  assert.deepEqual(Object.keys(list[0]).sort(),['allowSpectators','count','gameId','host','id','maxPlayers','status','title'].sort());
 });
 test('HTTP/SSE broadcasts closure to everyone and blocks departed session even with a forged bot flag',async t=>{
   const app=createApp({store:new JsonStore(),registry:games,botDelay:100000});

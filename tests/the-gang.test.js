@@ -1,0 +1,7 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {theGang as g} from '../packages/games/the-gang/index.js';
+import {evaluate,compare} from '../packages/games/the-gang/cards.js';
+const ids=['a','b','c'],random=()=>.42;
+test('private projections, immutable taking and stealing',()=>{const s=g.create(ids,{},random),saved=JSON.stringify(s);assert.equal(g.view(s,'a').players[1].hand.length,0);assert.equal(g.spectatorView(s).players[0].hand.length,0);assert.equal(g.view(s,'a').deck,undefined);let n=g.apply(s,'a',{type:'take',chip:1});n=g.apply(n,'b',{type:'take',chip:1});assert.equal(n.players[0].chips[0],null);assert.equal(JSON.stringify(s),saved);assert.throws(()=>g.apply(s,'x',{type:'take',chip:1}));assert.throws(()=>g.apply(s,'a',{type:'take',chip:4}));assert.deepEqual(JSON.parse(JSON.stringify(n)),n);});
+test('full cooperative match advances four rounds and ends at three vaults',()=>{let s=g.create(ids,{},random);for(let h=0;h<3;h++){for(let r=0;r<4;r++){const sorted=[...s.players].sort((a,b)=>r===3?compare(evaluate([...a.hand,...s.board]).score,evaluate([...b.hand,...s.board]).score):0);for(let i=0;i<3;i++)s=g.apply(s,sorted[i].id,{type:'take',chip:i+1});}assert.equal(s.vaults,h+1);assert.equal(s.showdown.rows.length,3);if(h<2)for(const id of ids)s=g.apply(s,id,{type:'next'},{random});}assert.ok(g.isFinished(s));assert.throws(()=>g.apply(s,'a',{type:'next'},{random}));});

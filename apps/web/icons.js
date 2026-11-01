@@ -1,5 +1,8 @@
 /** Small shared interface icons; game artwork remains separate raster assets. */
 const paths = {
+  chevron: '<path d="m9 5 7 7-7 7"/>',
+  megaphone: '<path d="m3 9 13-5v16L3 15zM16 9h3a3 3 0 0 1 0 6h-3M5 16l2 6h4l-2-5M21 3l-2 2M21 21l-2-2"/>',
+  robot: '<path d="M12 4v4M4 13H2v4h2M20 13h2v4h-2"/><circle cx="12" cy="3" r="1.5" fill="currentColor" stroke="none"/><rect x="4" y="8" width="16" height="13" rx="6" fill="currentColor" stroke="none"/><circle cx="9" cy="13" r="1.5" fill="#173548" stroke="none"/><circle cx="15" cy="13" r="1.5" fill="#173548" stroke="none"/><path d="M9 17q3 3 6 0" stroke="#173548"/>',
   chat: '<path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9H13a8.5 8.5 0 0 1 8 8v.5Z"/>',
   spark: '<path d="m12 3 2.5 6.5L21 12l-6.5 2.5L12 21l-2.5-6.5L3 12l6.5-2.5z"/>',
   check: '<circle cx="12" cy="12" r="9"/><path d="m8 12 3 3 5-6"/>',

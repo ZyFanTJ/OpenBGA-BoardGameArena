@@ -156,6 +156,6 @@ function submissionKey(s,id,command){
  return type&&p&&actionStatus(s,p)==='waiting'&&(!command||command.type===type)
   ? `${s.epoch}:${s.phase}` : null;
 }
-export const sevenWonders={manifest:{id:'seven-wonders',title:'七大奇迹',rulesVersion:'2020 second edition · Leaders + Armada · FAQ 2026-10',stateVersion:2,minPlayers:3,maxPlayers:7},validateOptions,create,apply,view,result,migrate,submissionKey,
+export const sevenWonders={manifest:{id:'seven-wonders',title:'七大奇迹',rulesVersion:'2020 second edition · Leaders + Armada · FAQ 2026-10',stateVersion:2,minPlayers:3,maxPlayers:7},validateOptions,create,apply,view,spectatorView(s){const v=view(s,s.players[0].id);return Object.fromEntries(["phase","age","round","expansions","players","lastActions","ageResults","scores","winners"].map(k=>[k,v[k]]));},result,migrate,submissionKey,
  turn:s=>s.phase==='finished'?null:{key:String(s.epoch),players:s.players.filter(p=>actionStatus(s,p)==='waiting').map(p=>p.id)},
  timeout:(view,id)=>sevenWondersBot.decide(view,id,{}),isFinished:s=>s.phase==='finished',bot:sevenWondersBot};

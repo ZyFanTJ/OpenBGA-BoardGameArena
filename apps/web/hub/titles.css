@@ -55,8 +55,7 @@
 .sw-seat-body:has(.game-title-badge){min-width:0}
 .sw-seat-body:has(.game-title-badge)>b{white-space:normal;overflow:visible}
 .nn-player:has(.game-title-badge){flex-wrap:wrap}
-.uno-badge:has(.game-title-badge){flex-wrap:wrap;justify-content:center}
-.uno-badge:has(.game-title-badge)>b,.nn-player:has(.game-title-badge)>strong{white-space:normal;overflow:visible}
+.nn-player:has(.game-title-badge)>strong{white-space:normal;overflow:visible}
 .dnd-portrait-info:has(.game-title-badge)>b{white-space:normal;overflow:visible}
 @media(max-width:760px){.game-player-identity{gap:3px}.game-player-identity>.title-badge.game-title-badge{font-size:8px;padding-inline:2px 4px}.game-title-badge>.title-crest{width:15px;height:15px}.in-room .player-badge:has(.game-title-badge){max-width:44vw;gap:3px;height:auto;min-height:24px}.player-badge:has(.game-title-badge)>.player-avatar{display:none}}
 @keyframes title-sweep{0%,55%{transform:translateX(-160%)}85%,100%{transform:translateX(160%)}}
@@ -65,4 +64,43 @@
 @keyframes title-metal-flow{to{background-position:240% 0}}
 @keyframes title-sparkle{0%,100%{opacity:.25;transform:translateY(3px)}50%{opacity:1;transform:translateY(-3px)}}
 @media(max-width:760px){.hub-title-art .title-crest{width:86px;height:79px}.hub-title-art>strong.title-lettering{font-size:17px;letter-spacing:.06em}.hub-title-art.hub-title-art{padding:20px 8px 14px;gap:6px}.title-badge.title-badge{font-size:10px}.hub-title-art>i.title-aura{width:106px;height:106px;left:calc(50% - 53px);top:calc(50% - 66px)}.pp-collectible .hub-title-art{padding:6px 4px;gap:2px}.pp-choice .hub-title-art{padding:4px;gap:0}}
+/* Individual emblems and rhythms travel with a title across every identity. */
+.title-style-oracle{--title-metal:#a8c9ff;--title-light:#eef1ff;--title-shadow:#6376bd;--title-ink:#19223f;--title-glow:#87aaff40}
+.title-style-phoenix{--title-metal:#ffb46c;--title-light:#fff0c7;--title-shadow:#b95534;--title-ink:#3b1c19;--title-glow:#f27c3f4a}
+.title-style-tide{--title-metal:#66ddd9;--title-light:#d9fffa;--title-shadow:#237f99;--title-ink:#10333e;--title-glow:#40c9d540}
+.title-style-glitch{--title-metal:#78f3c6;--title-light:#e3fff5;--title-shadow:#358f85;--title-ink:#102e30;--title-glow:#58eebf35}
+.title-style-blossom{--title-metal:#ecb1c7;--title-light:#fff1eb;--title-shadow:#af6e8f;--title-ink:#392333;--title-glow:#f0aac640}
+.title-style-dice{--title-metal:#ebc487;--title-light:#fff3ce;--title-shadow:#a67b40;--title-ink:#352b20;--title-glow:#e6b86b45}
+.title-style-void{--title-metal:#b9a0ff;--title-light:#f0e6ff;--title-shadow:#8053bb;--title-ink:#23183d;--title-glow:#a67cf04a}
+.title-style-sword{--title-metal:#b1d5e6;--title-light:#f1fbff;--title-shadow:#608caa;--title-ink:#1b2d3b;--title-glow:#9cd6ef38}
+.title-style-tea{--title-metal:#bcd5a0;--title-light:#f6f0d7;--title-shadow:#798f5e;--title-ink:#293225;--title-glow:#bfd79530}
+.title-style-comet{--title-metal:#9ed5f7;--title-light:#edfaff;--title-shadow:#598bb8;--title-ink:#182a40;--title-glow:#81befb40}
+[class*="title-style-"].title-badge{border-color:var(--title-shadow);box-shadow:inset 0 1px #ffffff18,0 0 10px var(--title-glow)}
+[class*="title-style-"].title-tier-legendary .title-lettering{background-image:linear-gradient(110deg,var(--title-metal) 5%,var(--title-light) 30%,#fff 40%,var(--title-metal) 55%,var(--title-light) 75%,var(--title-metal) 95%)}
+.title-emblem-fill{fill:var(--title-ink);stroke:var(--title-metal);stroke-width:2}
+.title-themed-crest .title-emblem-motion{transform-origin:48px 44px}
+.hub-title-art[class*="title-style-"] .title-crest{filter:drop-shadow(0 0 8px var(--title-glow))}
+.hub-title-art[class*="title-style-"]>.title-aura{border-color:var(--title-shadow);outline-color:var(--title-glow);box-shadow:0 0 24px var(--title-glow)}
+.title-style-oracle .title-emblem-motion{animation:title-oracle-stars 5s ease-in-out infinite}.title-style-oracle .title-aura{animation:title-orbit 30s linear infinite!important}
+.title-style-phoenix .title-emblem-motion{transform-origin:48px 69px;animation:title-wingbeat 4s ease-in-out infinite}.title-style-phoenix.hub-title-art>.title-sparks{animation:title-rising-embers 3.8s ease-out infinite}.title-style-phoenix .title-glint{background:linear-gradient(115deg,transparent 35%,#ffcc754d 50%,transparent 65%);animation-duration:6s}
+.title-style-tide .title-emblem-motion{animation:title-tide 5s ease-in-out infinite}.title-style-tide.hub-title-art>.title-aura{border-radius:42% 58% 54% 46%;border-style:double;border-width:3px;background:repeating-radial-gradient(ellipse,transparent 0 15px,var(--title-glow) 16px 17px,transparent 18px 25px);animation:title-orbit 22s linear infinite}.title-style-tide .title-glint{animation-duration:7s}
+.title-style-glitch.title-badge{border-radius:0 8px 0 8px;border-style:dashed}.title-style-glitch .title-emblem-motion{animation:title-signal-pulse 4.8s steps(1,end) infinite}.title-style-glitch.hub-title-art>.title-aura{border-radius:12px;transform:rotate(45deg);background:repeating-linear-gradient(0deg,transparent 0 11px,var(--title-glow) 12px 13px);animation:none}.title-style-glitch .title-glint{background:linear-gradient(0deg,transparent 38%,#8fffd333 49%,transparent 60%);animation:title-scan 6s ease-in-out infinite}
+.title-style-blossom .title-emblem-motion{animation:title-petal-turn 16s ease-in-out infinite}.title-style-blossom.hub-title-art>.title-aura{border-radius:35%;animation:title-breathe 6s ease-in-out infinite}.title-style-blossom .title-glint{animation-duration:8s}
+.title-style-dice .title-emblem-motion{animation:title-dice-hover 6s ease-in-out infinite}.title-style-dice.hub-title-art>.title-aura{clip-path:polygon(50% 0,94% 25%,94% 75%,50% 100%,6% 75%,6% 25%);border-radius:0;background:repeating-conic-gradient(var(--title-glow) 0 1deg,transparent 1deg 60deg);animation:title-orbit 36s linear infinite}
+.title-style-void .title-emblem-motion{animation:title-orbit 16s linear infinite}.title-style-void.hub-title-art>.title-aura{border:1px solid var(--title-metal);border-radius:50%;background:radial-gradient(ellipse,#100b20 20%,var(--title-glow) 50%,transparent 70%);animation:title-void-breathe 7s ease-in-out infinite}
+.title-style-sword .title-emblem-motion{animation:title-blade-glint 5.5s ease-in-out infinite}.title-style-sword.hub-title-art>.title-aura{border-radius:3px;transform:rotate(45deg) scale(.72);background:linear-gradient(135deg,transparent 44%,var(--title-glow) 50%,transparent 56%);animation:none}.title-style-sword .title-glint{animation-duration:7s}
+.title-style-tea .title-emblem-motion{animation:title-steam 4s ease-in-out infinite}.title-style-tea.title-badge{border-radius:14px}.title-style-tea .title-glint{animation:none;background:none}.title-style-tea.hub-title-art>.title-aura{border-style:dotted;background:none;animation:title-breathe 7s ease-in-out infinite}
+.title-style-comet .title-emblem-motion{animation:title-comet-drift 5s ease-in-out infinite}.title-style-comet.hub-title-art>.title-aura{border-style:dashed;animation:title-orbit 32s linear infinite}.title-style-comet .title-glint{animation-duration:6s}
+@keyframes title-oracle-stars{0%,100%{opacity:.5;transform:scale(.93)}50%{opacity:1;transform:scale(1.04)}}
+@keyframes title-wingbeat{0%,100%{transform:scaleX(.94) translateY(1px)}50%{transform:scaleX(1.04) translateY(-2px)}}
+@keyframes title-rising-embers{0%{opacity:0;transform:translateY(15px)}30%{opacity:1}100%{opacity:0;transform:translateY(-17px)}}
+@keyframes title-tide{0%,100%{transform:translate(-2px,1px)}50%{transform:translate(2px,-2px)}}
+@keyframes title-signal-pulse{0%,85%,100%{opacity:1;transform:translateX(0)}87%{opacity:.4;transform:translateX(1px)}90%{opacity:.85;transform:translateX(-1px)}93%{opacity:.65;transform:translateX(0)}}
+@keyframes title-scan{0%,30%{opacity:0;transform:translateY(-100%)}45%{opacity:.6}70%,100%{opacity:0;transform:translateY(100%)}}
+@keyframes title-petal-turn{0%,100%{transform:rotate(-8deg)}50%{transform:rotate(12deg)}}
+@keyframes title-dice-hover{0%,100%{transform:translateY(1px) rotate(-4deg)}50%{transform:translateY(-3px) rotate(4deg)}}
+@keyframes title-void-breathe{0%,100%{transform:scaleY(.62) rotate(-25deg);opacity:.5}50%{transform:scaleY(.75) rotate(-15deg);opacity:1}}
+@keyframes title-blade-glint{0%,35%,100%{opacity:.15;transform:translate(0,0)}55%{opacity:1;transform:translate(4px,-4px)}}
+@keyframes title-steam{0%{opacity:.2;transform:translateY(3px)}50%{opacity:.85}100%{opacity:.2;transform:translateY(-4px)}}
+@keyframes title-comet-drift{0%,100%{transform:translate(-2px,2px)}50%{transform:translate(2px,-2px)}}
 @media(prefers-reduced-motion:reduce){.title-badge *,.hub-title-art *,.hub-title-art::after{animation:none!important}.title-glint,.hub-title-art.title-tier-rare::after{display:none}.title-tier-legendary .title-lettering{background-position:40% 0}}

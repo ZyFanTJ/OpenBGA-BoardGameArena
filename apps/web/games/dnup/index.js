@@ -1,0 +1,41 @@
+import {createDnupMotion} from './motion.js';
+import {escapeHtml as e} from '../../ui.js';
+import {playerAvatar} from '../../player-identity.js';
+import {resultActions} from '../../result-actions.js';
+import {cardArt} from './art.js';
+import {guide} from './guide.js';
+const button=(label,action,disabled=false,attrs='')=>`<button type="button" data-action="game:${action}" ${disabled?'disabled':''} ${attrs}>${label}</button>`;
+export function createDnupRenderer(send,rerender){
+ let room,user,selected=[],preview=false,showGuide=false,busy=false,error='',key='',root,resultKey='',resultOpen=false;
+ const name=id=>room.players.find(p=>p.id===id)?.name??'玩家';
+ function render(snapshot,me){
+  room=snapshot;user=me;const s=room.game,own=s.players.find(p=>p.id===me.id),ended=s.phase!=='turn';
+  const nextKey=`${room.matchId}:${s.round}:${s.sequence}`;if(nextKey!==key){key=nextKey;selected=[];preview=false;error='';}
+  const nextResultKey=`${room.matchId}:${s.round}:${s.phase}`;if(nextResultKey!==resultKey){resultKey=nextResultKey;resultOpen=ended;}
+  const active=s.legal.act&&!busy&&!room.dissolution,hand=own?.hand??[],picked=hand.filter(c=>selected.includes(c.id));
+  const playable=active&&picked.length&&picked.every(c=>c.value===picked[0].value)&&s.legal.plays.some(p=>p.value===picked[0].value&&p.count===picked.length);
+  const cards=(list,small=false)=>list.map(c=>`<span data-dn-public="${e(c.id)}" class="dn-card ${small?'dn-small':''}" aria-label="${c.value}，旋转后 ${c.reverse}">${cardArt(c)}</span>`).join('');
+  const seat=p=>`<section class="dn-seat ${p.id===s.turnId&&!ended?'dn-active':''} ${p.id===me.id?'dn-own':''}" data-player-id="${e(p.id)}"><header>${playerAvatar(room,p.id,'dn-avatar')}<div class="dn-player-meta"><b>${p.id===me.id?'你':e(name(p.id))}</b><span class="dn-card-count" aria-label="${p.out?'已清手':`剩余 ${p.handCount} 张手牌`}" title="${p.out?'已清手':'剩余手牌'}">${p.out?'✓':`▱ ${p.handCount}`}</span></div><span class="dn-points" aria-label="${p.score} ${s.players.length===2?'胜':'分'}" title="${s.players.length===2?'获胜轮数':'积分'}">${p.score}</span></header><div class="dn-areas">${p.areas.map((a,area)=>`<div class="dn-area ${!a.length?'dn-area-empty':''} ${p.id===s.turnId&&area===s.area&&!ended?'dn-current-area':''}">${p.areas.length>1?`<small>出牌区 ${area+1}</small>`:''}<div class="dn-set">${a.length?cards(a,true):'<span class="dn-empty" aria-label="空出牌区">—</span>'}</div>${a.length?``:''}${active&&p.id!==me.id&&a.length?`<div class="dn-target-actions">${button('＋ 添牌','add',picked.length!==1||!s.legal.adds.some(t=>t.playerId===p.id&&t.area===area&&t.value===picked[0]?.value),`data-player="${e(p.id)}" data-area="${area}"`)}${button('↻ 收回','take',false,`data-player="${e(p.id)}" data-area="${area}"`)}</div>`:''}</div>`).join('')}</div></section>`;
+  let help=room.dissolution?'解散投票中，牌局暂时停下':ended?'本轮已结束':own?.out?'你已清手得分，等待第二位玩家':!active?`等待 ${name(s.turnId)} · 出牌区 ${s.area+1}`:picked.length?(playable?`可打出 ${picked.length} 张 ${picked[0].value}`:'当前选择无法作为一组打出，可检查对手的添牌按钮'):'选同值牌出牌，或选一张添给对手';
+  if(playable){const hit=s.players.flatMap(p=>p.areas.filter(a=>a.length===picked.length).map(a=>`${p.id===me.id?'自己':name(p.id)}的 ${a.length} 张 ${a[0].value}`));if(hit.length)help+=` · 将击退 ${hit.join('、')}，回手并旋转`; }
+  if(active&&picked.length===1){const targets=s.legal.adds.filter(t=>t.value===picked[0].value);if(targets.length)help+=` · 可添给 ${targets.map(t=>`${name(t.playerId)}区 ${t.area+1}（变为 ${t.size+1} 张）`).join('、')}`;}
+  const scores=`<table class="dn-score-table"><thead><tr><th>玩家</th><th>本轮</th><th>${s.players.length===2?'累计胜场':'总分'}</th></tr></thead><tbody>${s.players.map((p,i)=>`<tr class="${p.id===me.id?'dn-score-self':''}"><td>${e(name(p.id))}${p.id===me.id?'<small>你</small>':''}</td><td class="dn-score-gain">+${s.roundPoints?.[i]??0}</td><td><b>${p.score}</b></td></tr>`).join('')}</tbody></table>`;
+  const result=ended&&resultOpen?`<dialog class="dn-round-dialog" aria-labelledby="dn-round-title"><div class="dn-round-heading"><h2 id="dn-round-title">${s.phase==='finished'?`${e(name(s.winners[0]))} 获胜`:'本轮结算'}</h2>${button('×','resultClose',false,'class="dn-result-close" aria-label="收起结算"')}</div>${scores}${error?`<p class="dn-error" role="alert">${e(error)}</p>`:''}<footer>${s.phase==='finished'?resultActions(room,me):room.hostId===me.id?button('下一轮','nextRound',busy||!!room.dissolution,'class="dn-primary"'):'<span role="status">等待房主开始下一轮</span>'}</footer></dialog>`:'';
+  return `<section class="dn-game"><header class="dn-toolbar"><span>第 ${s.round} 轮 <small>· ${s.players.length===2?'两胜':'4 分'}</small></span>${ended?button('结算','resultOpen',false,'class="dn-result-reopen"'):''}${button('?','guide',false,`aria-label="玩法手卡" title="玩法手卡" aria-expanded="${showGuide}"`)}</header>${showGuide?guide():''}<div class="dn-table dn-table-${s.players.length}"><div class="dn-opponents">${s.players.filter(p=>p.id!==me.id).map(seat).join('')}</div><div class="dn-table-info"><span title="已弃牌数" aria-label="已弃 ${s.discardCount} 张">▱ ${s.discardCount}</span><span>${e(s.lastAction)}</span></div>${own?seat(own):''}</div><section class="dn-hand-panel"><div class="dn-hand ${preview?'dn-preview':''}">${[...hand].sort((a,b)=>(preview?a.reverse-b.reverse:a.value-b.value)||a.reverse-b.reverse||Number(a.id)-Number(b.id)).map(c=>`<button type="button" class="dn-card ${selected.includes(c.id)?'dn-selected':''}" data-action="game:card" data-card="${e(c.id)}" aria-label="${preview?'预览数字':'数字'} ${preview?c.reverse:c.value}，旋转后 ${preview?c.value:c.reverse}${c.star?'，先手星标':''}" aria-pressed="${selected.includes(c.id)}" ${active&&!preview?'':'disabled'}>${cardArt(preview?{...c,value:c.reverse,reverse:c.value}:c)}</button>`).join('')||'<p>手牌已清空</p>'}</div><div class="dn-decision"><p role="status">${e(preview?'旋转预览 · 确认后将消耗本次行动':help)}</p><div class="dn-controls">${button(`打出${picked.length?` ${picked.length} 张`:''}`,'play',!playable||preview,'class="dn-primary"')}${button('清空选择','clear',!selected.length||busy)}${button(preview?'取消预览':'旋转预览','preview',!active,`aria-pressed="${preview}"`)}${preview?button('确认整手旋转','rotate',!active,'class="dn-accent"'):''}</div>${error?`<p role="alert" class="dn-error">${e(error)}</p>`:''}</div></section>${result}</section>`;
+ }
+ async function handle(action,el){
+  if(action==='resultClose'||action==='resultOpen'){resultOpen=action==='resultOpen';rerender();if(!resultOpen)root?.querySelector('[data-action="game:resultOpen"]')?.focus();return;}
+  if(action==='guide'){showGuide=!showGuide;rerender();return;}
+  if(busy||motion.busy||room?.dissolution)return;
+  if(action==='card'){const id=el.dataset.card;selected=selected.includes(id)?selected.filter(c=>c!==id):[...selected,id];error='';rerender();return;}
+  if(action==='clear'){selected=[];rerender();return;}
+  if(action==='preview'){preview=!preview;rerender();return;}
+  let cmd;if(action==='play')cmd={type:'play',cards:[...selected]};
+  if(['rotate','nextRound'].includes(action))cmd={type:action};
+  if(['add','take'].includes(action))cmd={type:action,playerId:el.dataset.player,area:Number(el.dataset.area),...(action==='add'?{card:selected[0]}:{})};
+  if(!cmd)return;busy=true;error='';rerender();try{await send(cmd);}catch(err){error=err.message??'提交失败，请重试';}finally{busy=false;rerender();}
+ }
+ function paint(el,snapshot,me){root=el;const handScroll=el.querySelector('.dn-hand')?.scrollLeft??0;const focused=el.contains(document.activeElement)?document.activeElement:null,action=focused?.dataset.action,card=focused?.dataset.card,player=focused?.dataset.player,area=focused?.dataset.area;el.innerHTML=render(snapshot,me);const handNode=el.querySelector('.dn-hand');if(handNode)handNode.scrollLeft=handScroll;const dialog=el.querySelector('.dn-round-dialog');if(dialog){dialog.showModal();dialog.addEventListener('cancel',event=>{event.preventDefault();resultOpen=false;rerender();root?.querySelector('[data-action="game:resultOpen"]')?.focus();});}if(action)[...el.querySelectorAll('button:not(:disabled)')].find(b=>b.dataset.action===action&&b.dataset.card===card&&b.dataset.player===player&&b.dataset.area===area)?.focus({preventScroll:true});}
+ const motion=createDnupMotion(paint);
+ return {render,handle,update:(...args)=>motion.update(...args),dispose(){motion.dispose();root=null;}};
+}

@@ -37,7 +37,8 @@ export function migrateStorage(input){
   }
   if(data.version===7){data.integrations={revision:0,textProvider:defaultTextProvider()};data.version=8;}
   if(data.version===8){data.integrations.textProvider={...defaultTextProvider(),...data.integrations.textProvider};data.version=9;}
-  if(data.version!==9)throw new Error('Unsupported storage version; migrate before starting.');
+  if(data.version===9){data.friendConversations={};data.gameAppointments={};data.version=10;}
+  if(data.version!==10)throw new Error('Unsupported storage version; migrate before starting.');
   return data;
 }
 

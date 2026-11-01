@@ -138,6 +138,6 @@ function view(s,id) {
     lastEvent:clone(s.lastEvent),log:clone(s.log),roundResult:clone(s.roundResult),history:clone(s.history),winners:[...s.winners]};
 }
 export const uno={manifest:{id:'uno',title:'UNO',rulesVersion:'classic-108-W2085-online-1',stateVersion:1,minPlayers:2,maxPlayers:10},
-  create,apply,view,bot:unoBot,timeout:safeCommand,isFinished:s=>s.phase==='finished',
+  create,apply,view,spectatorView:s=>view(s,null),bot:unoBot,timeout:safeCommand,isFinished:s=>s.phase==='finished',
   turn(s){return ended(s)?null:{key:`uno:${s.round}:${s.turnNumber}:${s.phase==='challenge'?'challenge':'turn'}`,players:[s.players[s.turn].id]};},
   result(s){return {winners:[...s.winners],rounds:s.round,scoreDirection:'higher',players:s.players.map(p=>({id:p.id,score:p.total,rank:1+s.players.filter(q=>q.total>p.total).length,breakdown:[{label:'累计得分',value:p.total}]}))};}};

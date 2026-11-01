@@ -1,0 +1,93 @@
+/* Shared creation / room options. High specificity keeps table themes out. */
+dialog.room-setup#create-room-dialog,dialog.room-setup.room-rules-dialog{width:min(960px,calc(100vw - 40px));max-width:none;max-height:calc(100dvh - 32px);padding:0;border:1px solid #52616a;border-radius:18px;background:#101e2a;color:#e9ecdf;box-shadow:0 30px 100px #0009;overflow:auto}
+.room-setup::backdrop,.pregame-guide::backdrop{background:#030c16bb;backdrop-filter:blur(6px)}
+.setup-icon{width:20px;height:20px;flex:none;filter:invert(86%) sepia(22%) saturate(521%) hue-rotate(355deg);vertical-align:middle}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .setup-heading,.pregame-guide .setup-heading{display:flex;align-items:center;justify-content:space-between;padding:18px 24px;border-bottom:1px solid #ffffff12;gap:16px}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .setup-heading>div,.pregame-guide .setup-heading>div{display:flex;align-items:center;gap:12px}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .setup-heading h2,.pregame-guide .setup-heading h2{margin:0;font-size:21px;letter-spacing:.03em}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .setup-close,.pregame-guide .setup-close{display:grid;place-items:center;padding:8px;background:transparent;border:1px solid #ffffff20;border-radius:9px}
+:is(#create-room-dialog,#room-rules-dialog).room-setup form{margin:0;display:block}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .setup-body{display:grid;grid-template-columns:260px minmax(0,1fr);gap:28px;padding:22px 24px}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .setup-identity{padding-right:24px;border-right:1px solid #ffffff14;min-width:0}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .setup-art{display:flex;flex-direction:column;gap:3px;overflow:hidden}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .setup-art>.game-cover{height:112px;min-height:0;border-radius:9px;margin-bottom:8px;position:relative;overflow:hidden;isolation:isolate}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .setup-art>.game-cover img{width:100%;height:100%;object-fit:cover}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .setup-art>.game-cover.cover-cabo{display:flex;justify-content:center;align-items:center}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .setup-art .display-card{width:56px;height:82px;position:relative;inset:auto;flex:none}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .setup-art strong{font-size:20px;color:#f3ddaa}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .setup-art>span,:is(#create-room-dialog,#room-rules-dialog).room-setup .setup-summary{font-size:12px;color:#aabac5}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .setup-settings{min-width:0;display:flex;flex-direction:column;gap:16px}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .setup-settings h3{display:flex;align-items:center;gap:9px;margin:0;font-size:14px;color:#e5cc96}
+:is(#create-room-dialog,#room-rules-dialog).room-setup label:not(.dnd-adventure-card):not(.check):not(.sw-expansion-toggle):not(.sw-expert-option){display:block;font-size:12px;color:#adbdc6;margin:12px 0 6px}
+:is(#create-room-dialog,#room-rules-dialog).room-setup input:not([type=checkbox]):not([type=radio]):not([type=hidden]),:is(#create-room-dialog,#room-rules-dialog).room-setup select{width:100%;min-height:39px;margin:0;padding:8px 11px;font-size:13px;background:#0a1520;border:1px solid #3c4c57;border-radius:7px;color:#e9ecdf}
+:is(#create-room-dialog,#room-rules-dialog).room-setup :is(button,input,select):focus-visible{outline:2px solid #e9cd8b;outline-offset:3px}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .setup-game-options>label:first-child{margin-top:0!important}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .setup-standard{border:1px solid #ffffff16;border-radius:10px;padding:22px;color:#cdd3cd;background:#ffffff03;font-size:15px}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .setup-room-options{border-top:1px solid #ffffff14;padding-top:14px;margin-top:auto;display:grid;grid-template-columns:minmax(110px,1fr) minmax(160px,1fr);gap:20px;align-items:start}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .setup-timer>label{margin-top:0!important}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .turn-limit-note{font-size:11px;color:#8da3b2;margin:5px 0 0}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .setup-toggles{display:grid;gap:10px}
+:is(#create-room-dialog,#room-rules-dialog).room-setup label.check{display:flex;align-items:center;gap:10px;font-size:13px;margin:0;min-height:35px;color:#e0e5de}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .setup-toggles .check input{margin-left:auto}
+:is(#create-room-dialog,#room-rules-dialog).room-setup input[type=checkbox]{accent-color:#e3c788;width:17px;height:17px;flex:none}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .setup-footer{padding:16px 24px;display:flex;justify-content:flex-end;align-items:center;gap:12px;border-top:1px solid #ffffff14;background:#0b1722}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .setup-footer button{min-height:41px;font-size:13px;padding:10px 24px;border-radius:8px;display:inline-flex;align-items:center;justify-content:center;gap:14px}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .setup-footer .create-submit{width:auto;margin:0}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .setup-footer .gold-button{background:#e0c38b;color:#14202a;border:1px solid #f2d9a7}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .setup-footer .gold-button .setup-icon{filter:none;width:17px}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .setup-footer .outline-button{color:#bdcbd1;border:1px solid #475762;background:transparent}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .setup-footer small{margin-right:auto;color:#9cabb5;font-size:12px}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .sw-creation-scope{margin:0 0 12px;font-size:12px;display:flex;gap:12px}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .sw-expansion-options{margin:14px 0 0;padding:10px 12px;border:1px solid #3c4c57;border-radius:9px;display:grid;grid-template-columns:1fr 1fr;gap:10px}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .sw-expansion-options legend{font-size:12px;padding:0 5px}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .sw-expansion-toggle{padding:0;margin:0;display:flex;align-items:center;gap:8px;background:none;border:0;font-size:13px}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .sw-expert-option{grid-column:1/-1;grid-row:2;font-size:12px;margin:0;display:flex;align-items:center;gap:8px}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .sw-expert-option:has(:disabled){opacity:.4}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .dnd-adventure-picker{margin:0;padding:0}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .dnd-adventure-picker legend{font-size:12px;margin-bottom:8px;color:#adbdc6}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .dnd-adventure-cards{grid-template-columns:repeat(3,minmax(0,1fr));gap:9px}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .dnd-adventure-card{display:flex!important;flex-direction:column;min-height:0;border-radius:8px}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .dnd-adventure-cover{flex-basis:auto;height:76px}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .dnd-adventure-copy{padding:8px;gap:3px}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .dnd-adventure-copy strong{font-size:13px;white-space:normal}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .dnd-adventure-copy small{font-size:9px;line-height:1.3}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .dnd-adventure-copy em{font-size:10px}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .dnd-creation-info{font-size:10px;color:#8fa4b0;margin:8px 0 0}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .setup-game-options:has(#dnd-mode){display:grid;grid-template-columns:1fr 1fr;column-gap:14px}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .dnd-adventure-picker,:is(#create-room-dialog,#room-rules-dialog).room-setup .dnd-creation-info{grid-column:1/-1}
+:is(#create-room-dialog,#room-rules-dialog).room-setup label[for=dnd-mode]{grid-column:1;grid-row:2}
+:is(#create-room-dialog,#room-rules-dialog).room-setup label[for=dnd-tone]{grid-column:2;grid-row:2}
+:is(#create-room-dialog,#room-rules-dialog).room-setup #dnd-mode{grid-column:1;grid-row:3}:is(#create-room-dialog,#room-rules-dialog).room-setup #dnd-tone{grid-column:2;grid-row:3}
+dialog.pregame-guide{width:min(880px,calc(100vw - 32px));max-width:none;max-height:calc(100dvh - 32px);padding:0;background:#101e2a;color:#e9ecdf;border:1px solid #52616a;border-radius:16px}
+.pregame-guide .setup-heading{position:sticky;top:0;background:#101e2a;z-index:2}
+.pregame-guide-body{padding:20px;overflow-wrap:anywhere}.pregame-guide-body .cabo-reference{display:block;position:static;width:auto;max-height:none;height:auto;border:0;padding:0;background:none;overflow:visible}
+.pregame-guide-body .reference-heading{display:none}
+.pregame-guide .cabo-reference{color:#e4ede9;min-height:0;box-shadow:none}
+.pregame-guide .cabo-reference :is(p,footer,.reference-goal>span){color:#b9cbd2}
+.pregame-guide .cabo-reference :is(h3,.reference-goal>b,.reference-special b,.reference-power h3 b){color:#f0d59c}
+.pregame-guide .cabo-reference .rules-visual{--rg-ink:#e4ede9;--rg-line:#98b7c14d;--rg-panel:#b7d2d412}
+.pregame-guide .cabo-reference :is(.reference-call,footer){border-color:#98b7c14d}
+.pregame-guide .cabo-reference p{font-size:13px;line-height:1.8}
+.pregame-guide .cabo-reference :is(.reference-goal>span,footer){font-size:12px}
+.pregame-guide .cabo-reference .reference-power h3{font-size:13px}
+.pregame-guide .cabo-reference .rules-visual p{font-size:13px!important}
+.lounge-game-strip .lounge-guide-button{display:inline-flex;align-items:center;justify-content:center;gap:7px;white-space:nowrap;padding:8px 12px;font-size:12px}
+@media(max-width:700px){
+ dialog.room-setup#create-room-dialog,dialog.room-setup.room-rules-dialog{width:calc(100vw - 20px);max-height:calc(100dvh - 20px);border-radius:12px}
+ :is(#create-room-dialog,#room-rules-dialog).room-setup .setup-body{grid-template-columns:1fr;padding:16px;gap:20px}
+ :is(#create-room-dialog,#room-rules-dialog).room-setup .setup-identity{border:0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:5px 12px}
+ :is(#create-room-dialog,#room-rules-dialog).room-setup .setup-art{grid-column:1/-1;display:none}
+ .room-rules-dialog .setup-identity{display:none}
+ :is(#create-room-dialog,#room-rules-dialog).room-setup .setup-identity label{grid-column:1/-1;margin:5px 0!important}
+ :is(#create-room-dialog,#room-rules-dialog).room-setup .setup-identity :is(input,select){grid-column:1/-1}
+ :is(#create-room-dialog,#room-rules-dialog).room-setup .setup-heading,:is(#create-room-dialog,#room-rules-dialog).room-setup .setup-footer{padding:14px 16px}
+ :is(#create-room-dialog,#room-rules-dialog).room-setup .setup-footer{position:sticky;bottom:0;z-index:2}
+ :is(#create-room-dialog,#room-rules-dialog).room-setup .setup-footer button{padding:9px 16px}
+ :is(#create-room-dialog,#room-rules-dialog).room-setup .setup-room-options{gap:12px}
+ :is(#create-room-dialog,#room-rules-dialog).room-setup .dnd-adventure-copy strong{font-size:12px}
+ .pregame-guide-body{padding:12px}
+}
+
+:is(#create-room-dialog,#room-rules-dialog).room-setup .setup-heading{background:#122430}
+:is(#create-room-dialog,#room-rules-dialog).room-setup .dnd-adventure-cover img{width:100%;height:100%;object-fit:cover}
+.pregame-guide-body>.nn-reference{max-height:none;overflow:visible;padding:0}

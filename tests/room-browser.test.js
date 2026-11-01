@@ -16,7 +16,8 @@ const rooms = [
 ];
 test('room filters combine availability, game, case-insensitive name/code/host/title and multiple search terms', () => {
   const original = structuredClone(rooms);
-  assert.deepEqual(filterRooms(rooms,games).map(r=>r.id),['ABCD1234','WXYZ5678']);
+  assert.deepEqual(filterRooms([...rooms.slice(2),...rooms.slice(0,2)],games).map(r=>r.id),rooms.map(r=>r.id));
+  assert.deepEqual(filterRooms(rooms,games,{status:'joinable'}).map(r=>r.id),['ABCD1234','WXYZ5678']);
   assert.equal(filterRooms(rooms,games,{query:'  #abcd1234  '})[0].id,'ABCD1234');
   assert.equal(filterRooms(rooms,games,{query:'月见 七大奇迹',gameId:'seven-wonders'})[0].id,'WXYZ5678');
   assert.equal(filterRooms(rooms,games,{query:'月下 CABO',gameId:'seven-wonders'}).length,0);

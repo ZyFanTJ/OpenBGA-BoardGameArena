@@ -21,9 +21,9 @@ test('v2 profiles migrate through v3 to v7 with original backups and unchanged g
  const dir=mkdtempSync(join(tmpdir(),'moon-profile-'));
  try{const current=fixture().store.data;current.version=2;for(const p of Object.values(current.profiles))delete p.details;current.rooms.PRESERVE={stateVersion:9,revision:6,game:{hands:['secret']}};
  const original=structuredClone(current),file=join(dir,'platform.json');writeFileSync(file,JSON.stringify(current));const migrated=new JsonStore(file);
- assert.equal(migrated.data.version,9);assert.deepEqual(migrated.data.rooms,{PRESERVE:{...original.rooms.PRESERVE,revision:7,turnSeconds:0,turnClock:null,lastTimeout:null}});assert.deepEqual(migrated.data.sessions,original.sessions);
+ assert.equal(migrated.data.version,10);assert.deepEqual(migrated.data.rooms,{PRESERVE:{...original.rooms.PRESERVE,revision:7,turnSeconds:0,turnClock:null,lastTimeout:null}});assert.deepEqual(migrated.data.sessions,original.sessions);
  for(const id of Object.keys(original.profiles)){const {details,...p}=migrated.data.profiles[id];assert.deepEqual(p,original.profiles[id]);assert.equal(details.visibility,'friends');assert.deepEqual(details.showcase,Object.values(p.equipped));}
- assert.deepEqual(JSON.parse(readFileSync(file+'.v2.bak','utf8')),original);new JsonStore(file);assert.deepEqual(JSON.parse(readFileSync(file+'.v2.bak','utf8')),original);assert.deepEqual(current,original);assert.equal(migrateStorage(migrated.data).version,9);
+ assert.deepEqual(JSON.parse(readFileSync(file+'.v2.bak','utf8')),original);new JsonStore(file);assert.deepEqual(JSON.parse(readFileSync(file+'.v2.bak','utf8')),original);assert.deepEqual(current,original);assert.equal(migrateStorage(migrated.data).version,10);
  }finally{rmSync(dir,{recursive:true,force:true});}
 });
 test('profile update atomically saves identity, owned appearance and showcase without changing money or matches',()=>{

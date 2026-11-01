@@ -1,0 +1,35 @@
+/* Compact storefront. Preview dialogs keep their full-size artwork. */
+.hub-shop .hub-shop-grid{grid-template-columns:repeat(6,minmax(0,1fr));gap:14px}
+.hub-shop .hub-shop-card{--rarity:#a4b2bf;--rarity-base:#293541;--rarity-wash:#151f2b;min-width:0;border:1px solid color-mix(in srgb,var(--rarity) 32%,#26323e)!important;border-bottom:2px solid color-mix(in srgb,var(--rarity) 58%,#26323e)!important;border-radius:9px;background:#111d2a!important;box-shadow:0 4px 16px #0003}
+.hub-shop .hub-rarity-rare{--rarity:#83afd2;--rarity-base:#203343;--rarity-wash:#14212e}
+.hub-shop .hub-rarity-epic{--rarity:#b39acb;--rarity-base:#312a40;--rarity-wash:#1e1b2b}
+.hub-shop .hub-rarity-legendary{--rarity:#cfb27e;--rarity-base:#3a3227;--rarity-wash:#24211d;box-shadow:0 4px 16px #0003}
+.hub-shop .hub-shop-card::before{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;border-top:2px solid color-mix(in srgb,var(--rarity) 75%,transparent);border-radius:inherit;background:linear-gradient(180deg,color-mix(in srgb,var(--rarity) 6%,transparent),transparent 42%)}
+.hub-shop .hub-shop-card:hover:not(:disabled){box-shadow:0 6px 24px color-mix(in srgb,var(--rarity) 22%,#0005);transform:translateY(-2px)!important}
+.hub-shop .hub-item-rarity{display:inline-flex;align-items:center;gap:5px;left:9px;top:11px;padding:3px 7px;border:1px solid color-mix(in srgb,var(--rarity) 45%,transparent);border-radius:4px;background:var(--rarity-base);color:var(--rarity);font-size:10px;line-height:1.5;letter-spacing:.03em;box-shadow:0 2px 8px #0005}
+.hub-shop .hub-rarity-mark{color:var(--rarity);font-size:9px;letter-spacing:-2px;padding-right:2px}
+.hub-item-motion{position:absolute;right:9px;top:15px;z-index:3;display:inline-flex;align-items:center;gap:4px;color:#cbdadf;font-size:9px;line-height:1.5;pointer-events:none}.hub-item-motion>i{width:4px;height:4px;background:#9cdbcc;border-radius:50%;box-shadow:0 0 5px #9cdbcc55}
+.hub-shop .hub-item-art{min-height:0;height:158px;flex:none}
+.hub-shop .hub-portrait-large{width:82px;height:82px;box-shadow:0 0 0 4px #09131d,0 0 0 5px color-mix(in srgb,var(--rarity) 65%,transparent),0 0 22px color-mix(in srgb,var(--rarity) 20%,transparent)}
+.hub-shop .hub-avatar-orbit{width:110px;height:110px;border-color:color-mix(in srgb,var(--rarity) 24%,transparent)}
+.hub-shop .hub-shop-card-copy{display:flex;flex-direction:column;align-items:stretch;justify-content:space-between;gap:8px;padding:10px 11px;min-height:100px;background:linear-gradient(130deg,var(--rarity-wash),#0d1823);border-top:1px solid color-mix(in srgb,var(--rarity) 24%,transparent)}
+.hub-shop .hub-shop-card-copy>span{min-width:0}
+.hub-shop .hub-shop-card-copy strong{font-size:12px;line-height:1.5;letter-spacing:.01em;font-weight:650;overflow-wrap:anywhere}
+.hub-shop .hub-shop-card-copy small{font-size:10px;margin-top:3px}
+.hub-shop .hub-shop-card-copy>span:last-child{display:flex;justify-content:flex-end;align-items:center;margin:0;height:22px}
+.hub-shop .hub-shop-card-copy .hub-stars b{font-size:17px}
+.hub-shop .hub-shop-card-copy .hub-stars i{font-size:13px}
+.hub-shop .hub-equipped,.hub-shop .hub-owned{font-size:10px}
+.hub-shop .hub-mini-nameplate{padding:12px;gap:7px}
+.hub-shop .hub-mini-nameplate .hub-avatar{width:25px;height:25px;font-size:13px}
+.hub-shop .hub-mini-nameplate b{font-size:11px;letter-spacing:0}
+.hub-shop .hub-title-art.hub-title-art{gap:4px;padding:27px 8px 10px}
+.hub-shop .hub-title-art .title-crest{width:70px;height:64px}
+.hub-shop .hub-title-art>strong.title-lettering{font-size:15px;letter-spacing:.03em}
+.hub-shop .hub-title-art>i.title-aura{width:100px;height:100px;left:calc(50% - 50px);top:calc(50% - 60px)}
+.hub-shop .hub-accessory-art .accessory-card-preview{width:70px;height:99px;transform:rotate(-8deg)}
+.hub-shop .hub-accessory-art{gap:5px;padding:24px 8px 8px}
+.hub-shop .hub-accessory-art>span{font-size:9px}
+@media(max-width:1099px){.hub-shop .hub-shop-grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}}
+@media(max-width:759px){.hub-shop .hub-shop-grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}.hub-shop .hub-item-art{height:145px}}
+@media(max-width:539px){.hub-shop .hub-shop-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}.hub-shop .hub-item-art{height:150px}}

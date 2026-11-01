@@ -5,7 +5,7 @@ import {escapeHtml as e,button as b} from './ui.js';
 
 export const inviteLink=(id,origin=location.origin)=>`${origin}/#invite/${encodeURIComponent(id)}`;
 export function roomSharePayload(room,origin=location.origin){
-  return {title:`${room.title} · Moon Table`,text:`我在 Moon Table 开了「${room.title}」，来一起玩！\n房间码：${room.id}\n点开链接即可入房，首次来只需填写昵称，无需注册。`,url:inviteLink(room.id,origin)};
+  return {title:`${room.title} · Moon Table`,text:`我在 Moon Table 开了「${room.title}」，来一起玩！\n房间码 ${room.id}`,url:inviteLink(room.id,origin)};
 }
 /** Each attempt checks the latest room revision; a single membership join is atomic. */
 export async function joinInvitation(id,request=api){
@@ -17,22 +17,25 @@ export async function joinInvitation(id,request=api){
 }
 
 /** Room-level social actions consume archived summaries, never private game state. */
-export function createTableSocial({root,getRoom,getUser,identify,mountRoom,mutate,notify}){
+export function createTableSocial({root,getRoom,getUser,identify,mountRoom,mutate,notify,onClose=()=>{}}){
   let dialog,record=null,social=null,key=null,generation=0,card=null;
-  function close(){dialog?.remove();dialog=null;card=null;}
-  function modal(title,html){close();dialog=document.createElement('dialog');dialog.className='platform-dialog table-social-dialog';dialog.innerHTML=`<button class="dialog-close" data-action="table:close" aria-label="关闭">×</button><h2>${e(title)}</h2>${html}`;root.append(dialog);dialog.addEventListener('close',close,{once:true});dialog.showModal();return dialog;}
+  function close(restore=true){const previous=dialog;dialog?.remove();dialog=null;card=null;if(previous&&restore)onClose();}
+  function modal(title,html){close(false);dialog=document.createElement('dialog');dialog.className='platform-dialog table-social-dialog';dialog.innerHTML=`<button class="dialog-close" data-action="table:close" aria-label="关闭">×</button><h2>${e(title)}</h2>${html}`;root.append(dialog);dialog.addEventListener('close',close,{once:true});dialog.showModal();return dialog;}
   function footer(){
-    const el=root.querySelector('#after-game'),room=getRoom(),user=getUser();if(!el)return;
-    if(room?.status!=='finished'){el.innerHTML='';return;}
-    const voted=room.rematchVotes.includes(user.id),host=room.hostId===user.id;
+    const room=getRoom(),user=getUser();if(room?.status!=='finished')return;
     const peers=room.players.filter(p=>!p.isBot&&p.id!==user.id);
-    el.innerHTML=`<section class="table-after" aria-label="对局后"><div class="table-after-heading"><div><small>今夜同桌</small><h2>下一局，还一起玩</h2></div><div class="actions">${b('分享战绩','table:share',!record,'class="secondary"')}${b(host?'再来一局 →':voted?'已准备，等房主':'再来一局','table:again',voted&&!host,'class="gold-button"')}</div></div>${room.rematchVotes.length?`<p class="table-again-count" role="status">${room.rematchVotes.length} 位牌友想继续</p>`:''}${peers.length?`<div class="table-peers">${peers.map(p=>{const friend=social?.friends.some(f=>f.id===p.id),request=social?.requests.find(r=>r.from.id===p.id||r.to.id===p.id);return `<div><span>${e(p.name)}</span>${b(friend?'已是好友':request?request.incoming?'接受好友':'已申请':'加好友',request?.incoming?'table:accept':'table:friend',!social||friend||!!request&&!request.incoming,`class="secondary" data-player-id="${e(p.id)}" data-request-id="${e(request?.id??'')}"`)}</div>`;}).join('')}</div>`:''}</section>`;
+    for(const el of root.querySelectorAll('[data-result-peers]'))el.innerHTML=`<div class="table-peers">${peers.map(p=>{const friend=social?.friends.some(f=>f.id===p.id),request=social?.requests.find(r=>r.from.id===p.id||r.to.id===p.id);return `<div><span>${e(p.name)}</span>${b(friend?'已是好友':request?request.incoming?'接受好友':'已申请':'加好友',request?.incoming?'table:accept':'table:friend',!social||friend||!!request&&!request.incoming,`class="secondary" data-player-id="${e(p.id)}" data-request-id="${e(request?.id??'')}"`)}</div>`;}).join('')}</div>`;
   }
   return {
-    dispose(){generation++;key=null;record=null;social=null;close();},
+    dispose(){generation++;key=null;record=null;social=null;close(false);},
     async sync(){
-      const room=getRoom();footer();if(room?.status!=='finished'||key===room.matchId)return;
-      key=room.matchId;const run=++generation;
+      const room=getRoom();
+      if(room?.status!=='finished'){
+        if(key!==null){generation++;key=null;record=null;social=null;close(false);}
+        return;
+      }
+      footer();if(key===room.matchId)return;
+      key=room.matchId;record=null;social=null;const run=++generation;
       try{const [result,friends]=await Promise.all([api(`/history/${room.matchId}`),api('/friends')]);if(run!==generation)return;record=result;social=friends;footer();}
       catch(error){if(run===generation){key=null;notify(error.message);}}
     },

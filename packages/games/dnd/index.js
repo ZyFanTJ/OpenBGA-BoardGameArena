@@ -400,7 +400,7 @@ export const dnd = {
     s.story = emptyStory();
     return s;
   },
-  create, apply, view, presentation, effect, applyEffect, turn, timeout: safeCommand, isFinished: s => s.phase === 'finished',
+  create, apply, view, spectatorView(s){const v=view(s,s.players[0].id);return Object.fromEntries(["phase","scene","adventure","step","actorId","players","clues","journal","combat","lastCheck","world","story","outcome"].map(k=>[k,v[k]]));}, presentation, effect, applyEffect, turn, timeout: safeCommand, isFinished: s => s.phase === 'finished',
   submissionKey: (s, id, command) => s.phase === 'characters' && !getPlayer(s, id)?.character && (!command || command.type === 'character') ? `characters:${s.step}` : null,
   bot: { observe: () => null, decide(v, id) {
     if (v.phase === 'characters') return safeCommand(v, id);

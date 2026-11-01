@@ -1,11 +1,15 @@
+import {cardBackPreview} from '../game-cosmetics.js';
 import {escapeHtml as e} from '../ui.js';
+import {portraitStyles,frameStyles,frameOrnament,themedTitleCrest,titleStyle} from './cosmetic-art.js';
 const portraitIds=['wolf','owl','fox','dragon','guardian','scholar'];
-const bannerMap={'banner-observatory':'social','banner-laurels':'archive','banner-treasury':'shop','banner-night':'night'};
+const illustratedPortraits=new Set(['frieren','usagi','luffy','neon',...portraitStyles]);
+const bannerMap={'banner-observatory':'social','banner-laurels':'archive','banner-treasury':'shop','banner-night':'night','banner-sakura':'sakura','banner-moon':'moon','banner-voyage':'voyage','banner-souk':'souk'};
 export const bannerClass=id=>`hub-banner-${bannerMap[id]??'night'}`;
 const titleTiers={classic:'经典',rare:'稀有',epic:'史诗',legendary:'传说'};
 const titleTier=item=>Object.hasOwn(titleTiers,item?.rarity)?item.rarity:'classic';
 const defaultTitle={name:'初来乍到',rarity:'classic'};
-function titleCrest(tier){
+function titleCrest(tier,style=''){
+ if(style)return themedTitleCrest(style);
  const wings=tier==='epic'||tier==='legendary'?'<path class="title-wings" d="M28 35 5 24l5 16 15 9L8 43l8 14 15 2m37-24 23-11-5 16-15 9 17-6-8 14-15 2"/>':'';
  const crown=tier==='legendary'?'<path class="title-crown" d="m30 23-4-16 14 8 8-12 8 12 14-8-4 16Z"/><path d="M33 27h30"/>':'';
  const shield=tier==='classic'?'M48 19 66 30v25L48 71 30 55V30Z':'M48 18 70 31l-4 28-18 18-18-18-4-28Z';
@@ -13,17 +17,25 @@ function titleCrest(tier){
 }
 export function titleBadge(user,items=[],extra=''){
  const appearance=user?.appearance??user?.equipped??{},item=items.find(x=>x.type==='title'&&x.id===appearance.title)??(user?.title?.id===appearance.title?user.title:null)??defaultTitle,tier=titleTier(item);
- return `<span class="title-badge title-tier-${tier} ${extra}" title="${titleTiers[tier]}称号">${titleCrest(tier)}<span class="title-lettering">${e(item.name)}</span><i class="title-glint" aria-hidden="true"></i></span>`;
+ const style=titleStyle(item.id);
+ return `<span class="title-badge title-tier-${tier} ${style?`title-style-${style}`:''} ${extra}" title="${titleTiers[tier]}称号">${titleCrest(tier,style)}<span class="title-lettering">${e(item.name)}</span><i class="title-glint" aria-hidden="true"></i></span>`;
 }
+export function frameClass(user){const frame=(user?.appearance??user?.equipped)?.frame;return frameStyles.some(key=>frame===`frame-${key}`)?`avatar-frame ${frame}`:'';}
 export function avatar(user,extra=''){
+ if(user?.isBot)return `<span class="hub-avatar hub-robot-avatar ${extra}" aria-hidden="true"><img src="/assets/avatars/robot-companion-v1.png" alt="" decoding="async"></span>`;
  const id=user?.appearance?.avatar??user?.equipped?.avatar??'avatar-traveler',index=portraitIds.findIndex(x=>id===`avatar-${x}`);
- return `<span class="hub-avatar ${index>=0?`hub-portrait-${index}`:'hub-avatar-initial'} ${extra}" aria-hidden="true">${index<0?e(user?.name?.slice(0,1)??'◐'):''}</span>`;
+ const illustration=id.replace(/^avatar-/,'');
+ const ornament=frameOrnament((user?.appearance??user?.equipped)?.frame);
+ if(illustratedPortraits.has(illustration))return `<span class="hub-avatar ${frameClass(user)} hub-illustrated-avatar hub-avatar-${illustration} ${extra}" aria-hidden="true">${portraitStyles.includes(illustration)?`<img class="hub-avatar-image" src="/assets/avatars/atelier/${illustration}-v1.webp" alt="" width="256" height="256" loading="lazy" decoding="async">`:''}${ornament}</span>`;
+ return `<span class="hub-avatar ${frameClass(user)} ${index>=0?`hub-portrait-${index}`:'hub-avatar-initial'} ${extra}" aria-hidden="true">${index<0?e(user?.name?.slice(0,1)??'◐'):''}${ornament}</span>`;
 }
 export function itemArt(item,name='旅人'){
+ if(item.type==='frame')return `<div class="hub-item-art hub-frame-art">${avatar({name,appearance:{avatar:'avatar-noir',frame:item.id}},'hub-portrait-large')}</div>`;
+ if(item.type==='accessory')return `<div class="hub-item-art hub-accessory-art"><div class="accessory-card-preview">${cardBackPreview(item.id)}</div><span>${item.gameId==='cabo'?'CABO':'UNO'} 专属卡背</span></div>`;
  if(item.type==='avatar')return `<div class="hub-item-art hub-avatar-art">${avatar({name,appearance:{avatar:item.id}},'hub-portrait-large')}<span class="hub-avatar-orbit" aria-hidden="true"></span></div>`;
  if(item.type==='banner')return `<div class="hub-item-art hub-banner-art ${bannerClass(item.id)}"><span class="hub-mini-nameplate">${avatar({name})}<b>${e(name)}</b></span></div>`;
- const tier=titleTier(item);
- return `<div class="hub-item-art hub-title-art title-tier-${tier}"><i class="title-aura" aria-hidden="true"></i>${titleCrest(tier)}<strong class="title-lettering">${e(item.name)}</strong><i class="title-rule" aria-hidden="true"></i><i class="title-sparks" aria-hidden="true"></i></div>`;
+ const tier=titleTier(item),style=titleStyle(item.id);
+ return `<div class="hub-item-art hub-title-art title-tier-${tier} ${style?`title-style-${style}`:''}"><i class="title-aura" aria-hidden="true"></i>${titleCrest(tier,style)}<strong class="title-lettering">${e(item.name)}</strong><i class="title-rule" aria-hidden="true"></i><i class="title-sparks" aria-hidden="true"></i></div>`;
 }
 export function nameplate(user,items,extra=''){
  const appearance=user.appearance??user.equipped??{};

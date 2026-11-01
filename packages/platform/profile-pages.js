@@ -1,7 +1,9 @@
+import {indexedRecords} from './record-index.js';
 import {ensure} from './errors.js';
 import {boundedText} from './validation.js';
 import {ownProfile,publicProfile,profileDetails} from './profiles.js';
 import {cosmetics} from './economy.js';
+import {matchVisibleTo} from './records.js';
 
 /** Profile presentation is derived from records and owned cosmetics, never live game state. */
 export class ProfilePageService{
@@ -11,14 +13,14 @@ export class ProfilePageService{
     ensure(p&&(owner||this.social.accepted(data,user.id,id)),'资料不存在，或尚未成为好友',404);
     const details=profileDetails(p);
     ensure(owner||details.visibility==='friends','这位玩家的资料仅本人可见',403);
-    const all=Object.values(data.matches).filter(m=>m.participants.some(row=>row.id===id&&!row.isBot));
+    const all=indexedRecords(this.store,'matches','human-player',m=>m.participants.filter(p=>!p.isBot).map(p=>p.id),id).filter(m=>matchVisibleTo(m,id));
     const own=m=>m.participants.find(row=>row.id===id);
     const complete=all.filter(m=>!own(m).left),wins=complete.filter(m=>own(m).won).length;
     const perGame=this.registry.list().map(game=>{
       const rows=complete.filter(m=>m.gameId===game.id),scores=rows.map(m=>own(m).score),direction=rows[0]?.scoreDirection??'higher';
       return {id:game.id,title:game.title,played:rows.length,wins:rows.filter(m=>own(m).won).length,practice:rows.filter(m=>m.practice).length,bestScore:scores.length?(direction==='lower'?Math.min(...scores):Math.max(...scores)):null,scoreDirection:direction};
     });
-    const friendCount=Object.values(data.friendships).filter(f=>f.status==='accepted'&&(f.a===id||f.b===id)).length;
+    const friendCount=indexedRecords(this.store,'friendships','member',r=>[r.a,r.b],id).filter(f=>f.status==='accepted').length;
     const badges=[
       ['arrival','月下旅人','compass','建立自己的旅人身份',1,1],
       ['first-match','初试身手','dice','完成第一场对局，包含 AI 练习',complete.length,1],
@@ -46,7 +48,7 @@ export class ProfilePageService{
         ensure(item&&p.inventory.includes(item.id),'只能装备已拥有的外观',403);
       }
       for(const id of input.showcase)ensure(p.inventory.includes(id)&&cosmetics.some(item=>item.id===id),'只能展示已拥有的藏品',403);
-      p.name=name;p.equipped={avatar:input.appearance.avatar,banner:input.appearance.banner,title:input.appearance.title};
+      p.name=name;p.equipped={...p.equipped,avatar:input.appearance.avatar,banner:input.appearance.banner,title:input.appearance.title};
       p.details={bio,favoriteGame:input.favoriteGame,visibility:input.visibility,showcase:[...input.showcase]};p.revision++;
     });
     return this.get(user);

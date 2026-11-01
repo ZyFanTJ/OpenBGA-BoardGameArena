@@ -6,21 +6,21 @@ import { lobbyDialogs, lobbyFooter } from './lobby.js';
 const PAGE_SIZE = 12;
 export const canJoinRoom = room => room.status === 'lobby' && room.count < room.maxPlayers;
 
-export function filterRooms(rooms, games, { query = '', gameId = '', status = 'joinable' } = {}) {
+export function filterRooms(rooms, games, { query = '', gameId = '', status = 'all' } = {}) {
   const terms = query.trim().toLocaleLowerCase().split(/\s+/).filter(Boolean);
   const titles = new Map(games.map(game => [game.id, game.title]));
-  return rooms.filter(room => {
+  return [...new Map(rooms.map(room=>[room.id,room])).values()].filter(room => {
     const text = `${room.title} ${room.id} #${room.id} ${room.host} ${room.gameId} ${titles.get(room.gameId) ?? ''}`.toLocaleLowerCase();
     return (!gameId || room.gameId === gameId)
-      && (status === 'all' || status === 'joinable' && canJoinRoom(room) || status === 'playing' && room.status === 'playing')
+      && (status === 'all' || status === 'joinable' && canJoinRoom(room) || status === 'playing' && room.status === 'playing' || status === 'watchable' && room.allowSpectators!==false)
       && terms.every(term => text.includes(term));
-  });
+  }).sort((a,b)=>Number(canJoinRoom(b))-Number(canJoinRoom(a)));
 }
 
 export function roomBrowserHtml(user, games, metadata) {
   return `<main class="room-browser" aria-labelledby="room-browser-title">
     <div class="rb-heading"><div><span class="rb-eyebrow">MOON TABLE / ROOMS</span><h1 id="room-browser-title">房间大厅</h1></div><div class="rb-actions"><button class="outline-button" data-action="focus-join">房间码加入</button><button class="gold-button" data-action="open-create">＋ 创建房间</button></div></div>
-    <div class="rb-toolbar"><label class="rb-search">${icon('search')}<span class="sr-only">搜索房间、房间码、房主或桌游</span><input id="room-search" type="search" placeholder="搜索房间、房间码、房主" autocomplete="off"></label><label class="rb-game"><span class="sr-only">筛选桌游</span><select id="room-game"><option value="">全部桌游</option>${games.map(game => `<option value="${e(game.id)}">${e(game.title)}</option>`).join('')}</select></label><div class="rb-filters" role="group" aria-label="房间状态">${[['joinable','可加入'],['all','全部'],['playing','进行中']].map(([value,label]) => `<button data-action="room-filter" data-room-filter="${value}" aria-pressed="${value === 'joinable'}">${label}</button>`).join('')}</div><button class="rb-refresh" data-action="refresh-rooms" aria-label="刷新房间" title="刷新房间">${icon('refresh')}</button></div>
+    <div class="rb-toolbar"><label class="rb-search">${icon('search')}<span class="sr-only">搜索房间、房间码、房主或桌游</span><input id="room-search" type="search" placeholder="搜索房间、房间码、房主" autocomplete="off"></label><label class="rb-game"><span class="sr-only">筛选桌游</span><select id="room-game"><option value="">全部桌游</option>${games.map(game => `<option value="${e(game.id)}">${e(game.title)}</option>`).join('')}</select></label><div class="rb-filters" role="group" aria-label="房间状态">${[['all','全部'],['joinable','可加入'],['playing','进行中'],['watchable','可观战']].map(([value,label]) => `<button data-action="room-filter" data-room-filter="${value}" aria-pressed="${value === 'all'}">${label}</button>`).join('')}</div><button class="rb-refresh" data-action="refresh-rooms" aria-label="刷新房间" title="刷新房间">${icon('refresh')}</button></div>
     <div class="rb-summary"><span id="room-result-count" role="status">正在寻找牌桌…</span><span id="room-refresh-error" role="status" hidden>刷新失败，请重试</span><nav class="rb-pagination" aria-label="房间翻页" hidden><button data-action="room-page" data-step="-1" aria-label="上一页房间">‹</button><output></output><button data-action="room-page" data-step="1" aria-label="下一页房间">›</button></nav></div>
     <section class="rb-grid" id="room-directory" aria-label="公开房间" aria-busy="true"><div class="rb-empty"><span class="rb-empty-symbol">◐</span><h2>正在寻找牌桌…</h2></div></section>
   </main>${lobbyFooter()}${lobbyDialogs(user, games, metadata, {joinInDialog:true})}`;
@@ -30,19 +30,19 @@ export function roomCard(room, games, metadata) {
   const game = games.find(game => game.id === room.gameId), meta = metadata[room.gameId] ?? {};
   const joinable = canJoinRoom(room);
   const status = room.status === 'playing' ? '进行中' : room.status === 'finished' ? '已结束' : joinable ? '等待中' : '已满';
-  return `<article class="rb-card ${joinable ? 'is-open' : ''}" data-room-id="${e(room.id)}">
+  return `<article class="rb-card ${joinable ? 'is-open' : 'is-unavailable'}" data-room-id="${e(room.id)}">
     <div class="rb-art game-cover ${e(meta.coverClass ?? '')}" aria-hidden="true">${meta.artHtml ?? ''}</div>
     <div class="rb-card-top"><span class="rb-game-title">${e(game?.title ?? room.gameId)}</span><span class="rb-state"><i></i>${status}</span></div>
     <div class="rb-card-copy"><h2 title="${e(room.title)}">${e(room.title)}</h2><span class="rb-code">#${e(room.id)}</span></div>
     <div class="rb-occupancy"><span class="rb-host" title="${e(room.host)}">${icon('people')}${e(room.host)}</span><span class="rb-player-count" aria-label="${room.count} 人，最多 ${room.maxPlayers} 人"><b>${room.count}</b> / ${room.maxPlayers}<span>人</span></span></div>
-    <footer><div class="rb-seat-track" aria-hidden="true">${Array.from({length:room.maxPlayers},(_,index) => `<i class="${index < room.count ? 'occupied' : ''}"></i>`).join('')}</div><button class="${joinable ? 'gold-button' : 'outline-button'}" data-action="join-public" data-room-id="${e(room.id)}" ${joinable ? '' : 'disabled'} aria-label="${joinable ? '加入' : status} ${e(room.title)}">${joinable ? '加入房间 →' : status}</button></footer>
+    <footer><div class="rb-seat-track" aria-hidden="true">${Array.from({length:room.maxPlayers},(_,index) => `<i class="${index < room.count ? 'occupied' : ''}"></i>`).join('')}</div><button class="${joinable ? 'gold-button' : 'outline-button'}" data-action="join-public" data-room-id="${e(room.id)}" ${joinable ? '' : 'disabled'} aria-label="${joinable ? '加入' : status} ${e(room.title)}">${joinable ? '加入房间 →' : status}</button>${room.allowSpectators!==false?`<button class="outline-button" data-action="watch-room" data-room-id="${e(room.id)}">观战</button>`:""}</footer>
   </article>`;
 }
 
 /** Owns directory loading and local filters; never reads private room snapshots. */
 export function createRoomBrowser(root, games, metadata) {
   const surface = root.querySelector('.room-browser'), grid = surface.querySelector('#room-directory');
-  let rooms = [], page = 0, status = 'joinable', loaded = false, disposed = false, pending;
+  let rooms = [], page = 0, status = 'all', loaded = false, disposed = false, pending;
   const search = surface.querySelector('#room-search'), game = surface.querySelector('#room-game');
   function render() {
     const matches = filterRooms(rooms, games, {query:search.value, gameId:game.value, status});

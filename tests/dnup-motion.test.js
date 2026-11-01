@@ -1,0 +1,8 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import {dnup} from '../packages/games/dnup/index.js';
+import {returnPlan} from '../apps/web/games/dnup/motion.js';
+function state(){const s=dnup.create(['a','b','c'],{},()=>.42);s.cursor=0;s.players[0].hand[0].value=8;s.players[1].areas[0]=[{...s.players[1].hand.pop(),value:3,reverse:7}];return s;}
+test('suppression animation retains original public card and its rotated return',()=>{const s=state(),before=dnup.view(s,'c'),after=dnup.view(dnup.apply(s,'a',{type:'play',cards:[s.players[0].hand[0].id]}),'c'),saved=JSON.stringify([before,after]);const plan=returnPlan(before,after);assert.equal(plan.length,1);assert.equal(plan[0].playerId,'b');assert.equal(plan[0].cards[0].before.value,3);assert.equal(plan[0].cards[0].after.value,7);assert.equal(JSON.stringify([before,after]),saved);assert.equal(returnPlan(after,after).length,0);assert.equal(returnPlan(before,{...after,sequence:after.sequence+1}).length,0);assert.equal(returnPlan(before,{...after,round:2}).length,0);});
+test('manual take targets taker, not original owner',()=>{const s=state(),after=dnup.apply(s,'a',{type:'take',playerId:'b',area:0}),plan=returnPlan(dnup.view(s,'c'),dnup.view(after,'c'));assert.equal(plan[0].playerId,'a');assert.equal(plan[0].cards[0].from,'b');});
+test('public discard cleanup keeps its old value and origin, without inventing a flip',()=>{const s=state();s.players[1].areas[0][0].value=8;const next=dnup.apply(s,'a',{type:'rotate'});const plan=returnPlan(dnup.view(s,'c'),dnup.view(next,'c'));assert.equal(plan[0].kind,'discard');assert.equal(plan[0].cards[0].before.value,8);assert.equal(plan[0].cards[0].after.value,8);});

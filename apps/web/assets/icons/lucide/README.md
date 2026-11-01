@@ -1,0 +1,1 @@
+Official Lucide SVG subset from https://github.com/lucide-icons/lucide/tree/main/icons, retrieved 2026-10-24. Unmodified source SVGs; ISC and Feather MIT notices are in LICENSE. Used by room-setup.js.

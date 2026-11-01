@@ -236,7 +236,7 @@ function turn(s) {
 }
 export const nightOfTheNinja = {
   manifest: { id: 'night-of-the-ninja', title: '忍者之夜', rulesVersion: '2020-core-online-1', stateVersion: 1, minPlayers: 4, maxPlayers: 11 },
-  create, apply, view, turn, timeout: safeCommand, bot: ninjaBot, isFinished: s => s.phase === 'finished',
+  create, apply, view, spectatorView:s=>view(s,null), turn, timeout: safeCommand, bot: ninjaBot, isFinished: s => s.phase === 'finished',
   submissionKey(s, id, command) {
     const type = { draft: 'draft', announce: 'announce' }[s.phase];
     return type && (!command || command.type === type) && turn(s)?.players.includes(id)

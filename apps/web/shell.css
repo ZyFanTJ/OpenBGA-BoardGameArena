@@ -1,16 +1,52 @@
-.shell-menu-toggle{display:none}.shell-menu-links{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:24px}.shell-menu-links button{min-height:44px}
+.shell-menu-toggle{display:none}
+/* Keep account controls intact when the navigation runs out of room. */
+#app .lobby-nav>.lobby-profile,#app .lobby-nav>.notification-button,#app .lobby-nav>.shell-admin-entry{flex-shrink:0}
+#app .lobby-profile>.profile-avatar{flex:none;aspect-ratio:1}
+#app .lobby-profile>span:nth-child(2){min-width:0}
+#app .lobby-profile>span:last-child{flex:none}
+#app .shell-admin-entry{display:inline-flex;align-items:center;gap:5px;padding:7px 10px;background:#203341;border:1px solid #aa956366;color:#e6cf96;font-size:11px;border-radius:2px;white-space:nowrap}
+#app .shell-admin-entry .ui-icon{width:16px;height:16px;fill:none;stroke:currentColor}
+#app .lobby-search{flex:0 1 215px;min-width:100px}
+@media(min-width:1101px) and (max-width:1600px){
+ #app .lobby-nav>nav{gap:2px}
+ #app .lobby-nav>nav button{padding-inline:10px;gap:8px;font-size:12px}
+}
+@media(min-width:761px) and (max-width:1280px){#app .lobby-search{display:none}}
+html:has(.shell-menu[open]),body:has(.shell-menu[open]){overflow:hidden}
+#app .shell-menu{position:fixed;inset:0 auto 0 0;margin:0;width:min(85vw,320px);max-width:100vw;height:100dvh;max-height:100dvh;padding:0;border:0;border-right:1px solid #c7aa7240;border-radius:0;background:#101d2a;color:#eef0ed;box-shadow:16px 0 60px #0006;overflow-y:auto;overscroll-behavior:contain}
+#app .shell-menu[open]{display:flex;flex-direction:column;animation:shell-menu-enter .2s ease-out}
+#app .shell-menu::backdrop{background:#020912aa}
+#app .shell-menu-heading{display:flex;align-items:center;justify-content:space-between;gap:8px;padding: max(12px,env(safe-area-inset-top)) 16px 12px 20px;flex-shrink:0;border-bottom:1px solid #abb4bb25}
+#app .shell-menu-brand{font-size:17px;letter-spacing:.04em;overflow-wrap:anywhere}
+#app .shell-menu-heading button{width:48px;min-width:48px;height:48px;padding:0;border:0;background:transparent;color:#aebfcb;font-size:28px}
+#app .shell-menu-links{display:flex;flex-direction:column;flex:1 0 auto;gap:4px;width:auto;margin:0;padding:16px 12px;align-items:stretch}
+#app .shell-menu-links button{display:flex;align-items:center;justify-content:flex-start;flex:none;gap:14px;width:100%;min-height:48px;height:auto;padding:12px 16px;border:0;border-radius:8px;background:transparent;color:#b9c6d1;font-size:15px;text-align:left;box-shadow:none}
+#app .shell-menu-links button[hidden]{display:none}
+#app .shell-menu-links button::after{display:none}
+#app .shell-menu-links button:is(:hover,[aria-current=page]),#app .shell-menu-profile[aria-current=page]{background:#e6c98a14;color:#e6c98a}
+#app .shell-menu .ui-icon{width:20px;height:20px;flex-shrink:0}
+#app .shell-menu-profile{display:flex;align-items:center;gap:12px;flex-shrink:0;width:100%;padding:18px 16px max(18px,env(safe-area-inset-bottom));border:0;border-top:1px solid #abb4bb25;border-radius:0;background:#ffffff04;color:#eef0ed;text-align:left}
+#app .shell-menu-avatar .hub-avatar{width:44px;height:44px;flex-shrink:0}
+#app .shell-menu-identity{display:flex;flex-direction:column;gap:4px;min-width:0;flex:1}
+#app .shell-menu-identity b{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-size:15px}
+#app .shell-menu-identity small{font-size:11px;color:#9fadb9}
+#app .shell-menu-title:empty{display:none}
+#app .shell-menu-title .title-badge{max-width:100%}
+#app .shell-menu button:focus-visible{outline:2px solid #e6c98a;outline-offset:-2px}
+@keyframes shell-menu-enter{from{transform:translateX(-100%)}to{transform:translateX(0)}}
+@media(prefers-reduced-motion:reduce){#app .shell-menu[open]{animation:none}}
 /* Shared navigation geometry must not depend on the active game. */
 @media(min-width:761px){html{scrollbar-gutter:stable}}
 @media(max-width:760px), (max-height:500px) and (max-width:1000px){
  #app .lobby-nav{height:80px;min-height:0;padding:4px 12px;display:grid;grid-template-columns:minmax(0,1fr) auto 36px;grid-template-rows:34px 38px;gap:0 8px}
  #app .lobby-brand{gap:8px}#app .lobby-brand b{font-size:15px}#app .moon-mark{width:24px;height:24px}
- #app .lobby-nav nav{grid-column:1/-1;grid-row:2;width:100%;gap:2px;justify-content:space-between}
- #app .lobby-nav nav button{height:38px;min-width:0;padding:6px 12px;font-size:13px;gap:4px;flex:1}
- #app .lobby-nav nav .ui-icon{width:14px;height:14px}
+ #app .lobby-nav>nav{grid-column:1/-1;grid-row:2;width:100%;gap:2px;justify-content:space-between}
+ #app .lobby-nav>nav button{height:38px;min-width:0;padding:6px 12px;font-size:13px;gap:4px;flex:1}
+ #app .lobby-nav>nav .ui-icon{width:14px;height:14px}
  #app .lobby-profile{grid-row:1;grid-column:2;min-width:0;padding:0;gap:5px;border:0}
  #app .profile-avatar{width:24px;height:24px;font-size:12px}#app .lobby-profile b{font-size:10px}#app .lobby-profile small{display:none}
  #app .lobby-search,#app .notification-button{display:none}
- #app .lobby-nav nav [data-action^="soon-"]{display:none}
+ #app .lobby-nav>nav [data-action^="soon-"]{display:none}
  #app .lobby-profile>span:last-child{display:none}
  #app .lobby-profile b{max-width:64px;font-size:11px}
  #app .shell-menu-toggle{display:block;grid-column:3;grid-row:1;width:36px;height:34px;padding:0;background:transparent;color:var(--text);border:0;font-size:21px}
@@ -20,19 +56,83 @@
  #app .room-lounge{height:calc(100dvh - 146px)}
 }
 @media(orientation:landscape) and (max-height:500px) and (max-width:1000px){
- #app .lobby-nav{height:36px;grid-template-columns:auto 1fr 36px;grid-template-rows:30px}#app .lobby-nav nav{grid-column:2;grid-row:1}#app .lobby-profile{display:none}#app .lobby-nav nav button{height:30px}#app .shell-menu-toggle{height:30px}
+ #app .lobby-nav{height:36px;grid-template-columns:auto 1fr 36px;grid-template-rows:30px}#app .lobby-nav>nav{grid-column:2;grid-row:1}#app .lobby-profile{display:none}#app .lobby-nav>nav button{height:30px}#app .shell-menu-toggle{height:30px}
  #app .moon-lobby{height:auto;min-height:calc(100dvh - 64px)}#app .room-empty{height:calc(100dvh - 64px)}
 }
 
 /* Reserve the search slot so section changes never redistribute navigation. */
 .lobby-search.is-inactive{visibility:hidden;pointer-events:none}
-@media(min-width:761px) and (max-width:1100px){#app .lobby-nav nav{gap:0}#app .lobby-nav nav button{padding:13px 8px;font-size:11px;gap:5px}#app .lobby-nav nav .ui-icon{width:17px;height:17px}}
-@media(max-width:760px){#app .lobby-nav nav :is([data-action=friends],[data-action=history],[data-action=shop]){display:none}}
+@media(min-width:761px) and (max-width:1100px){#app .lobby-nav>nav{gap:0}#app .lobby-nav>nav button{padding:13px 8px;font-size:11px;gap:5px}#app .lobby-nav>nav .ui-icon{width:17px;height:17px}}
+@media(max-width:760px){#app .lobby-nav>nav :is([data-action=forum],[data-action=history],[data-action=shop]){display:none}}
 
 @media(min-width:761px) and (max-width:950px){
- #app .lobby-nav{padding-inline:12px;gap:10px}
- #app .lobby-brand{gap:10px}#app .lobby-brand b{font-size:15px;letter-spacing:.12em}#app .lobby-brand .moon-mark{width:28px;height:28px}
- #app .lobby-nav nav button{font-size:10px;padding-inline:6px;gap:4px}#app .lobby-nav nav .ui-icon{width:15px;height:15px}
- #app .lobby-nav .lobby-profile{min-width:82px;padding-left:10px;gap:7px}#app .profile-avatar{width:32px;height:32px}#app .lobby-profile>span:last-child{display:none}
+ #app .lobby-nav{padding-inline:12px;gap:6px}
+ #app .lobby-brand{gap:6px}#app .lobby-brand b{font-size:12px;letter-spacing:.06em}#app .lobby-brand .moon-mark{width:28px;height:28px}
+ #app .lobby-nav>nav button{font-size:10px;padding-inline:6px;gap:4px}#app .lobby-nav>nav .ui-icon{width:15px;height:15px}
+ #app .lobby-nav>nav :is([data-action=friends],[data-action=history],[data-action=shop])>span{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+ #app .lobby-nav .lobby-profile{min-width:0;padding-left:10px;gap:7px}#app .profile-avatar{width:32px;height:32px}#app .lobby-profile>span:last-child{display:none}
+ #app .lobby-profile b{max-width:48px}
  #app .shell-admin-entry{font-size:10px;padding:5px 7px;white-space:nowrap}
 }
+
+.room-loading{text-align:center;max-width:440px}
+.room-loading-mark{display:block;color:var(--gold);font-size:40px;animation:room-loading-turn 1.4s linear infinite}
+.room-loading p{font-size:15px;color:var(--text)}
+@keyframes room-loading-turn{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.room-loading-mark{animation:none}}
+/* Mobile shows lobby, current room and friends; the drawer holds the full directory. */
+@media(max-width:760px), (max-height:500px) and (max-width:1000px){
+ #app .lobby-nav{grid-template-columns:72px minmax(0,1fr) 44px;grid-template-rows:44px 38px;height:90px}
+ #app .shell-menu-toggle{display:flex;align-items:center;justify-content:center;gap:6px;grid-column:1;grid-row:1;width:72px;height:44px;font-size:14px}
+ #app .shell-menu-toggle>span:first-child{font-size:20px}
+ #app .lobby-brand{grid-column:2;grid-row:1;justify-content:center;overflow:hidden}
+ #app .lobby-brand b{font-size:13px;letter-spacing:.03em;white-space:nowrap}
+ #app .lobby-brand .moon-mark{display:none}
+ #app .lobby-profile,#app .shell-admin-entry{display:none}
+ #app .notification-button{display:flex;align-items:center;justify-content:center;grid-column:3;grid-row:1;width:44px;height:44px;padding:0}
+ #app .lobby-nav>nav :is([data-action=forum],[data-action=history],[data-action=shop]){display:none}
+ #app .moon-lobby{min-height:calc(100dvh - 118px)}#app .room-empty{height:calc(100dvh - 118px)}#app .room-lounge{height:calc(100dvh - 156px)}
+}
+@media(orientation:landscape) and (max-height:500px) and (max-width:1000px){
+ #app .lobby-nav{height:52px;grid-template-columns:72px minmax(0,1fr) 44px;grid-template-rows:44px}
+ #app .lobby-brand{display:none}#app .lobby-nav>nav{grid-column:2;grid-row:1}#app .lobby-nav>nav button{height:44px}
+ #app .moon-lobby{min-height:calc(100dvh - 80px)}#app .room-empty{height:calc(100dvh - 80px)}#app .room-lounge{height:calc(100dvh - 118px)}
+}
+
+/* One header owns its appearance across lobby, rooms and social pages. */
+#app>.lobby-nav{background:linear-gradient(100deg,#0a131e,#0c1723 70%,#101d2b);border-bottom:1px solid #b2ac8a38}
+#app>.lobby-nav>nav>button[data-action]{color:#b9c7d1;border-radius:8px;background:transparent;box-shadow:none}
+#app>.lobby-nav>nav>button[data-action][aria-current=page]{color:#e9d3a1;background:linear-gradient(0deg,#d2b57414,transparent);box-shadow:0 2px #e4c787}
+#app>.lobby-nav>nav>button[data-action]:not([aria-current=page]):hover{background:#263746;color:#f3dfb3}
+#app>.lobby-nav>nav>button[data-action][aria-current=page]>.ui-icon{fill:#e6c98a;stroke:#e6c98a}
+@media(max-width:760px), (max-height:500px) and (max-width:1000px){
+ #app>.lobby-nav>nav{gap:2px;justify-content:space-between}
+ #app>.lobby-nav>nav>button[data-action]{display:flex;align-items:center;justify-content:center;flex:1;min-width:0;height:38px;padding:6px 5px;gap:5px;font-size:12px;border-radius:0}
+ #app>.lobby-nav>nav>button[data-action]>.ui-icon{display:inline-block;width:15px;height:15px;flex:none}
+ #app>.lobby-nav>nav>button:is([data-action=forum],[data-action=history],[data-action=shop]){display:none}
+}
+
+/* Keep both mobile navigation rows available while the page scrolls. */
+@media(max-width:760px), (max-height:500px) and (max-width:1000px){
+ #app>.lobby-nav{position:sticky;top:0;z-index:40;isolation:isolate;box-shadow:0 5px 16px #02081038}
+}
+
+/* The active tab glides across the persistent header instead of flashing. */
+#app>.lobby-nav>nav{position:relative;isolation:isolate}
+#app>.lobby-nav>nav::before{content:'';position:absolute;pointer-events:none;z-index:-1;left:0;top:0;width:var(--nav-active-width,0px);height:var(--nav-active-height,0px);transform:translate(var(--nav-active-x,0px),var(--nav-active-y,0px));border-radius:8px;background:linear-gradient(0deg,#d2b57418,transparent);box-shadow:inset 0 -2px #e4c787;opacity:0}
+#app>.lobby-nav>nav[data-has-selection=true]::before{opacity:1}
+#app>.lobby-nav>nav[data-indicator-ready=true]::before{transition:transform .28s cubic-bezier(.22,.8,.25,1),width .28s cubic-bezier(.22,.8,.25,1),height .2s ease,opacity .16s ease}
+#app>.lobby-nav>nav>button[data-action]{transition:color .2s ease,background-color .18s ease}
+#app>.lobby-nav>nav>button[data-action][aria-current=page]{background:transparent;box-shadow:none}
+#app .shell-menu{background:linear-gradient(180deg,#0a1729a8 0%,#101f30ed 45%,#091725f5 100%),url('/assets/lobby/moon-display-v1.webp') 70% top/auto 100% no-repeat;border-right-color:#cbb17c55;box-shadow:16px 0 70px #0009}
+#app .shell-menu-heading{padding-top:max(20px,env(safe-area-inset-top));padding-bottom:20px;background:linear-gradient(110deg,#31435335,transparent);border-bottom-color:#d2b3783b}
+#app .shell-menu-brand{color:#f3dbab;letter-spacing:.08em;text-shadow:0 2px 12px #0008}
+#app .shell-menu-links{gap:8px;padding:18px 14px}
+#app .shell-menu-links button{border:1px solid #a6b4c225;border-radius:10px;background:linear-gradient(110deg,#203c4d66,#152c3a2b);box-shadow:inset 0 1px #f5e4ba06}
+#app .shell-menu-links button[aria-current=page]{border-color:#d3b77b66;background:linear-gradient(110deg,#c1a66e2b,#2c465340);box-shadow:inset 3px 0 #e0c185}
+#app .shell-menu-profile{background:linear-gradient(110deg,#21374b99,#12283a80);border-top-color:#cdb17b42}
+@media(max-width:760px), (max-height:500px) and (max-width:1000px){#app>.lobby-nav>nav::before{border-radius:0}}
+@media(prefers-reduced-motion:reduce){#app>.lobby-nav>nav::before,#app>.lobby-nav>nav>button[data-action]{transition:none!important}}
+#app>.shell-page-enter{animation:shell-page-enter .18s ease-out}
+@keyframes shell-page-enter{from{opacity:.55}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){#app>.shell-page-enter{animation:none}}

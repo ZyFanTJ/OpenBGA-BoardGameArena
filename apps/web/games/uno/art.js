@@ -1,8 +1,10 @@
+import {cardBack} from '../../game-cosmetics.js';
 // Original scalable card illustrations. No third-party card scans or font assets.
 export const colors={red:{name:'红色',hex:'#d84b50',mark:'●'},yellow:{name:'黄色',hex:'#dba82b',mark:'◆'},green:{name:'绿色',hex:'#258464',mark:'▲'},blue:{name:'蓝色',hex:'#3776b1',mark:'■'}};
 export const values={skip:'跳过',reverse:'反转',draw2:'+2',wild:'变色',wild4:'+4'};
 export const cardLabel=c=>c?`${c.color?colors[c.color].name:'万能'} ${values[c.value]??c.value}`:'牌背';
-export function cardArt(card) {
+export function cardArt(card,owner) {
+  if(!card){const back=cardBack(owner,'uno');if(back)return back;}
   if(!card)return '<svg viewBox="0 0 100 148" aria-hidden="true"><rect x="2" y="2" width="96" height="144" rx="11" fill="#e9e5d4"/><rect x="7" y="7" width="86" height="134" rx="7" fill="#123f49"/><path d="M13 38 50 13 87 38 87 110 50 135 13 110Z" fill="none" stroke="#acbe9c" stroke-width="1.5"/><path d="m25 74 25-35 25 35-25 35Z" fill="#1b6570" stroke="#dbd5ab"/><text x="50" y="81" text-anchor="middle" fill="#fff0ba" font-size="21" font-family="sans-serif" font-weight="900">UNO</text><circle cx="50" cy="25" r="3" fill="#e6cc88"/><circle cx="50" cy="123" r="3" fill="#e6cc88"/></svg>';
   const color=card.color?colors[card.color].hex:'#233d48',symbol={skip:'⊘',reverse:'⇄',draw2:'+2',wild:'✦',wild4:'+4'}[card.value]??card.value;
   const corners=`<text x="12" y="27" fill="white" font-size="19" font-weight="900">${symbol}</text><text x="12" y="27" fill="white" font-size="19" font-weight="900" transform="rotate(180 50 74)">${symbol}</text>`;

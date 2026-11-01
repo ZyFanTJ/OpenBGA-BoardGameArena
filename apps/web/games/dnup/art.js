@@ -1,0 +1,3 @@
+// Both values read upright; the rotation arrow and exposed left rail remain
+// visible when cards overlap. Accessible card labels provide the full meaning.
+export const cardArt=c=>c?`<span class="dn-face dn-color-${c.value}" aria-hidden="true"><span class="dn-card-caption">${c.star?'<span class="dn-card-star">★</span>':''}</span><strong class="dn-value${[6,9].includes(c.value)?' dn-baseline':''}">${c.value}</strong><span class="dn-after dn-color-${c.reverse}"><span class="dn-after-label"><span class="dn-turn-icon">↻</span></span><b class="${[6,9].includes(c.reverse)?'dn-baseline':''}">${c.reverse}</b></span></span>`:'<span class="dn-back" aria-hidden="true"><b>↕</b><small>DNUP</small></span>';

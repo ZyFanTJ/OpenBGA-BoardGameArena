@@ -12,11 +12,12 @@ export class SessionService {
     const user = { id: randomUUID(), name: boundedText(name, 24), createdAt: Date.now() };
     return this.issue(user,{guest:true});
   }
-  issue(user,{guest=false}={}){
+  issue(user,{guest=false,update}={}){
     const token=randomBytes(32).toString('hex'),now=Date.now();
     this.store.transaction(data=>{
       if(guest)ensure(systemSettings(data).guestAccessEnabled,'游客入座暂时关闭，请登录账号',403);
       requireActive(data,user.id);
+      update?.(data);
       ensureProfile(data,user);
       for(const [key,s] of Object.entries(data.sessions))if(now-s.createdAt>2592000000)delete data.sessions[key];
       data.sessions[hash(token)]={id:user.id,name:user.name,createdAt:now};

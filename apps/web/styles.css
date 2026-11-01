@@ -1,35 +1,28 @@
+@import url('/games/compact-hud.css');
+@import url('/room-setup.css');
+@import url('/games/guide-ui.css');
 @import url('/table-social.css');
 @import url('/room-chat.css');
 @import url('/games/dnd/style.css');
-@import url('/games/dnd/immersion.css');
-@import url('/games/dnd/play.css');
-@import url('/games/dnd/art.css');
 @import url('/games/seven-wonders/style.css');
 @import url('/games/seven-wonders/setup.css');
-@import url('/games/seven-wonders/atlas.css');
-@import url('/games/seven-wonders/hud.css');
-@import url('/games/seven-wonders/clarity.css');
-@import url('/games/seven-wonders/expansions.css');
-@import url('/games/seven-wonders/feedback.css');
-@import url('/games/seven-wonders/decision-hud.css');
 @import url('/games/marrakech/style.css');
-@import url('/games/night-of-the-ninja/style.css');
 @import url('/games/cabo.css');
-@import url('/games/cabo/call-effect.css');
-@import url('/games/cabo-guide.css');
 @import url('/lobby.css');
 @import url('/room-lounge.css');
-@import url('/games/cabo/mobile.css');
 @import url('/shell.css');
 @import url('/hub/hub.css');
 @import url('/platform-palette.css');
 @import url('/room-browser.css');
 @import url('/hub/profile.css');
 @import url('/hub/titles.css');
+@import url('/hub/friends.css');
 @import url('/room-invites.css');
-@import url('/forum/forum.css');
-@import url('/admin/admin.css');
 @import url('/turn-feedback.css');
+@import url('/hub/ornaments.css');
+@import url('/hub/shop.css');
+@import url('/lobby/modern.css');
+@import url('/lobby/mobile.css');
 :root { color-scheme: dark; --bg:#082d38; --panel:#103f49; --line:#37636a; --text:#eef3df; --muted:#a6c6bf; --mint:#deedbc; --gold:#f1d782; --ink:#123d3d; font-family:system-ui,-apple-system,"Segoe UI","Microsoft YaHei",sans-serif; font-size:16px; }
 .game-loading{min-height:200px;display:grid;place-content:center;gap:16px;text-align:center;color:var(--muted)}
 * { box-sizing:border-box; } [hidden] { display:none!important; }
@@ -82,3 +75,5 @@ h1,h2,h3,p { margin:0; } h1 { font-size:2.6rem; line-height:1.25; letter-spacing
 .clipboard-dialog p{margin:14px 0 24px;color:#a9b8c3;font-size:13px}
 .clipboard-dialog>button{display:block;margin-left:auto;min-height:40px;padding:8px 24px;background:#dbc082;color:#172631;border:1px solid #eddbab}
 
+
+.site-footer{flex-wrap:wrap;gap:16px}.site-footer>div{display:flex;align-items:center;flex-wrap:wrap;gap:20px}.site-footer a,.site-footer>div>span{display:inline-flex;align-items:center;gap:7px;color:inherit;text-decoration:none}.site-footer a:hover{text-decoration:underline}

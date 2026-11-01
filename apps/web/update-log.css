@@ -1,0 +1,37 @@
+body:has(#update-log-dialog[open]){overflow:hidden}
+#update-log-dialog{width:min(760px,calc(100vw - 40px));max-width:none;max-height:min(860px,calc(100dvh - 48px));padding:0;border:1px solid #9c99715c;border-radius:20px;background:#101e2a;color:#e5eadd;box-shadow:0 30px 110px #000a;overflow:hidden}
+#update-log-dialog[open]{display:flex;flex-direction:column}
+#update-log-dialog::backdrop{background:#030c16c4;backdrop-filter:blur(6px)}
+#update-log-dialog .update-log-heading{position:relative;display:flex;align-items:center;justify-content:flex-start;gap:18px;height:auto;min-height:132px;flex:none;padding:26px 30px;border-bottom:1px solid #d2ba7f25;background:radial-gradient(ellipse at 10% 0,#d2b77813,transparent 68%),linear-gradient(110deg,#1c303b,#12212d)}
+.update-log-emblem{display:grid;place-items:center;width:58px;height:58px;flex:none;border:1px solid #d4b77555;border-radius:17px;background:#c6ad7110;color:#e5ca8c;box-shadow:inset 0 1px #f3d69c12}
+.update-log-emblem .ui-icon{width:29px;height:29px}
+.update-log-heading>div:nth-child(2){min-width:0;padding-right:30px}.update-log-heading>div>span{font-size:9px;letter-spacing:.16em;color:#b8a678}.update-log-heading h2{margin:5px 0 6px;font-size:27px;letter-spacing:.04em;color:#f2e4c2}.update-log-heading p{font-size:12px;color:#a6b8c3;line-height:1.7}
+#update-log-dialog .update-log-close{position:absolute;top:22px;right:24px;width:36px;height:36px;display:grid;place-items:center;padding:0;border:1px solid #aabbb52c;border-radius:10px;color:#bfd0ca;background:#ffffff04;font-size:25px;font-weight:400;line-height:1}
+#update-log-dialog .update-log-close:hover{background:#ffffff10;color:#fff0c8}
+.update-log-body{overflow:auto;min-height:0;padding:26px 30px 28px;overscroll-behavior:contain;scrollbar-gutter:stable}
+.update-log-group{position:relative;display:grid;grid-template-columns:90px minmax(0,1fr);gap:26px;padding-bottom:22px}.update-log-group:last-child{padding-bottom:0}
+.update-log-group:before{content:'';position:absolute;left:101px;top:14px;bottom:-14px;border-left:1px solid #88a09b3b}.update-log-group:last-child:before{bottom:12px}
+.update-log-group:after{content:'';position:absolute;left:97px;top:9px;width:9px;height:9px;border-radius:50%;background:#8aa8a6;box-shadow:0 0 0 5px #101e2a}
+.update-log-group.is-latest:after{background:#e5c68b;box-shadow:0 0 0 5px #101e2a,0 0 16px #d7bb7466}
+.update-log-date{padding-top:0;text-align:left;font-variant-numeric:tabular-nums}.update-log-date time>span{display:block;color:#d0d9d7;font-size:19px;font-weight:600;letter-spacing:.02em}.update-log-date time small{display:block;color:#778f9d;font-size:11px;margin-top:3px;letter-spacing:.12em}.update-log-date>b{display:inline-block;margin-top:10px;padding:2px 7px;border:1px solid #cfb57744;border-radius:5px;background:#c6ad7110;font-size:9px;color:#e6ca8e;font-weight:500}
+.update-log-entries{display:grid;gap:12px;min-width:0}
+.update-log-entry{padding:18px 20px;border:1px solid #8ea6ab26;border-radius:12px;background:linear-gradient(120deg,#1c303d,#142632);box-shadow:inset 0 1px #d0e1ce05}
+.is-latest .update-log-entry{border-color:#c9b57a40;background:linear-gradient(120deg,#293a3b,#172d35)}
+.update-log-category{display:flex;align-items:center;gap:6px;color:#8fbaad;font-size:10px;letter-spacing:.04em;margin-bottom:9px}.update-log-category .ui-icon{width:14px;height:14px}.is-latest .update-log-category{color:#d3bb83}
+.update-log-entry h3{font-size:16px;line-height:1.6;font-weight:600;color:#eee9d7}.update-log-entry p{font-size:12px;line-height:1.85;color:#9fb6bf;margin-top:7px}
+.update-log-entry.is-selected{border-color:#e0c48b;box-shadow:0 0 0 2px #e0c48b16}
+#update-log-dialog .update-log-footer{display:flex;align-items:center;justify-content:space-between;gap:16px;flex:none;margin:0;padding:16px 30px;border-top:1px solid #a5bcb01c;background:#0c1b27}
+.update-log-footer>span{display:flex;align-items:center;gap:7px;color:#829ba9;font-size:10px}.update-log-footer .ui-icon{width:14px;height:14px}
+#update-log-dialog .update-log-dismiss{padding:8px 20px;min-height:38px;border:1px solid #c6af7777;border-radius:8px;background:#d4bd83;color:#1d3435;font-size:12px;font-weight:600;white-space:nowrap}
+#update-log-dialog .update-log-dismiss:hover{background:#e5cf95}
+#update-log-dialog button:focus-visible{outline:2px solid #efd49a;outline-offset:3px}
+@media(max-width:600px){
+ #update-log-dialog{width:calc(100vw - 20px);max-height:calc(100dvh - 28px);border-radius:15px}
+ #update-log-dialog .update-log-heading{min-height:116px;padding:20px 18px;gap:12px}.update-log-emblem{width:43px;height:43px;border-radius:13px}.update-log-emblem .ui-icon{width:23px;height:23px}
+ .update-log-heading h2{font-size:23px}.update-log-heading>div>span{font-size:8px;letter-spacing:.08em}.update-log-heading p{font-size:11px}.update-log-heading>div:nth-child(2){padding-right:12px}
+ #update-log-dialog .update-log-close{top:14px;right:12px;width:32px;height:32px;font-size:23px}
+ .update-log-body{padding:20px 16px}.update-log-group{grid-template-columns:1fr;gap:12px;padding-left:17px;padding-bottom:24px}.update-log-group:before{left:3px;top:12px;bottom:-12px}.update-log-group:after{left:0;top:8px;width:7px;height:7px}
+ .update-log-date{display:flex;align-items:center;gap:12px}.update-log-date time{display:flex;align-items:baseline;gap:8px}.update-log-date time>span{font-size:17px}.update-log-date time small{font-size:10px;margin:0}.update-log-date>b{margin:0}
+ .update-log-entry{padding:15px}.update-log-entry h3{font-size:14px}.update-log-entry p{font-size:12px}.update-log-category{margin-bottom:7px}
+ #update-log-dialog .update-log-footer{padding:14px 16px;gap:10px}.update-log-footer>span{font-size:9px}.update-log-footer .ui-icon{display:none}
+}

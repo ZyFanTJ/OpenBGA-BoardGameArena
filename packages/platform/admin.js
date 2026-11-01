@@ -4,7 +4,11 @@ import {boundedText} from './validation.js';
 import {userAccess,requireAdmin} from './access.js';
 import {systemSettings,validateSettings} from './system.js';
 import {cosmetics} from './economy.js';
-import {createHash} from 'node:crypto';
+import {matchVisibleTo} from './records.js';
+import {createHash,randomBytes,scrypt} from 'node:crypto';
+import {promisify} from 'node:util';
+import {password as validatePassword} from './accounts.js';
+const derive=promisify(scrypt);
 import {textProviderView,validateTextProvider} from './integrations.js';
 
 const pageQuery=query=>{
@@ -17,7 +21,7 @@ const stripTransaction=t=>({id:t.id,kind:t.kind,amount:t.amount,balance:t.balanc
 
 /** Owns privileged account operations, system configuration and their audit trail. */
 export class AdminService{
- constructor(store,{social,now=()=>Date.now(),providerSecrets}={}){this.store=store;this.social=social;this.now=now;this.providerSecrets=providerSecrets;}
+ constructor(store,{social,now=()=>Date.now(),providerSecrets,registry}={}){this.store=store;this.social=social;this.now=now;this.providerSecrets=providerSecrets;this.registry=registry;}
  bootstrap(handle){
   if(!handle)return;
   ensure(typeof handle==='string'&&/^[a-zA-Z0-9_]{3,24}$/.test(handle),'初始管理员账号无效');
@@ -43,7 +47,7 @@ export class AdminService{
  }
  overview(user){
   requireAdmin(this.store.data,user);const data=this.store.data,rows=Object.keys(data.profiles).map(id=>this.row(id));
-  return {counts:{users:rows.length,registered:rows.filter(p=>p.registered).length,online:rows.filter(p=>!['offline','disabled'].includes(p.status)).length,disabled:rows.filter(p=>p.disabled).length,rooms:Object.keys(data.rooms).length,playing:Object.values(data.rooms).filter(r=>r.status==='playing').length,credits:rows.reduce((n,p)=>n+p.credits,0),matches:Object.keys(data.matches).length},newUsers:[...rows].sort((a,b)=>b.createdAt-a.createdAt||a.id.localeCompare(b.id)).slice(0,5),audit:this.audit(user,{page:1}).items.slice(0,5),settings:{revision:data.system.revision,settings:systemSettings(data)},storageVersion:data.version};
+  return {counts:{users:rows.length,registered:rows.filter(p=>p.registered).length,online:rows.filter(p=>!['offline','disabled'].includes(p.status)).length,disabled:rows.filter(p=>p.disabled).length,rooms:Object.keys(data.rooms).length,playing:Object.values(data.rooms).filter(r=>r.status==='playing').length,credits:rows.reduce((n,p)=>n+p.credits,0),matches:Object.values(data.matches).filter(m=>m.historyOwnerId===undefined).length},newUsers:[...rows].sort((a,b)=>b.createdAt-a.createdAt||a.id.localeCompare(b.id)).slice(0,5),audit:this.audit(user,{page:1}).items.slice(0,5),settings:{revision:data.system.revision,settings:systemSettings(data)},storageVersion:data.version};
  }
  users(user,query={}){
   requireAdmin(this.store.data,user);const {page,q,size}=pageQuery(query),filter=query.filter??'all';
@@ -58,7 +62,7 @@ export class AdminService{
   const p=data.profiles[id];
   return {...this.row(id),profile:ownProfile(data,id),accountCreatedAt:data.accounts[id]?.createdAt??null,collection:p.inventory.map(key=>{const item=cosmetics.find(c=>c.id===key);return {id:key,name:item?.name??key,type:item?.type??'unknown',equipped:Object.values(p.equipped).includes(key)};}),
    friends:Object.values(data.friendships).filter(r=>r.status==='accepted'&&(r.a===id||r.b===id)).length,
-   matches:Object.values(data.matches).filter(m=>m.participants.some(p=>p.id===id&&!p.isBot)).sort((a,b)=>b.recordedAt-a.recordedAt).slice(0,10).map(m=>({id:m.id,title:m.gameTitle,at:m.endedAt??m.recordedAt,practice:m.practice,own:m.participants.find(p=>p.id===id)})),
+   matches:Object.values(data.matches).filter(m=>matchVisibleTo(m,id)&&m.participants.some(p=>p.id===id&&!p.isBot)).sort((a,b)=>b.recordedAt-a.recordedAt).slice(0,10).map(m=>({id:m.id,title:m.gameTitle,at:m.endedAt??m.recordedAt,practice:m.practice,own:m.participants.find(p=>p.id===id)})),
    transactions:Object.values(data.transactions).filter(t=>t.userId===id).sort((a,b)=>b.at-a.at).slice(0,20).map(stripTransaction)};
  }
  audit(user,query={}){
@@ -66,7 +70,7 @@ export class AdminService{
   const rows=[...this.store.data.administration.audit].reverse().map(a=>({id:a.id,action:a.action,actorId:a.actorId,actorName:this.store.data.profiles[a.actorId]?.name??'系统',targetId:a.targetId,targetName:this.store.data.profiles[a.targetId]?.name??(a.action==='settings'?'系统设置':a.action==='ai'?'AI DM':'未知用户'),reason:a.reason,before:structuredClone(a.before),after:structuredClone(a.after),at:a.at}));
   return paginate(rows.filter(r=>!q||[r.actorName,r.targetName,r.reason,r.action].some(v=>v.toLowerCase().includes(q))),page,size);
  }
- settings(user){requireAdmin(this.store.data,user);return {revision:this.store.data.system.revision,settings:systemSettings(this.store.data)};}
+ settings(user){requireAdmin(this.store.data,user);return {revision:this.store.data.system.revision,settings:systemSettings(this.store.data),games:this.registry?.list().map(g=>({id:g.id,title:g.title,minPlayers:g.minPlayers,maxPlayers:g.maxPlayers}))??[]};}
  ai(user){requireAdmin(this.store.data,user);return textProviderView(this.store.data);}
  updateAi(user,input){
   requireAdmin(this.store.data,user);const value=validateTextProvider(input.settings,this.store.data.integrations.textProvider);
@@ -84,8 +88,8 @@ export class AdminService{
  }
  write(user,input,action,targetId,value,update){
   ensure(typeof input.requestId==='string'&&/^[a-zA-Z0-9-]{16,80}$/.test(input.requestId),'管理请求标识无效');
-  ensure(typeof input.reason==='string'&&input.reason.trim().length>=2&&input.reason.trim().length<=200,'请填写 2–200 字的操作备注');
-  const reason=input.reason.trim(),signature=JSON.stringify({action,targetId,value,reason}),id=`admin:${user.id}:${input.requestId}`;
+  ensure(input.reason===undefined||typeof input.reason==='string'&&(input.reason??'').trim().length<=200,'操作备注最多 200 字');
+  const reason=(input.reason??'').trim(),signature=JSON.stringify({action,targetId,value,reason}),id=`admin:${user.id}:${input.requestId}`;
   this.store.transaction(data=>{
    requireAdmin(data,user);
    const previous=data.administration.audit.find(a=>a.id===id);
@@ -102,7 +106,7 @@ export class AdminService{
    const before=p.credits,after=input.mode==='set'?input.amount:before+input.amount;
    ensure(Number.isSafeInteger(after)&&after>=0&&after<=1000000000,'星辉余额需在 0–1000000000 之间');
    ensure(before!==after,'星辉余额没有变化');p.credits=after;p.revision++;
-   data.transactions[requestId]={id:requestId,userId:id,kind:'admin',actorId:user.id,reason:input.reason.trim(),amount:after-before,balance:after,at:this.now()};
+   data.transactions[requestId]={id:requestId,userId:id,kind:'admin',actorId:user.id,reason:(input.reason??'').trim(),amount:after-before,balance:after,at:this.now()};
    return {before:{credits:before},after:{credits:after}};
   });return this.detail(user,id);
  }
@@ -115,6 +119,22 @@ export class AdminService{
    const details=profileDetails(p),before={name:p.name,bio:details.bio};ensure(before.name!==name||before.bio!==bio,'用户资料没有变化');
    p.name=name;p.details={...details,bio};p.revision++;
    return {before,after:{name,bio}};
+  });return this.detail(user,id);
+ }
+ async password(user,id,input){
+  requireAdmin(this.store.data,user);
+  ensure(this.store.data.accounts[id],'只能为注册用户重置密码');
+  const salt=randomBytes(16).toString('hex');
+  const digest=(await derive(validatePassword(input.password),salt,64,{N:16384,r:8,p:1,maxmem:64*1024*1024})).toString('hex');
+  // Request IDs represent one reset operation. Retries never apply another password.
+  this.write(user,input,'password',id,{accessRevision:input.accessRevision},data=>{
+   const account=data.accounts[id],access=userAccess(data,id);
+   ensure(account,'注册账号不存在',404);
+   ensure(access.revision===input.accessRevision,'账号状态已更新，请重新查看',409);
+   data.accounts[id]={...account,salt,digest};
+   for(const [key,session]of Object.entries(data.sessions))if(session.id===id)delete data.sessions[key];
+   data.administration.users[id]={...access,revision:access.revision+1};
+   return {before:{passwordChanged:false},after:{passwordChanged:true}};
   });return this.detail(user,id);
  }
  access(user,id,input){
@@ -139,7 +159,7 @@ export class AdminService{
   });return this.detail(user,id);
  }
  updateSettings(user,input){
-  requireAdmin(this.store.data,user);const settings=validateSettings(input.settings);
+  requireAdmin(this.store.data,user);const settings=validateSettings(input.settings,this.registry,systemSettings(this.store.data));
   this.write(user,input,'settings',null,settings,data=>{
    ensure(data.system.revision===input.revision,'系统设置已更新，请重新载入',409);
    const before=systemSettings(data);ensure(JSON.stringify(before)!==JSON.stringify(settings),'系统设置没有变化');

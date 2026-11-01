@@ -54,7 +54,7 @@ export function profileDraft(form){
 }
 
 export function updateProfilePreview(form,user,items){
-  const draft=profileDraft(form),preview={...user,name:draft.name||'月下旅人',appearance:draft.appearance,details:draft};
+  const draft=profileDraft(form),preview={...user,name:draft.name||'月下旅人',appearance:{...user.appearance,...draft.appearance},details:draft};
   const box=form.querySelector('#pp-live-preview');box.className=bannerClass(draft.appearance.banner);box.innerHTML=profileIdentity(preview,items);
   form.dataset.showcaseOrder=JSON.stringify(draft.showcase);
   form.querySelector('#pp-selected-slots').innerHTML=draft.showcase.map((id,index)=>`<div><span>${index+1}</span><b>${e(items.find(item=>item.id===id)?.name??'')}</b><button type="button" data-action="hub:showcase-move" data-index="${index}" data-step="-1" ${index===0?'disabled':''} aria-label="前移藏品 ${e(items.find(item=>item.id===id)?.name??'')}">‹</button><button type="button" data-action="hub:showcase-move" data-index="${index}" data-step="1" ${index===draft.showcase.length-1?'disabled':''} aria-label="后移藏品 ${e(items.find(item=>item.id===id)?.name??'')}">›</button></div>`).join('');

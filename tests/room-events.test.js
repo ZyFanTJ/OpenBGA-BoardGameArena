@@ -84,3 +84,12 @@ test('SSE response errors close the connection without leaving a subscription or
   assert.equal(f.streams.subscriptions.size, 0);
   const count = res.frames.length; f.streams.fail({ res }, { status: 403 }); assert.equal(res.frames.length, count);
 });
+
+test('v2 heartbeats are observable without game data; v1 retains comments and authorization remains live',async t=>{
+ const f=fixture(t,{heartbeatMs:10}),v2=new Response(),v1=new Response();
+ f.streams.add(f.room.id,v2,f.a.user,f.a.token,2);f.streams.add(f.room.id,v1,f.b.user,f.b.token);
+ const before=f.views();await new Promise(resolve=>setTimeout(resolve,25));
+ const beats=v2.frames.filter(frame=>frame.startsWith('event: heartbeat'));
+ assert.ok(beats.length);assert.deepEqual(Object.keys(JSON.parse(beats[0].split('\n')[1].slice(6))),['at']);assert.equal(f.views(),before);assert.ok(v1.frames.includes(': heartbeat\n\n'));
+ f.sessions.revoke(f.a.token);await new Promise(resolve=>setTimeout(resolve,25));assert.equal(v2.writableEnded,true);
+});

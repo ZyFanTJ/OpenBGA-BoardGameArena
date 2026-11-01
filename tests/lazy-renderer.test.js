@@ -5,19 +5,21 @@ import {lazyRenderer} from '../apps/web/games/lazy.js';
 const settle = () => new Promise(resolve => setImmediate(resolve));
 
 test('a game renderer loads only when needed, displays its latest snapshot and forwards actions', async () => {
-  let loads = 0, renders = 0, observed, command, disposed = 0, overlays = 0;
+  let loads = 0, renders = 0, observed, command, disposed = 0, overlays = 0, restored = 0, reset = false;
   const factory = lazyRenderer(async () => {
     loads++;
-    return send => ({update: (container, snapshot) => { observed = snapshot; container.innerHTML = 'ready'; }, handle: action => send(action), beforeOverlay: () => overlays++, dispose: () => disposed++});
+    return send => ({update: (container, snapshot, user, options) => { reset = !!options?.resetAnimations; observed = snapshot; container.innerHTML = 'ready'; }, handle: action => send(action), beforeOverlay: () => overlays++, afterOverlay: () => restored++, dispose: () => disposed++});
   });
   const ui = factory(value => { command = value; }, () => { renders++; });
   const container = {innerHTML: ''}; assert.equal(loads, 0);
   ui.beforeOverlay();assert.equal(overlays,0);
+  ui.afterOverlay();assert.equal(restored,0);
   ui.update(container, {revision: 1}, {}); assert.match(container.innerHTML, /正在铺好牌桌/);
   ui.update(container, {revision: 2}, {}); assert.equal(loads, 1);
   await settle(); assert.equal(renders, 1);
-  ui.update(container, {revision: 3}, {}); assert.equal(observed.revision, 3); assert.equal(container.innerHTML, 'ready');
+  ui.update(container, {revision: 3}, {}, {resetAnimations:true}); assert.equal(observed.revision, 3); assert.equal(container.innerHTML, 'ready'); assert.equal(reset,true);
   ui.beforeOverlay();assert.equal(overlays,1);
+  ui.afterOverlay();assert.equal(restored,1);
   ui.handle('play'); assert.equal(command, 'play'); ui.dispose(); assert.equal(disposed, 1);
   const next = factory(() => {}, () => {}); next.update(container, {revision: 4}, {});
   assert.equal(container.innerHTML, 'ready'); assert.equal(loads, 1);

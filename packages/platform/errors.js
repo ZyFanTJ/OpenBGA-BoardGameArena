@@ -1,6 +1,6 @@
 export class DomainError extends Error {
-  constructor(message, status = 400) { super(message); this.status = status; }
+  constructor(message, status = 400, code) { super(message); this.status = status; if(code)this.code=code; }
 }
-export function ensure(condition, message, status = 400) {
-  if (!condition) throw new DomainError(message, status);
+export function ensure(condition, message, status = 400, code) {
+  if (!condition) throw new DomainError(message, status, code);
 }

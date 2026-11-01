@@ -20,9 +20,9 @@ export function lazyRenderer(load) {
       });
     }
     return {
-      update(container, snapshot, user) {
+      update(container, snapshot, user, options) {
         if (!failed) start();
-        if (instance?.update) instance.update(container, snapshot, user);
+        if (instance?.update) instance.update(container, snapshot, user, options);
         else if (instance) container.innerHTML = instance.render(snapshot, user);
         else container.innerHTML = failed ? '<div class="game-loading"><p>暂时没能打开牌桌</p><button type="button" data-action="game:retryRenderer">重试</button></div>' : '<p class="game-loading" role="status">正在铺好牌桌…</p>';
       },
@@ -31,6 +31,7 @@ export function lazyRenderer(load) {
         return instance?.handle(action, target);
       },
       beforeOverlay() { instance?.beforeOverlay?.(); },
+      afterOverlay() { instance?.afterOverlay?.(); },
       dispose() { generation++; pending = false; failed = false; instance?.dispose?.(); instance = null; },
     };
   };

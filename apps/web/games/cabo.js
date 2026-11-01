@@ -1,12 +1,16 @@
+import {roundWaiting} from '../round-waiting.js';
+import {resultActions} from '../result-actions.js';
 import { escapeHtml as e, button as b } from '../ui.js';
 import { renderCaboTable } from './cabo-table.js';
 import { createTableAnimator } from './cabo-motion.js';
 import { caboShell } from './cabo-guide.js';
 import { caboResults } from './cabo/results.js';
+import { createCaboAudio } from './cabo/audio.js';
 
 export function createCaboRenderer(send, rerender) {
   let selected = [], previousKey = '';
-  let current, user, room, motion, container, settlementKey, settlementOpen = true;
+  let audio;
+  let current, user, room, motion, container, settlementKey, settlementOpen = true, restoreSettlement = false;
   function showSettlement(open) {
     settlementOpen = open;
     container?.querySelectorAll('[data-cabo-settlement]').forEach(el => { el.hidden = !open; });
@@ -21,14 +25,17 @@ export function createCaboRenderer(send, rerender) {
   const keyOf = (id, slot) => `${id}:${slot}`;
   function ownSlots() { return selected.filter(x => x.id === user.id).map(x => x.slot); }
   const renderer = {
-    update(target, snapshot, me) {
-      if (container!==target) {container?.removeEventListener('keydown',escapeSettlement);container=target;container.addEventListener('keydown',escapeSettlement);}
+    update(target, snapshot, me, options) {
+      if (container!==target) {audio?.dispose();audio=null;container?.removeEventListener('keydown',escapeSettlement);container=target;container.addEventListener('keydown',escapeSettlement);}
       if (!container.querySelector('.cabo-board')) container.innerHTML = caboShell(snapshot.game.expert);
-      motion ??= createTableAnimator((snapshot, me) => renderer.render(snapshot, me));
-      motion.update(container.querySelector('.cabo-board'), snapshot, me);
+      audio ??= createCaboAudio(container);
+      motion ??= createTableAnimator((snapshot, me) => renderer.render(snapshot, me), (previous, next, me, stage) => audio?.transition(previous, next, me, stage));
+      if(options?.resetAnimations){selected=[];audio?.stopEffects();}
+      motion.update(container.querySelector('.cabo-board'), snapshot, me, options);
     },
-    dispose() { motion?.dispose(); motion = null;container?.removeEventListener('keydown',escapeSettlement); },
-    beforeOverlay() { showSettlement(false); },
+    dispose() { motion?.dispose(); motion = null;audio?.dispose();audio=null;container?.removeEventListener('keydown',escapeSettlement); },
+    beforeOverlay() { restoreSettlement = settlementOpen; showSettlement(false); },
+    afterOverlay() { if(restoreSettlement){restoreSettlement=false;showSettlement(true);container?.querySelector('[data-action="table:share"]')?.focus({preventScroll:true});} },
     render(snapshot, me) {
       room = snapshot; current = room.game; user = me;
       const s = current;
@@ -51,10 +58,11 @@ export function createCaboRenderer(send, rerender) {
         help = s.phase === 'finished' ? `${s.winners.map(name).join('、')} 获胜` : '本轮结算';
         controls = caboResults(s, name, user.id);
         if (room.hostId === user.id && s.phase === 'roundEnd') controls += b('下一轮', 'game:nextRound');
-        if (s.phase === 'finished') controls += b('分享战绩', 'table:share');
+        if(s.phase==='roundEnd'&&room.hostId!==user.id)controls+=roundWaiting(room);
+        if (s.phase === 'finished') controls += resultActions(room,user);
       } else if (!myTurn) help = `${name(s.turnId)} 的回合`;
       else if (s.phase === 'turn') {
-        help = '你的回合 · 选择牌堆';
+        help = '你的回合';
         controls = b('CABO', 'game:cabo', !!s.caller, 'class="accent"');
       } else if (s.phase === 'drawn') {
         help = '选择要换出的牌';
@@ -72,7 +80,7 @@ export function createCaboRenderer(send, rerender) {
         controls = b('盖牌', 'game:confirm');
       }
       if (s.caller && myTurn && !['setup', 'roundEnd', 'finished'].includes(s.phase)) help = `最后一次行动 · ${help}`;
-      const summaryControls = s.phase === 'roundEnd' && room.hostId === user.id ? b('下一轮','game:nextRound') : s.phase === 'finished' ? b('分享战绩','table:share') : '';
+      const summaryControls = s.phase === 'roundEnd' && room.hostId === user.id ? b('下一轮','game:nextRound') : '';
       return renderCaboTable({ s, room, user, name, selectable, selected, help, controls, settlementOpen, summaryControls });
     },
     async handle(action, element) {
@@ -82,6 +90,7 @@ export function createCaboRenderer(send, rerender) {
       if (motion?.busy) return;
       const s = current;
       if (action === 'card') {
+        audio?.play('select');
         const choice = { id: element.dataset.player, slot: Number(element.dataset.slot) };
         const exists = selected.some(x => keyOf(x.id, x.slot) === keyOf(choice.id, choice.slot));
         if (exists) selected = selected.filter(x => keyOf(x.id, x.slot) !== keyOf(choice.id, choice.slot));

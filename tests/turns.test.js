@@ -96,8 +96,8 @@ test('unlimited rooms still advertise required actions but never schedule automa
 
 test('v6 migration preserves complete game states and records, defaults existing rooms to unlimited and backs up exact bytes',()=>{
  const f=fixture();f.start();const input=structuredClone(f.store.data);input.version=6;for(const r of Object.values(input.rooms)){delete r.turnSeconds;delete r.turnClock;delete r.lastTimeout;}
- const before=structuredClone(input),next=migrateStorage(input);assert.deepEqual(input,before);assert.equal(next.version,9);
- const expected=structuredClone(input);expected.version=9;for(const r of Object.values(expected.rooms)){r.turnSeconds=0;r.turnClock=null;r.lastTimeout=null;r.revision++;}assert.deepEqual(next,expected);assert.deepEqual(migrateStorage(next),next);
+ const before=structuredClone(input),next=migrateStorage(input);assert.deepEqual(input,before);assert.equal(next.version,10);
+ const expected=structuredClone(input);expected.version=10;for(const r of Object.values(expected.rooms)){r.turnSeconds=0;r.turnClock=null;r.lastTimeout=null;r.revision++;}assert.deepEqual(next,expected);assert.deepEqual(migrateStorage(next),next);
  fs.mkdirSync('work',{recursive:true});const dir=fs.mkdtempSync(resolve('work/turn-migrate-'));try{const file=join(dir,'platform.json'),raw=JSON.stringify(input);fs.writeFileSync(file,raw);assert.deepEqual(new JsonStore(file).data,next);assert.equal(fs.readFileSync(file+'.v6.bak','utf8'),raw);new JsonStore(file);assert.equal(fs.readFileSync(file+'.v6.bak','utf8'),raw);}finally{fs.rmSync(dir,{recursive:true,force:true});}
 });
 

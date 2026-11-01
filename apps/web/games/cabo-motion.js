@@ -13,6 +13,7 @@ function capture(container) {
   return new Map([...container.querySelectorAll('[data-motion-key]')].map(node => {
     const rect = node.getBoundingClientRect();
     return [node.dataset.motionKey, { node, x: rect.x, y: rect.y, width: rect.width, height: rect.height,
+      art:node.querySelector('.card-skin')?.outerHTML,
       value: node.dataset.value === '' ? null : Number(node.dataset.value),
       angle: node.classList.contains('draw-pile') ? -7 : node.classList.contains('discard-pile') ? 7 : 0 }];
   }));
@@ -41,7 +42,7 @@ class Scene {
     this.hide(key);
     const ghost = document.createElement('div'); ghost.className = 'playing-card motion-card';
     Object.assign(ghost.style, { width: `${anchor.width}px`, height: `${anchor.height}px`, transform: `translate(${anchor.x}px,${anchor.y}px)` });
-    ghost.innerHTML = `<span class="motion-face">${cardArt(anchor.value)}</span>`;
+    ghost.innerHTML = `<span class="motion-face">${anchor.art??cardArt(anchor.value)}</span>`;
     this.layer.append(ghost); this.holds.set(key, ghost);
   }
   release(key) { this.holds.get(key)?.remove(); this.holds.delete(key); }
@@ -59,7 +60,7 @@ class Scene {
     const ghost = document.createElement('div'); ghost.className = 'playing-card motion-card';
     Object.assign(ghost.style, { width: `${from.width}px`, height: `${from.height}px` });
     const flip = document.createElement('div'); flip.className = 'motion-flipper';
-    flip.innerHTML = `<span class="motion-face">${cardArt(from.value)}</span><span class="motion-face motion-back">${cardArt(value)}</span>`;
+    flip.innerHTML = `<span class="motion-face">${from.art??cardArt(from.value)}</span><span class="motion-face motion-back">${value===null&&to.art?to.art:cardArt(value)}</span>`;
     ghost.append(flip); this.layer.append(ghost);
     const sx = to.width / from.width, sy = to.height / from.height;
     const transform = (x, y, scaleX, scaleY, angle) => `translate3d(${x}px,${y}px,0) rotate(${angle}deg) scale(${scaleX},${scaleY})`;
@@ -81,24 +82,24 @@ class Scene {
     this.hide(key);
     await this.fly(from, to, { duration: 480, delay, bend: lift, show: key });
   }
-  async pulse(key, color = '#ffe6a3') {
+  async pulse(key, color = '#ffe6a3', duration = 560) {
     const anchor = this.after.get(key) ?? this.before.get(key);
     if (!anchor || this.cancelled) return;
     const ring = document.createElement('div'); ring.className = 'motion-ring';
     Object.assign(ring.style, { left: `${anchor.x - 8}px`, top: `${anchor.y - 8}px`, width: `${anchor.width + 16}px`, height: `${anchor.height + 16}px`, borderColor: color });
     this.layer.append(ring);
-    await this.animate(ring, [{ opacity: 0, transform: 'scale(.85)' }, { opacity: .8, offset: .25 }, { opacity: 0, transform: 'scale(1.32)' }], 560);
+    await this.animate(ring, [{ opacity: 0, transform: 'scale(.85)' }, { opacity: .8, offset: .25 }, { opacity: 0, transform: 'scale(1.32)' }], duration);
     ring.remove();
   }
-  async title(text) {
+  async title(text, duration = 620, reduced = false, position = .57) {
     if (this.cancelled) return;
     const rect = this.container.getBoundingClientRect(), label = document.createElement('div');
     label.className = 'motion-title'; label.textContent = text;
-    Object.assign(label.style, { left: `${rect.x + rect.width / 2}px`, top: `${rect.y + rect.height * .57}px` });
+    Object.assign(label.style, { left: `${rect.x + rect.width / 2}px`, top: `${rect.y + rect.height * position}px` });
     this.layer.append(label);
-    await this.animate(label, [{ opacity: 0, transform: 'translate(-50%,10px) scale(.9)' },
+    await this.animate(label, reduced ? [{ opacity: 1, transform: 'translate(-50%,0)' }, { opacity: 1, transform: 'translate(-50%,0)' }] : [{ opacity: 0, transform: 'translate(-50%,10px) scale(.9)' },
       { opacity: 1, offset: .22, transform: 'translate(-50%,0) scale(1)' },
-      { opacity: 1, offset: .72 }, { opacity: 0, transform: 'translate(-50%,-12px) scale(1.02)' }], 620);
+      { opacity: 1, offset: .72 }, { opacity: 0, transform: 'translate(-50%,-12px) scale(1.02)' }], duration);
     label.remove();
   }
   cancel() { this.cancelled = true; for (const animation of this.animations) animation.cancel(); this.clean(); }
@@ -165,9 +166,16 @@ async function playMotion(scene, previous, next, actorName, reduced) {
       await Promise.all(survivorMoves); break;
     }
     case 'swap': {
-      const [a, b] = motion.targets.map(targetKey); scene.hide(a); scene.hide(b);
-      await Promise.all([scene.fly(before.get(a), after.get(b), { duration: 760, bend: -65, spin: -12, show: b }),
-        scene.fly(before.get(b), after.get(a), { duration: 760, bend: 45, spin: 12, show: a }), scene.pulse(a), scene.pulse(b)]);
+      const [a, b] = motion.targets.map(targetKey);
+      if (reduced) { scene.show(a); scene.show(b); await scene.title('SWAP · 交换完成，请留意新的牌位', 1800, true, .3); break; }
+      // Keep the original backs/faces visible while marking both outgoing slots.
+      scene.hold(a); scene.hold(b);
+      const cue = scene.title('SWAP · 交换卡牌', 1550, false, .3);
+      await Promise.all([scene.pulse(a, '#ffe6a3', 350), scene.pulse(b, '#b9d9ff', 350)]);
+      scene.hide(a); scene.hide(b);
+      await Promise.all([scene.fly(before.get(a), after.get(b), { duration: 1200, bend: -65, spin: -12, show: b }),
+        scene.fly(before.get(b), after.get(a), { duration: 1200, bend: 45, spin: 12, show: a }), cue]);
+      await Promise.all([scene.pulse(a, '#b9d9ff', 700), scene.pulse(b, '#ffe6a3', 700), scene.title('交换完成 · 留意新的牌位', 700, false, .3)]);
       break;
     }
     case 'look': case 'peek': case 'spy': case 'cover':
@@ -189,18 +197,19 @@ async function playMotion(scene, previous, next, actorName, reduced) {
 }
 
 /** Serialize authoritative snapshots; selection redraws use the same revision and never replay actions. */
-export function createTableAnimator(render) {
-  let displayed, latestRevision = -1, queue = [], running = false, scene, disposed = false, container;
+export function createTableAnimator(render, onSound = () => {}) {
+  let displayed, latestRevision = -1, queue = [], running = false, scene, disposed = false, container, generation = 0;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)');
   const cancel = () => scene?.cancel();
   window.addEventListener('resize', cancel); window.addEventListener('scroll', cancel, true);
   document.addEventListener('visibilitychange', cancel); reduced.addEventListener('change', cancel);
   async function drain() {
     if (running || disposed) return;
+    const token = generation;
     running = true; container.inert = true; container.setAttribute('aria-busy', 'true');
     let restoreFocus = container.contains(document.activeElement);
     try {
-      while (queue.length && !disposed) {
+      while (queue.length && !disposed && token === generation) {
         if (document.hidden || queue.length > 6) queue = [queue.at(-1)];
         const { snapshot, user } = queue.shift();
         // Chat/room-only revisions must not rebuild the table or reset a scrolled hand.
@@ -210,31 +219,51 @@ export function createTableAnimator(render) {
         const after = capture(container);
         const continuous = !displayed || snapshot.revision === displayed.revision + 1;
         const call = snapshot.game.motion?.kind === 'cabo' && previous && !previous.caller;
-        const animate = snapshot.game.motion && continuous && !document.hidden && (!reduced.matches || call);
+        const swap = snapshot.game.motion?.kind === 'swap';
+        const animate = snapshot.game.motion && continuous && !document.hidden && (!reduced.matches || call || swap);
+        // Sound follows the displayed timeline, including reduced-motion mode.
+        // First paint, duplicate pushes, gaps and recovery never replay sound.
+        const audible = previous && continuous && !document.hidden;
+        if (audible) onSound(previous, snapshot.game, user, 'start');
         displayed = snapshot;
+        let cancelled = false;
         if (animate) {
           container.classList.add('motion-playing');
-          scene = new Scene(container, before, after, queue.length > 1 ? .65 : 1);
+          const activeScene = new Scene(container, before, after, queue.length > 1 && !swap ? .65 : 1);
+          scene = activeScene;
           const actorName = snapshot.players.find(p => p.id === snapshot.game.motion.actorId)?.name ?? '玩家';
-          try { await playMotion(scene, previous, snapshot.game, actorName, reduced.matches); }
-          finally { scene.clean(); scene = null; container.classList.remove('motion-playing'); }
+          try { await playMotion(activeScene, previous, snapshot.game, actorName, reduced.matches); }
+          finally { cancelled = activeScene.cancelled; activeScene.clean(); if (scene === activeScene) { scene = null; container.classList.remove('motion-playing'); } }
         }
+        if (audible && !cancelled && !disposed && token === generation && !document.hidden) onSound(previous, snapshot.game, user, 'end');
       }
     } catch (error) {
+      if (disposed || token !== generation) return;
       console.error('CABO animation failed', error);
       // An effect cannot leave the table locked or prevent the newest authoritative view from rendering.
       const latest = queue.at(-1); queue = [];
       if (latest) { displayed = latest.snapshot; container.innerHTML = render(latest.snapshot, latest.user); }
     } finally {
-      running = false; container.inert = false; container.removeAttribute('aria-busy');
-      if (restoreFocus && !disposed) container.querySelector('.table-actions button:not(:disabled), .playing-card:not(:disabled)')?.focus({ preventScroll: true });
+      if (token === generation) {
+        running = false; container.inert = false; container.removeAttribute('aria-busy');
+        if (restoreFocus && !disposed) container.querySelector('.table-actions button:not(:disabled), .playing-card:not(:disabled)')?.focus({ preventScroll: true });
+      }
     }
   }
   return {
     get busy() { return running; },
-    update(target, snapshot, user) {
+    update(target, snapshot, user, {resetAnimations = false} = {}) {
       if (disposed || snapshot.revision < latestRevision) return;
       container = target;
+      if (resetAnimations) {
+        // A conflict/reconnect snapshot replaces the animation timeline, even at
+        // the same revision. Never wait for hidden cards in an obsolete scene.
+        generation++; scene?.cancel(); scene = null; queue = []; running = false;
+        container.classList.remove('motion-playing'); container.inert = false; container.removeAttribute('aria-busy');
+        latestRevision = snapshot.revision; displayed = snapshot;
+        container.innerHTML = render(snapshot, user);
+        return;
+      }
       if (snapshot.revision === latestRevision) {
         if (!running) {
           const before = capture(container); container.innerHTML = render(snapshot, user);
@@ -251,7 +280,8 @@ export function createTableAnimator(render) {
       latestRevision = snapshot.revision; queue.push({ snapshot, user }); void drain();
     },
     dispose() {
-      disposed = true; queue = []; cancel();
+      disposed = true; generation++; queue = []; cancel(); running = false;
+      if (container) { container.inert = false; container.removeAttribute('aria-busy'); container.classList.remove('motion-playing'); }
       window.removeEventListener('resize', cancel); window.removeEventListener('scroll', cancel, true);
       document.removeEventListener('visibilitychange', cancel); reduced.removeEventListener('change', cancel);
     },

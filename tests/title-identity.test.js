@@ -7,11 +7,33 @@ import {RoomService} from '../packages/platform/rooms.js';
 import {games} from '../packages/games/registry.js';
 import {playerName,playerIdentity} from '../apps/web/player-identity.js';
 import {itemArt,titleBadge} from '../apps/web/hub/cosmetics.js';
+import {ownProfile,publicProfile} from '../packages/platform/profiles.js';
 import {renderCaboTable} from '../apps/web/games/cabo-table.js';
 import {createUnoRenderer} from '../apps/web/games/uno/index.js';
 import {createSevenWondersRenderer} from '../apps/web/games/seven-wonders/index.js';
 import {createMarrakechRenderer} from '../apps/web/games/marrakech/index.js';
 import {createNinjaRenderer} from '../apps/web/games/night-of-the-ninja/index.js';
+
+test('session, shop and refreshed profiles resolve the equipped title without a client catalog',()=>{
+ const store=new JsonStore(),sessions=new SessionService(store),economy=new EconomyService(store);
+ const {user,token}=sessions.create('菜单称号验证');
+ assert.match(titleBadge(user),/初来乍到/);
+ for(const id of ['title-strategist','title-starlord']){
+  const bought=economy.purchase(user,{itemId:id,revision:ownProfile(store.data,user.id).revision,requestId:`menu-title-${id}`});
+  const result=economy.equip(user,{itemId:id,revision:bought.profile.revision});
+  const item=cosmetics.find(item=>item.id===id);
+  for(const profile of [result.profile,ownProfile(store.data,user.id),sessions.authenticate(token),publicProfile(store.data.profiles[user.id])]){
+   assert.deepEqual(profile.title,{id,name:item.name,rarity:item.rarity});
+   assert.match(titleBadge(profile),new RegExp(item.name));
+   assert.match(titleBadge(profile),new RegExp(`title-tier-${item.rarity}`));
+  }
+ }
+ const initial=economy.equip(user,{itemId:'title-wanderer',revision:ownProfile(store.data,user.id).revision});
+ assert.match(titleBadge(initial.profile),/初来乍到/);
+ assert.equal('title' in store.data.profiles[user.id],false,'display metadata never enters persisted profiles');
+ initial.profile.title.name='modified';
+ assert.equal(ownProfile(store.data,user.id).title.name,'初来乍到');
+});
 
 test('room identities resolve equipped titles from profiles without exposing collections or changing game state',()=>{
  const store=new JsonStore(),sessions=new SessionService(store),economy=new EconomyService(store),rooms=new RoomService(store,games,{random:()=>.3});

@@ -6,7 +6,7 @@ test('room invitation shares a direct link and useful text for group chats witho
   const room={id:'ABCD1234',title:'今晚玩 UNO',players:[{name:'private'}],game:{secret:123}};
   const payload=roomSharePayload(room,'https://table.example');
   assert.equal(payload.url,'https://table.example/#invite/ABCD1234');
-  assert.match(payload.text,/今晚玩 UNO/);assert.match(payload.text,/无需注册/);
+  assert.match(payload.text,/今晚玩 UNO/);assert.match(payload.text,/ABCD1234/);
   assert.doesNotMatch(JSON.stringify(payload),/private|secret/);
   assert.equal(inviteLink('ABCD1234','https://table.example'),payload.url);
 });

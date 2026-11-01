@@ -8,3 +8,19 @@
 @media(max-width:1100px){.in-room .room-identity h1{max-width:160px}.turn-cue{padding:4px 9px;gap:7px;font-size:11px}.turn-countdown{font-size:17px}}
 @media(max-width:760px){.in-room .room-bar{gap:6px}.in-room .room-logo{display:none}.in-room .room-identity{min-width:0;flex:1}.in-room .room-identity h1{max-width:85px}.in-room .room-presence .room-person{display:none}.turn-cue{min-height:30px;font-size:10px;padding:4px 7px;gap:6px}.turn-countdown{font-size:15px;min-width:34px}.turn-cue-dot{width:5px;height:5px}.in-room .room-tools .room-invite{display:none}.in-room .room-tools{gap:4px}.in-room .room-tools button{padding:4px 6px}}
 @media(prefers-reduced-motion:reduce){.turn-arrival{animation:none}}
+
+/* Amber contrasts with the teal table. Paint changes only: no scaling, padding,
+ * or border-width changes that could move cards or overflow a mobile seat. */
+.has-active-turn :is(.table-seat.is-turn-actor .player-badge,.uno-seat.is-turn-actor .uno-badge,.uno-own-active,.sw-seat.is-turn-actor,.nn-seat.is-turn-actor,.mk-seat.is-turn-actor,.ct-active,.dnd-portrait-card.is-turn-actor .dnd-class-portrait,.th-seat.is-turn-actor .th-seat-body){border-color:#ffd052;animation:player-breathe 1.6s ease-in-out infinite}
+@keyframes player-breathe{0%,100%{box-shadow:inset 0 0 0 2px #ffc642,inset 0 0 14px #ffb72b30,0 0 6px #ffc13d38}50%{box-shadow:inset 0 0 0 3px #fff2a6,inset 0 0 24px #ffbd3860,0 0 12px #ffc64290}}
+.turn-cue.is-required .turn-cue-dot{animation:turn-dot-breathe 1.6s ease-in-out infinite}
+@keyframes turn-dot-breathe{0%,100%{opacity:.55;box-shadow:0 0 0 1px #8fffd033,0 0 4px #8fffd055}50%{opacity:1;box-shadow:0 0 0 3px #8fffd04d,0 0 12px #8fffd0}}
+.room-connection{position:fixed;z-index:150;left:50%;top:116px;transform:translateX(-50%);display:flex;align-items:center;gap:12px;width:max-content;max-width:calc(100vw - 24px);padding:10px 14px;border:1px solid #d9b26b;border-radius:10px;background:#192630f5;box-shadow:0 6px 24px #0008;color:#f8dca4;font-size:12px}
+.room-connection span{min-width:0}.room-connection button{font-size:11px;padding:6px 10px;flex-shrink:0}.room-connection[data-state=offline]{border-color:#d19172}.room-command-status{padding:7px 12px;color:#d9d6ad;background:#253532;font-size:12px}
+.round-waiting{width:100%;max-width:420px;justify-self:center;margin:12px auto 0;padding:10px 12px;border:1px solid #a4b3ae44;border-radius:8px;background:#132c32;color:#dfdcc5;font-size:12px;text-align:left}
+.round-waiting summary{display:flex;align-items:center;gap:8px;cursor:pointer;list-style:none;min-height:28px}.round-waiting summary::-webkit-details-marker{display:none}.round-waiting summary span{margin-left:auto}.round-waiting summary i{width:6px;height:6px;flex:none;background:#d2b87b;border-radius:50%}.round-waiting p{font-size:11px!important;font-weight:400;line-height:1.8;margin:8px 0 0!important;color:#b7c8c6}
+@media(max-width:760px){.room-connection{top:145px;font-size:11px;padding:9px 11px;gap:8px}}
+@media(prefers-reduced-motion:reduce){.has-active-turn :is(.table-seat.is-turn-actor .player-badge,.uno-seat.is-turn-actor .uno-badge,.uno-own-active,.sw-seat.is-turn-actor,.nn-seat.is-turn-actor,.mk-seat.is-turn-actor,.ct-active,.dnd-portrait-card.is-turn-actor .dnd-class-portrait,.th-seat.is-turn-actor .th-seat-body){animation:none;box-shadow:inset 0 0 0 3px #ffe394,inset 0 0 20px #ffbd3840}.turn-cue.is-required .turn-cue-dot{animation:none;opacity:1;box-shadow:0 0 0 2px #8fffd04d,0 0 10px #8fffd0}}
+
+
+@media(max-width:760px){.is-uno.is-my-turn .turn-cue-label{display:inline}}

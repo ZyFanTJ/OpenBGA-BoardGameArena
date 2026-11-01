@@ -1,5 +1,39 @@
 {
-  "name": "moon-table", "version": "0.8.4", "private": true,
-  "type": "module", "engines": { "node": ">=22.13" },
-  "scripts": { "start": "node apps/server/index.js", "dev": "node --watch apps/server/index.js", "test": "node --test tests/*.test.js", "image:build":"node scripts/docker.mjs build", "image:package":"node scripts/docker.mjs package", "image:push":"node scripts/docker.mjs push", "deploy":"node scripts/docker.mjs deploy" }
+  "name": "moon-table",
+  "version": "0.8.11",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "start": "node apps/server/index.js",
+    "dev": "node scripts/dev.mjs",
+    "test": "node --test tests/*.test.js",
+    "check:tidewatch": "tsc -p apps/web/games/tidewatch/tsconfig.json",
+    "benchmark:tidewatch": "node scripts/benchmark-tidewatch.mjs",
+    "image:build": "node scripts/docker.mjs build",
+    "image:package": "node scripts/docker.mjs package",
+    "image:push": "node scripts/docker.mjs push",
+    "deploy": "node scripts/docker.mjs deploy",
+    "build:web": "node scripts/build-web.mjs",
+    "prestart": "npm run build:web",
+    "predev": "npm run build:web",
+    "pretest": "npm run build:web"
+  },
+  "dependencies": {
+    "@radix-ui/react-tabs": "^1.2.1",
+    "@radix-ui/react-toggle-group": "^1.2.1",
+    "@radix-ui/react-tooltip": "^1.4.1",
+    "lucide-react": "^1.61.0",
+    "phaser": "^4.2.1",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "ws": "^8.22.0"
+  },
+  "devDependencies": {
+    "@types/ws": "^8.18.2",
+    "esbuild": "^0.28.2",
+    "typescript": "^7.0.2"
+  }
 }

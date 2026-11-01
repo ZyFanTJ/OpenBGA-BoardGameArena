@@ -1,3 +1,4 @@
+@import url('./cabo/audio.css');
 .cabo-layout { display:grid; grid-template-columns:minmax(0,1fr) 260px; gap:14px; position:relative; align-items:start; }
 .cabo-board { min-width:0; container-type:inline-size; }
 .cabo-reference { background:linear-gradient(150deg,#eef0d9,#dce4c9); color:#214541; border:1px solid #bccda9; border-radius:19px; padding:21px 18px 16px; height:calc(100dvh - 78px); min-height:560px; overflow-y:auto; scrollbar-width:thin; scrollbar-color:#8baba1 transparent; box-shadow:0 8px 22px #001e2d33; }

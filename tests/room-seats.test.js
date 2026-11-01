@@ -65,7 +65,7 @@ test('v3 migration assigns seats in original order without changing games, and k
  try{
   const original={version:3,sessions:{token:{id:'private'}},profiles:{},rooms:{R:{revision:9,stateVersion:2,status:'playing',players:[{id:'a'},{id:'bot',isBot:true},{id:'b'}],game:{players:[{id:'a',hand:['secret']},{id:'bot'},{id:'b'}],epoch:13,pending:{a:{private:'choice'}}}}}};
   const input=structuredClone(original),migrated=migrateStorage(input);assert.deepEqual(input,original);
-  assert.equal(migrated.version,9);assert.deepEqual(migrated.rooms.R.players.map(p=>p.seat),[0,1,2]);assert.equal(migrated.rooms.R.revision,11);
+  assert.equal(migrated.version,10);assert.deepEqual(migrated.rooms.R.players.map(p=>p.seat),[0,1,2]);assert.equal(migrated.rooms.R.revision,11);
   assert.deepEqual(migrated.rooms.R.game,original.rooms.R.game);assert.equal(migrated.rooms.R.stateVersion,2);assert.deepEqual(migrated.sessions,original.sessions);
   assert.deepEqual(migrateStorage(migrated),migrated);
   const file=join(dir,'platform.json');writeFileSync(file,JSON.stringify(original));let store=new JsonStore(file);assert.deepEqual(store.data,migrated);

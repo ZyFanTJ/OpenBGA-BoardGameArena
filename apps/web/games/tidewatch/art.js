@@ -1,0 +1,1 @@
+export function art(kind,extra=''){const enemy=!/^(tide|ember|gear|star)[0-5]$/.test(kind);return '<span class="twv-art twv-art-'+kind+' '+(enemy?'twv-enemy':'')+' '+extra+'" aria-hidden="true"></span>';}
